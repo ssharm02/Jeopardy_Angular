@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { JeopardyService } from "src/services/getQuestions";
 import { Subscription } from "rxjs";
-
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -53,12 +52,11 @@ export class AppComponent implements OnInit {
 
   public filterCategories(data) {
     data.filter((el) => {
-      this.jeopardyQuestion.push(el.question);
       if (el.type === 'multiple') {
+        this.jeopardyQuestion.push(el.question);
         this.possibleAnswers.push(el.incorrect_answers + ',' + '  ' + el.correct_answer);
         console.log('possible answers', this.possibleAnswers);
       }
     });
-
   }
 }
