@@ -13,41 +13,44 @@
   <tbody>
     <tr>
       <th scope="row">
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn1" value="100">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn1" value="100" [disabled]="clicked">
           $100
         </button>
       </th>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn2" value="100">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn2" value="100" [disabled]="clicked">
           $100
         </button>
       </td>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn3" value="100">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn3" value="100" [disabled]="clicked">
           $100
         </button>
       </td>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn4" value="100">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn4" value="100"
+          [disabled]="clicked">
           $100
         </button>
       </td>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn5" value="100">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn5" value="100"
+          [disabled]="clicked">
           $100
         </button>
       </td>
     </tr>
     <tr>
       <th scope="row">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+          [disabled]="clicked">
           $200
         </button>
       </th>
-      <td><button type="button" class="btn btn-primary">$200</button></td>
-      <td><button type="button" class="btn btn-primary">$200</button></td>
-      <td><button type="button" class="btn btn-primary">$200</button></td>
-      <td><button type="button" class="btn btn-primary">$200</button></td>
+      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
+      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
+      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
+      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
     </tr>
     <tr>
       <th scope="row">

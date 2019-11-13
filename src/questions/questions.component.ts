@@ -11,12 +11,14 @@ export class JeoQuestions implements OnInit {
   public categories;
   public allQuestions = new Array();
   public GET_QUESTIONS = 4;
+  public clicked: boolean = false;
   public category1 = new Object();
   public category2 = new Object();
   public category3 = new Object();
   public category4 = new Object();
   public category5 = new Object();
   public userScore: number;
+  public userAnswer: string;
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
 
@@ -45,16 +47,16 @@ export class JeoQuestions implements OnInit {
       this.category3 = this.allQuestions[2];
       this.category4 = this.allQuestions[3];
       this.category5 = this.allQuestions[4];
-      this.mutateObject(this.category1)
+      this.mutateObject(this.category1);
       console.log(this.category1);
       this.filterCategories(this.category1);
     }, 5000);
   }
   public mutateObject(data) {
-    data.forEach((e) => {
+    data.forEach(e => {
       e.incorrect_answers.push(e.correct_answer);
-    })
-    console.log('new data is ', data)
+    });
+    console.log("new data is ", data);
     return data;
   }
   public filterCategories(data) {
@@ -71,14 +73,16 @@ export class JeoQuestions implements OnInit {
   }
 
   public userButtonClicked(event) {
-    console.log('button function launching')
+    console.log("button function launching");
     const elementId: string = (event.target as Element).id;
     const buttonValu = event.target.value;
-    console.log('button value is ', buttonValu)
+    console.log("button value is ", buttonValu);
     console.log(elementId);
+    this.clicked = true;
   }
   public onSelectionChange(event) {
-    let selectedEntry = event.target.value;
-    console.log('selected Entry function launching ', selectedEntry);
+    const userChoice = event.target.value;
+    console.log("selected Entry function launching ", userChoice);
+    return userChoice;
   }
 }
