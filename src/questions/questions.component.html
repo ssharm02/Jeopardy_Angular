@@ -13,27 +13,27 @@
   <tbody>
     <tr>
       <th scope="row">
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn1">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn1" value="100">
           $100
         </button>
       </th>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn2">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn2" value="100">
           $100
         </button>
       </td>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn3">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn3" value="100">
           $100
         </button>
       </td>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn4">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn4" value="100">
           $100
         </button>
       </td>
       <td>
-        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn5">
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn5" value="100">
           $100
         </button>
       </td>
@@ -90,8 +90,11 @@
       </div>
       <div *ngFor="let itemx of category1[i].incorrect_answers;" class="modal-body">
         <div class="input-group-text">
-          <input type="radio" name="question" id="question" aria-label="Radio button for following text input" />
-          <label (click)="onSelectionChange($event)" class="form-check-label" for="question">{{itemx}}</label>
+          <label  class="form-check-label" for="question">
+          <input type="radio"  name="question" id="question"
+            aria-label="Radio button for following text input"
+            (change)="onSelectionChange($event)" [value]="itemx"/>
+          {{itemx}}</label>
         </div>
       </div>
       <div class="modal-footer">

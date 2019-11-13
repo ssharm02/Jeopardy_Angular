@@ -71,11 +71,14 @@ export class JeoQuestions implements OnInit {
   }
 
   public userButtonClicked(event) {
+    console.log('button function launching')
     const elementId: string = (event.target as Element).id;
+    const buttonValu = event.target.value;
+    console.log('button value is ', buttonValu)
     console.log(elementId);
   }
   public onSelectionChange(event) {
-    let selectedEntry = event.target;
+    let selectedEntry = event.target.value;
     console.log('selected Entry function launching ', selectedEntry);
   }
 }
