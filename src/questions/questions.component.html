@@ -126,14 +126,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="input-group-text" *ngFor="let item of allQuestions">
+        <div class="input-group-text" *ngFor="let item of possibleAnswers">
           <input
             type="radio"
             name="question"
             id="question"
             aria-label="Radio button for following text input"
           />
-          <label class="form-check-label" for="question">1</label>
+          <label class="form-check-label" for="question">{{item}}</label>
         </div>
       </div>
       <div class="modal-footer">
