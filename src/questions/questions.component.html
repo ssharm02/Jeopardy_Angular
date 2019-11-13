@@ -13,65 +13,35 @@
   <tbody>
     <tr>
       <th scope="row">
-        <button
-          type="button"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="btn1"
-        >
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn1">
           $100
         </button>
       </th>
       <td>
-        <button
-          type="button"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="btn2"
-        >
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn2">
           $100
         </button>
       </td>
       <td>
-        <button
-          type="button"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="btn3"
-        >
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn3">
           $100
         </button>
       </td>
       <td>
-        <button
-          type="button"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="btn4"
-        >
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn4">
           $100
         </button>
       </td>
       <td>
-        <button
-          type="button"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="btn5"
-        >
+        <button type="button" (click)="userButtonClicked($event)" class="btn btn-primary" id="btn5">
           $100
         </button>
       </td>
     </tr>
     <tr>
       <th scope="row">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          data-target="#exampleModalCenter"
-        >
-          $100
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          $200
         </button>
       </th>
       <td><button type="button" class="btn btn-primary">$200</button></td>
@@ -108,36 +78,20 @@
     </tr>
   </tbody>
 </table>
-<div
-  class="modal fade"
-  id="exampleModalCenter"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true"
->
+<div *ngFor="let item of category1; let i = index;" class=" modal fade" id="exampleModalCenter" tabindex="-1"
+  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Question</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{item.question}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div class="input-group-text" *ngFor="let item of category1;">
-          <input
-            type="radio"
-            name="question"
-            id="question"
-            aria-label="Radio button for following text input"
-          />
-          <label class="form-check-label" for="question">{{item.incorrect_answers[0]}}</label>
+      <div *ngFor="let itemx of category1[i].incorrect_answers;" class="modal-body">
+        <div class="input-group-text">
+          <input type="radio" name="question" id="question" aria-label="Radio button for following text input" />
+          <label (click)="onSelectionChange($event)" class="form-check-label" for="question">{{itemx}}</label>
         </div>
       </div>
       <div class="modal-footer">

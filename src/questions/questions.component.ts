@@ -45,12 +45,18 @@ export class JeoQuestions implements OnInit {
       this.category3 = this.allQuestions[2];
       this.category4 = this.allQuestions[3];
       this.category5 = this.allQuestions[4];
-
+      this.mutateObject(this.category1)
       console.log(this.category1);
       this.filterCategories(this.category1);
     }, 5000);
   }
-
+  public mutateObject(data) {
+    data.forEach((e) => {
+      e.incorrect_answers.push(e.correct_answer);
+    })
+    console.log('new data is ', data)
+    return data;
+  }
   public filterCategories(data) {
     data.filter(el => {
       if (el.type === "multiple") {
@@ -67,5 +73,9 @@ export class JeoQuestions implements OnInit {
   public userButtonClicked(event) {
     const elementId: string = (event.target as Element).id;
     console.log(elementId);
+  }
+  public onSelectionChange(event) {
+    let selectedEntry = event.target;
+    console.log('selected Entry function launching ', selectedEntry);
   }
 }
