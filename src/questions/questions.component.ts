@@ -48,6 +48,10 @@ export class JeoQuestions implements OnInit {
       this.category4 = this.allQuestions[3];
       this.category5 = this.allQuestions[4];
       this.mutateObject(this.category1);
+      this.mutateObject(this.category2);
+      this.mutateObject(this.category3);
+      this.mutateObject(this.category4);
+      this.mutateObject(this.category5);
       console.log(this.category1);
       this.filterCategories(this.category1);
     }, 5000);

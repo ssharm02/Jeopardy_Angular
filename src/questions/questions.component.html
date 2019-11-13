@@ -42,15 +42,19 @@
     </tr>
     <tr>
       <th scope="row">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cat1"
           [disabled]="clicked">
           $200
         </button>
       </th>
-      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
-      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
-      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
-      <td><button type="button" class="btn btn-primary" [disabled]="clicked">$200</button></td>
+      <td><button type="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#cat2">$200</button></td>
+      <td><button type="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#cat3">$200</button></td>
+      <td><button type="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#cat4">$200</button></td>
+      <td><button type="button" class="btn btn-primary" data-toggle="modal"
+          data-target="#cat5">$200</button></td>
     </tr>
     <tr>
       <th scope="row">
@@ -81,7 +85,7 @@
     </tr>
   </tbody>
 </table>
-<div *ngFor="let item of category1; let i = index;" class=" modal fade" id="exampleModalCenter" tabindex="-1"
+<div *ngFor="let item of category1; let i = index;" class=" modal fade" id="cat1" tabindex="-1"
   role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -98,6 +102,114 @@
             aria-label="Radio button for following text input"
             (change)="onSelectionChange($event)" [value]="itemx"/>
           {{itemx}}</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngFor="let item of category2; let i = index;" class=" modal fade" id="cat2" tabindex="-1"
+  role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{item.question}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngFor="let itemx of category2[i].incorrect_answers;" class="modal-body">
+        <div class="input-group-text">
+          <label class="form-check-label" for="question">
+            <input type="radio" name="question" id="question" aria-label="Radio button for following text input"
+              (change)="onSelectionChange($event)" [value]="itemx" />
+            {{itemx}}</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngFor="let item of category3; let i = index;" class=" modal fade" id="cat3" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{item.question}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngFor="let itemx of category3[i].incorrect_answers;" class="modal-body">
+        <div class="input-group-text">
+          <label class="form-check-label" for="question">
+            <input type="radio" name="question" id="question" aria-label="Radio button for following text input"
+              (change)="onSelectionChange($event)" [value]="itemx" />
+            {{itemx}}</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngFor="let item of category4; let i = index;" class=" modal fade" id="cat4" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{item.question}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngFor="let itemx of category4[i].incorrect_answers;" class="modal-body">
+        <div class="input-group-text">
+          <label class="form-check-label" for="question">
+            <input type="radio" name="question" id="question" aria-label="Radio button for following text input"
+              (change)="onSelectionChange($event)" [value]="itemx" />
+            {{itemx}}</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngFor="let item of category5; let i = index;" class=" modal fade" id="cat5" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">{{item.question}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngFor="let itemx of category5[i].incorrect_answers;" class="modal-body">
+        <div class="input-group-text">
+          <label class="form-check-label" for="question">
+            <input type="radio" name="question" id="question" aria-label="Radio button for following text input"
+              (change)="onSelectionChange($event)" [value]="itemx" />
+            {{itemx}}</label>
         </div>
       </div>
       <div class="modal-footer">
