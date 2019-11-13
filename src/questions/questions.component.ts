@@ -16,6 +16,7 @@ export class JeoQuestions implements OnInit {
   public category3 = new Object();
   public category4 = new Object();
   public category5 = new Object();
+  public userScore: number;
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
 

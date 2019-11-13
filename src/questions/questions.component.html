@@ -1,3 +1,7 @@
+<div class="userDollars" style="text-align: right;">
+  $10000
+</div>
+<hr>
 <table class="table">
   <thead>
     <tr>
@@ -126,14 +130,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="input-group-text" *ngFor="let item of possibleAnswers">
+        <div class="input-group-text" *ngFor="let item of category1;">
           <input
             type="radio"
             name="question"
             id="question"
             aria-label="Radio button for following text input"
           />
-          <label class="form-check-label" for="question">{{item}}</label>
+          <label class="form-check-label" for="question">{{item.incorrect_answers[0]}}</label>
         </div>
       </div>
       <div class="modal-footer">
