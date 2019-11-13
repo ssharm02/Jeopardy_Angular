@@ -62,4 +62,9 @@ export class JeoQuestions implements OnInit {
       }
     });
   }
+
+  public userButtonClicked(event) {
+    const elementId: string = (event.target as Element).id;
+    console.log(elementId);
+  }
 }

@@ -1,7 +1,7 @@
 <table class="table">
   <thead>
     <tr>
-      <th *ngFor="let item of allQuestions" scope="col"  class="thead-dark">
+      <th *ngFor="let item of allQuestions" scope="col" class="thead-dark">
         {{ item[0].category }}
       </th>
     </tr>
@@ -9,16 +9,66 @@
   <tbody>
     <tr>
       <th scope="row">
-        <button type="button" class="btn btn-primary">$100</button>
+        <button
+          type="button"
+          (click)="userButtonClicked($event)"
+          class="btn btn-primary"
+          id="btn1"
+        >
+          $100
+        </button>
       </th>
-      <td><button type="button" class="btn btn-primary">$100</button></td>
-      <td><button type="button" class="btn btn-primary">$100</button></td>
-      <td><button type="button" class="btn btn-primary">$100</button></td>
-      <td><button type="button" class="btn btn-primary">$100</button></td>
+      <td>
+        <button
+          type="button"
+          (click)="userButtonClicked($event)"
+          class="btn btn-primary"
+          id="btn2"
+        >
+          $100
+        </button>
+      </td>
+      <td>
+        <button
+          type="button"
+          (click)="userButtonClicked($event)"
+          class="btn btn-primary"
+          id="btn3"
+        >
+          $100
+        </button>
+      </td>
+      <td>
+        <button
+          type="button"
+          (click)="userButtonClicked($event)"
+          class="btn btn-primary"
+          id="btn4"
+        >
+          $100
+        </button>
+      </td>
+      <td>
+        <button
+          type="button"
+          (click)="userButtonClicked($event)"
+          class="btn btn-primary"
+          id="btn5"
+        >
+          $100
+        </button>
+      </td>
     </tr>
     <tr>
       <th scope="row">
-        <button type="button" class="btn btn-primary">$100</button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModalCenter"
+        >
+          $100
+        </button>
       </th>
       <td><button type="button" class="btn btn-primary">$200</button></td>
       <td><button type="button" class="btn btn-primary">$200</button></td>
@@ -54,3 +104,44 @@
     </tr>
   </tbody>
 </table>
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Question</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group-text" *ngFor="let item of allQuestions">
+          <input
+            type="radio"
+            name="question"
+            id="question"
+            aria-label="Radio button for following text input"
+          />
+          <label class="form-check-label" for="question">1</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
