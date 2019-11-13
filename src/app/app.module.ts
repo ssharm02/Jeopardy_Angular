@@ -3,15 +3,14 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 import { JeopardyService } from "src/services/getQuestions";
 import { HttpClientModule } from "@angular/common/http";
+
 import { JeoQuestions } from 'src/questions/questions.component';
+import { LogMeIn } from 'src/login/login.component';
 
 
 @NgModule({
-    declarations: [AppComponent, JeoQuestions],
-  imports: [
-    BrowserModule,
-    HttpClientModule
-  ],
+  declarations: [AppComponent, LogMeIn, JeoQuestions],
+  imports: [BrowserModule, HttpClientModule],
   providers: [JeopardyService],
   bootstrap: [AppComponent]
 })
