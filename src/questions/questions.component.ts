@@ -20,6 +20,7 @@ export class JeoQuestions implements OnInit {
   public category3 = new Object();
   public category4 = new Object();
   public category5 = new Object();
+  public allCategories = new Object();
   public userScore: number;
   public userAnswer: string;
   public jeopardyQuestion = new Array();
@@ -31,9 +32,8 @@ export class JeoQuestions implements OnInit {
     this.manipulateObject();
   }
 
-  getServiceData = async () => {
-    this.jeoSub = await this.jeotest.getItems().subscribe(async data => {
-
+  getServiceData() {
+    this.jeoSub = this.jeotest.getItems().subscribe(data => {
       this.allQuestions.push(data);
       return this.allQuestions;
     });
@@ -49,12 +49,14 @@ export class JeoQuestions implements OnInit {
       this.category3 = this.allQuestions[2];
       this.category4 = this.allQuestions[3];
       this.category5 = this.allQuestions[4];
+      console.log(this.category2)
 
       this.mutateObject(this.category1);
       this.mutateObject(this.category2);
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
+
     }, 5000);
   }
   public mutateObject(data) {
