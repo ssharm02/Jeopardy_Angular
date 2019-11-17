@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { JeopardyService } from 'src/services/getQuestions';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { JeopardyService } from "src/services/getQuestions";
+import { Subscription } from "rxjs";
 @Component({
   selector: "jeo-questions",
-  templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css']
+  templateUrl: "./questions.component.html",
+  styleUrls: ["./questions.component.css"]
 })
 export class JeoQuestions implements OnInit {
   public jeoSub: Subscription;
@@ -12,7 +12,7 @@ export class JeoQuestions implements OnInit {
   public allQuestions = new Array();
   public GET_QUESTIONS = 4;
   public clicked = false;
-  public dollarAmount;
+  public dollarAmount = 0;
   public btnPressed: string;
   public userChoice: string;
   public category1 = new Object();
@@ -21,10 +21,11 @@ export class JeoQuestions implements OnInit {
   public category4 = new Object();
   public category5 = new Object();
   public allCategories = new Object();
-  public userScore: number;
+  public userScore = 0;
   public userAnswer: string;
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
+  @Output() closeModalEvent = new EventEmitter<boolean>();
 
   constructor(public jeotest: JeopardyService) {}
 
@@ -49,14 +50,12 @@ export class JeoQuestions implements OnInit {
       this.category3 = this.allQuestions[2];
       this.category4 = this.allQuestions[3];
       this.category5 = this.allQuestions[4];
-      console.log(this.category2)
 
       this.mutateObject(this.category1);
       this.mutateObject(this.category2);
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
-
     }, 5000);
   }
   public mutateObject(data) {
@@ -67,45 +66,60 @@ export class JeoQuestions implements OnInit {
   }
   public filterCategories(data) {
     data.filter(el => {
-      if (el.type === 'multiple') {
+      if (el.type === "multiple") {
         this.jeopardyQuestion.push(el.question);
       }
     });
   }
 
   public userButtonClicked(event) {
+    this.clicked = true;
     this.btnPressed = (event.target as Element).id;
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
-    this.clicked = true;
   }
   public onSelectionChange(event) {
     this.userChoice = event.target.value;
   }
   public checkAnswerGiveDollars() {
-
+    this.closeModalEvent.emit(false);
     // tslint:disable-next-line: quotemark
-    if (this.btnPressed === "cat2-btn1") {
+    if (this.btnPressed === "cat1-btn1") {
+      this.clicked = true;
       if (this.userChoice === this.category2[0].correct_answer) {
         this.userScore += this.dollarAmount;
+      } else {
+        this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn2') {
+    if (this.btnPressed === "cat1-btn2") {
+      this.clicked = true;
       if (this.userChoice === this.category2[1].correct_answer) {
         this.userScore += this.dollarAmount;
+      } else {
+        this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn3') {
+    if (this.btnPressed === "cat1-btn3") {
+      this.clicked = true;
       if (this.userChoice === this.category2[2].correct_answer) {
         this.userScore += this.dollarAmount;
+      } else {
+        this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn4') {
+    if (this.btnPressed === "cat1-btn4") {
+      this.clicked = true;
       if (this.userChoice === this.category2[3].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn5') {
+    if (this.btnPressed === "cat1-btn5") {
+      this.clicked = true;
       if (this.userChoice === this.category2[4].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
       }
     }
   }
