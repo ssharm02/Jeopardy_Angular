@@ -34,7 +34,7 @@ export class JeoQuestions implements OnInit {
   }
 
   getServiceData() {
-    this.jeoSub = this.jeotest.getItems().subscribe(data => {
+    this.jeotest.getItems().subscribe(data => {
       this.allQuestions.push(data);
       return this.allQuestions;
     });
@@ -73,7 +73,7 @@ export class JeoQuestions implements OnInit {
   }
 
   public userButtonClicked(event) {
-    this.clicked = true;
+    this.clicked = false;
     this.btnPressed = (event.target as Element).id;
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
@@ -85,7 +85,6 @@ export class JeoQuestions implements OnInit {
     this.closeModalEvent.emit(false);
     // tslint:disable-next-line: quotemark
     if (this.btnPressed === "cat1-btn1") {
-      this.clicked = true;
       if (this.userChoice === this.category2[0].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
@@ -93,7 +92,6 @@ export class JeoQuestions implements OnInit {
       }
     }
     if (this.btnPressed === "cat1-btn2") {
-      this.clicked = true;
       if (this.userChoice === this.category2[1].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
@@ -101,7 +99,6 @@ export class JeoQuestions implements OnInit {
       }
     }
     if (this.btnPressed === "cat1-btn3") {
-      this.clicked = true;
       if (this.userChoice === this.category2[2].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
@@ -109,14 +106,12 @@ export class JeoQuestions implements OnInit {
       }
     }
     if (this.btnPressed === "cat1-btn4") {
-      this.clicked = true;
       if (this.userChoice === this.category2[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
     if (this.btnPressed === "cat1-btn5") {
-      this.clicked = true;
       if (this.userChoice === this.category2[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;

@@ -1,11 +1,11 @@
 <div class="userDollars" style="text-align: right;">
-  <p>${{ userScore }}</p>
+  <p>Your Winnings ${{ userScore }}</p>
 </div>
 <hr />
-<table class="table">
+<table class="table table-bordered">
   <thead>
     <tr>
-      <th *ngFor="let item of allQuestions" scope="col" class="thead-dark">
+      <th *ngFor="let item of allQuestions" scope="col">
         {{ item[0].category }}
       </th>
     </tr>

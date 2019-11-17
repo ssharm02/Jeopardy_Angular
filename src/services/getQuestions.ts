@@ -31,13 +31,13 @@ export class JeopardyService {
     9
   ];
   public selectRandomCategory(maximum, minimum) {
-    let num = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+    const num = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
     this.categoryArray.splice(num, 1);
     return num;
   }
 
   public getItems(): Observable<any> {
-    let category = this.selectRandomCategory(32, 9);
+    const category = this.selectRandomCategory(32, 9);
     const NUMBER_OF_QUESTIONS = 5;
     return this.http
       .get(

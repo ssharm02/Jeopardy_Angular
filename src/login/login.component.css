@@ -12,13 +12,16 @@ body {
   }
 }
 
-#splash {
+#splash{
+  background-image: url("../assets/images/jeopardyBak.jpg");
+}
+splash {
   position: absolute;
   top: 0;
   left: 0;
   width: 105%;
   height: 105%;
-  background-image: url('../images/jeopardyBak.jpg');
+  content: url(../assets/images/jeopardyBak.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
