@@ -17,23 +17,22 @@
     <div class="splash-overlay" id="overlay-bottom"></div>
 
     <div id="wrapper">
-        <input
-          id="login-field"
-          type="text"
-          #nameInput
-          placeholder="Enter your Name"
-          maxlength="40"
-          name="uname"
-          autofocus
-          autocomplete="off"
-          required
-        />
-        <a [routerLink]="['../jeoQuestionsx']">
-          <button id="login-button" (click)="addPlayer()"
-         >Login</button></a
-        >
+      <input
+        id="login-field"
+        type="text"
+        #nameInput
+        placeholder="Enter your Name"
+        maxlength="40"
+        name="uname"
+        autofocus
+        autocomplete="off"
+        required
+      />
+      <a [routerLink]="['../jeoQuestionsx']">
+        <button id="login-button" (click)="addPlayer()">Login</button></a
+      >
 
-      <div id="credits-text">Angular Jeopardy</div>
+      <div id="credits-text">Sarthak's Jeopardy</div>
     </div>
   </body>
 </html>

@@ -14,6 +14,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public allQuestions = new Array();
   public GET_QUESTIONS = 4;
   public clicked = false;
+  public clicked2 = false;
+  public clicked3 = false;
+  public clicked4 = false;
+  public clicked5 = false;
   public selectCategory: string;
   public dollarAmount = 0;
   public cat: string;
@@ -178,6 +182,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.modalId = "cat1";
           this.cat = firstCategory1Q;
           this.incorrectAnswers = firstCategory1INQ;
+          setTimeout(() => {
+           this.clicked = true;
+          }, 2000);
           break;
       case 'cat1-btn2':
           this.modalId = "cat2";
@@ -203,6 +210,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.modalId = "cat2a";
           this.cat = secondCategory1Q;
           this.incorrectAnswers = secondCategory1INQ;
+          setTimeout(() => {
+            this.clicked2 = true;
+           }, 2000);
           break;
       case 'cat2-btn2':
           this.modalId = "cat2b";
@@ -228,6 +238,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.modalId = "cat3a";
           this.cat = thirdCategory1Q;
           this.incorrectAnswers = thirdCategory1INQ;
+          setTimeout(() => {
+            this.clicked3 = true;
+           }, 2000);
           break;
       case 'cat3-btn2':
           this.modalId = "cat3b";
@@ -253,6 +266,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.modalId = "cat4a";
           this.cat = fourthCategory1Q;
           this.incorrectAnswers = fourthCategory1INQ;
+          setTimeout(() => {
+            this.clicked4 = true;
+           }, 2000);
           break;
       case 'cat4-btn2':
           this.modalId = "cat4b";
@@ -278,6 +294,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.modalId = "cat5a";
           this.cat = fifthCategory1Q;
           this.incorrectAnswers = fifthCategory1INQ;
+          setTimeout(() => {
+            this.clicked5 = true;
+           }, 2000);
           break;
       case 'cat5-btn2':
           this.modalId = "cat5b";
