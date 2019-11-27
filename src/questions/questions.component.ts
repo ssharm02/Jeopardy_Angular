@@ -20,6 +20,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public categories;
   public allQuestions = new Array();
   public GET_QUESTIONS = 4;
+  public questionCounter = 0;
   public clicked = false;
   public clicked2 = false;
   public clicked3 = false;
@@ -63,13 +64,17 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public userAnswer: string;
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
+  public message: string;
+
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
-  constructor(public jeotest: JeopardyService) {}
+  constructor(public jeotest: JeopardyService, private data: LogMeIn) {}
 
   ngOnInit(): void {
     this.manipulateObject();
+    this.data.addPlayer().subscribe(message => this.message = message);
+
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();

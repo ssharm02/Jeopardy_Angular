@@ -1,11 +1,10 @@
+<div class="background" [ngStyle]="{ 'background-image': getUrl() }">
+  <div class="userDollars" style="text-align: right;">
+    <p>Your Winnings ${{ userScore }}</p>
+    <p>Player Name is {{ message }}</p>
+  </div>
 
-<div class="background" [ngStyle]="{'background-image': getUrl()}">
-<div class="userDollars" style="text-align: right;">
-  <p>Your Winnings ${{ userScore }}</p>
-  <p>Player Name is {{ userName }}</p>
-</div>
-
-<!-- <ng-template #MsgRef >
+  <!-- <ng-template #MsgRef >
   <button
   type="button"
   (click)="userButtonClicked($event)"
@@ -23,458 +22,483 @@
 <ng-template [ngTemplateOutlet]="MsgRef"></ng-template> //reuse any number of times
 <ng-template [ngTemplateOutlet]="MsgRef"></ng-template> //reuse any number of times
 <ng-template [ngTemplateOutlet]="MsgRef"></ng-template> //reuse any number of times -->
-<hr />
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th *ngFor="let item of allQuestions" scope="col">
-        {{ item[0].category }}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">
-        <button
-          type="button"
-          [disabled]="clicked"
-          (click)="userButtonClicked($event)" 
-          class="btn btn-primary"
-          id="cat1-btn1"
-          value="100"
-          data-toggle="modal"
-          data-target="#cat1"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $100
-        </button>
-        <!-- [attr.data-target] = "theme.themeId" -->
-      </th>
-      <td>
-        <button
-          type="button"
-          [disabled]="cat2Clicked1"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="cat2-btn1"
-          value="100"
-          data-toggle="modal"
-          data-target="#cat2a"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $100
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          [disabled]="cat3Clicked1"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="cat3-btn1"
-          value="100"
-          data-toggle="modal"
-          data-target="#cat3a"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $100
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          [disabled]="cat4Clicked1"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="cat4-btn1"
-          value="100"
-          data-toggle="modal"
-          data-target="#cat4a"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $100
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          [disabled]="cat5Clicked1"
-          (click)="userButtonClicked($event)"
-          class="btn btn-primary"
-          id="cat5-btn1"
-          value="100"
-          data-toggle="modal"
-          data-target="#cat5a"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $100
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">
-        <button
-          type="button"
-          class="btn btn-primary"
-          [disabled]="clicked2"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat2"
-          id="cat1-btn2"
-          value="200"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $200
-        </button>
-      </th>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          [disabled]="cat2Clicked2"
-          (click)="userButtonClicked($event)"
-          id="cat2-btn2"
-          value="200"
-          data-toggle="modal"
-          data-target="#cat2b"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $200
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat3-btn2"
-          [disabled]="cat3Clicked2"
-          (click)="userButtonClicked($event)"
-          value="200"
-          data-toggle="modal"
-          data-target="#cat3b"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $200
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat4-btn2"
-          [disabled]="cat4Clicked2"
-          (click)="userButtonClicked($event)"
-          value="200"
-          data-toggle="modal"
-          data-target="#cat4b"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $200
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          [disabled]="cat5Clicked2"
-          (click)="userButtonClicked($event)"
-          id="cat5-btn2"
-          value="200"
-          data-toggle="modal"
-          data-target="#cat5b"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $200
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          [disabled]="clicked3"
-          data-target="#cat3"
-          id="cat1-btn3"
-          (click)="userButtonClicked($event)"
-          value="500"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $500
-        </button>
-      </th>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat2-btn3"
-          [disabled]="cat2Clicked3"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat2c"
-          value="500"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $500
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat3-btn3"
-          [disabled]="cat3Clicked3"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat3c"
-          value="500"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $500
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat4-btn3"
-          [disabled]="cat4Clicked3"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat4c"
-          value="500"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $500
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat5-btn3"
-          [disabled]="cat5Clicked3"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat5c"
-          value="500"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $500
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">
-        <button
-          type="button"
-          class="btn btn-primary"
-          [disabled]="clicked4"
-          data-toggle="modal"
-          data-target="#cat4"
-          id="cat1-btn4"
-          (click)="userButtonClicked($event)"
-          value="1000"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1000
-        </button>
-      </th>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat2-btn4"
-          [disabled]="cat2Clicked4"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat2d"
-          value="1000"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1000
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat3-btn4"
-          [disabled]="cat3Clicked4"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat3d"
-          value="1000"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1000
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat4-btn4"
-          [disabled]="cat4Clicked4"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat4d"
-          value="1000"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1000
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat5-btn4"
-          [disabled]="cat5Clicked4"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat5d"
-          value="1000"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1000
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-toggle="modal"
-          [disabled]="clicked5"
-          data-target="#cat5"
-          id="cat1-btn5"
-          value="1200"
-          (click)="userButtonClicked($event)"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1200
-        </button>
-      </th>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat2-btn5"
-          [disabled]="cat2Clicked5"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat2e"
-          value="1200"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1200
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat3-btn5"
-          [disabled]="cat3Clicked5"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat3e"
-          value="1200"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1200
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat4-btn5"
-          [disabled]="cat4Clicked5"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat4e"
-          value="1200"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1200
-        </button>
-      </td>
-      <td>
-        <button
-          type="button"
-          class="btn btn-primary"
-          id="cat5-btn5"
-          [disabled]="cat5Clicked5"
-          (click)="userButtonClicked($event)"
-          data-toggle="modal"
-          data-target="#cat5e"
-          value="1200"
-          data-keyboard="false" data-backdrop="static"
-        >
-          $1200
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<div
-  *ngFor="let item of category1; let i = index"
-  class="modal fade"
-  id="{{ modalId }}"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">
-          {{ cat }}
-        </h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div *ngFor="let itemx of incorrectAnswers" class="modal-body">
-        <div class="input-group-text">
-          <label class="form-check-label" for="question">
-            <input
-              type="radio"
-              (change)="onSelectionChange($event)"
-              name="question"
-              id="question"
-              aria-label="Radio button for following text input"
-              [value]="itemx"
-            />
-            {{ itemx }}</label
+  <hr />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th *ngFor="let item of allQuestions" scope="col">
+          {{ item[0].category }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">
+          <button
+            type="button"
+            [disabled]="clicked"
+            (click)="userButtonClicked($event)"
+            class="btn btn-primary"
+            id="cat1-btn1"
+            value="100"
+            data-toggle="modal"
+            data-target="#cat1"
+            data-keyboard="false"
+            data-backdrop="static"
           >
+            $100
+          </button>
+          <!-- [attr.data-target] = "theme.themeId" -->
+        </th>
+        <td>
+          <button
+            type="button"
+            [disabled]="cat2Clicked1"
+            (click)="userButtonClicked($event)"
+            class="btn btn-primary"
+            id="cat2-btn1"
+            value="100"
+            data-toggle="modal"
+            data-target="#cat2a"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $100
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            [disabled]="cat3Clicked1"
+            (click)="userButtonClicked($event)"
+            class="btn btn-primary"
+            id="cat3-btn1"
+            value="100"
+            data-toggle="modal"
+            data-target="#cat3a"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $100
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            [disabled]="cat4Clicked1"
+            (click)="userButtonClicked($event)"
+            class="btn btn-primary"
+            id="cat4-btn1"
+            value="100"
+            data-toggle="modal"
+            data-target="#cat4a"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $100
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            [disabled]="cat5Clicked1"
+            (click)="userButtonClicked($event)"
+            class="btn btn-primary"
+            id="cat5-btn1"
+            value="100"
+            data-toggle="modal"
+            data-target="#cat5a"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $100
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="clicked2"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat2"
+            id="cat1-btn2"
+            value="200"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $200
+          </button>
+        </th>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="cat2Clicked2"
+            (click)="userButtonClicked($event)"
+            id="cat2-btn2"
+            value="200"
+            data-toggle="modal"
+            data-target="#cat2b"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $200
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat3-btn2"
+            [disabled]="cat3Clicked2"
+            (click)="userButtonClicked($event)"
+            value="200"
+            data-toggle="modal"
+            data-target="#cat3b"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $200
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat4-btn2"
+            [disabled]="cat4Clicked2"
+            (click)="userButtonClicked($event)"
+            value="200"
+            data-toggle="modal"
+            data-target="#cat4b"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $200
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="cat5Clicked2"
+            (click)="userButtonClicked($event)"
+            id="cat5-btn2"
+            value="200"
+            data-toggle="modal"
+            data-target="#cat5b"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $200
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            [disabled]="clicked3"
+            data-target="#cat3"
+            id="cat1-btn3"
+            (click)="userButtonClicked($event)"
+            value="500"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $500
+          </button>
+        </th>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat2-btn3"
+            [disabled]="cat2Clicked3"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat2c"
+            value="500"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $500
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat3-btn3"
+            [disabled]="cat3Clicked3"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat3c"
+            value="500"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $500
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat4-btn3"
+            [disabled]="cat4Clicked3"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat4c"
+            value="500"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $500
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat5-btn3"
+            [disabled]="cat5Clicked3"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat5c"
+            value="500"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $500
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="clicked4"
+            data-toggle="modal"
+            data-target="#cat4"
+            id="cat1-btn4"
+            (click)="userButtonClicked($event)"
+            value="1000"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1000
+          </button>
+        </th>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat2-btn4"
+            [disabled]="cat2Clicked4"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat2d"
+            value="1000"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1000
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat3-btn4"
+            [disabled]="cat3Clicked4"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat3d"
+            value="1000"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1000
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat4-btn4"
+            [disabled]="cat4Clicked4"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat4d"
+            value="1000"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1000
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat5-btn4"
+            [disabled]="cat5Clicked4"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat5d"
+            value="1000"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1000
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <th scope="row">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            [disabled]="clicked5"
+            data-target="#cat5"
+            id="cat1-btn5"
+            value="1200"
+            (click)="userButtonClicked($event)"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1200
+          </button>
+        </th>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat2-btn5"
+            [disabled]="cat2Clicked5"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat2e"
+            value="1200"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1200
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat3-btn5"
+            [disabled]="cat3Clicked5"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat3e"
+            value="1200"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1200
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat4-btn5"
+            [disabled]="cat4Clicked5"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat4e"
+            value="1200"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1200
+          </button>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="cat5-btn5"
+            [disabled]="cat5Clicked5"
+            (click)="userButtonClicked($event)"
+            data-toggle="modal"
+            data-target="#cat5e"
+            value="1200"
+            data-keyboard="false"
+            data-backdrop="static"
+          >
+            $1200
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div
+    *ngFor="let item of category1; let i = index"
+    class="modal fade"
+    id="{{ modalId }}"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">
+            {{ cat }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <div *ngFor="let itemx of incorrectAnswers" class="modal-body">
+          <div class="input-group-text">
+            <label class="form-check-label" for="question">
+              <input
+                type="radio"
+                (change)="onSelectionChange($event)"
+                name="question"
+                id="question"
+                aria-label="Radio button for following text input"
+                [value]="itemx"
+              />
+              {{ itemx }}</label
+            >
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
         </button> -->
-        <button
-          type="button"
-          class="btn btn-primary"
-          data-dismiss="modal"
-          (click)="checkAnswerGiveDollars()"
-        >
-          Submit
-        </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-dismiss="modal"
+            (click)="checkAnswerGiveDollars()"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>
