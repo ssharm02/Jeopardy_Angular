@@ -15,4 +15,8 @@ export class LogMeIn {
     this.changeName.emit(this.playerName);
     return this.changeName;
   }
+  getUrl()
+{
+  return "url('../assets/images/jeopardyBak.jpg')";
+}
 }

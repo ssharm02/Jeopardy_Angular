@@ -1,12 +1,19 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, OnDestroy } from "@angular/core";
-import { JeopardyService } from "src/services/getQuestions";
-import { Subscription } from "rxjs";
-import {LogMeIn} from '../login/login.component';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  OnDestroy
+} from '@angular/core';
+import { JeopardyService } from 'src/services/getQuestions';
+import { Subscription } from 'rxjs';
+import { LogMeIn } from '../login/login.component';
 
 @Component({
   selector: "jeo-questions",
-  templateUrl: "./questions.component.html",
-  styleUrls: ["./questions.component.css"]
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.css']
 })
 export class JeoQuestions implements OnInit, OnDestroy {
   public jeoSub: Subscription;
@@ -58,7 +65,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public manipulateObject() {
     for (let i = 0; i <= this.GET_QUESTIONS; i++) {
       this.getServiceData();
-   }
+    }
     setTimeout(() => {
       this.category1 = this.allQuestions[0];
       this.category2 = this.allQuestions[1];
@@ -75,30 +82,35 @@ export class JeoQuestions implements OnInit, OnDestroy {
     }, 5000);
   }
 
-  public parseHtmlEntities(str) {
-    str = str.replace(/&/g, "&amp;");
-    str = str.replace(/>/g, "&gt;");
-    str = str.replace(/</g, "&lt;");
-    str = str.replace(/"/g, "&quot;");
-    str = str.replace(/'/g, "&#039;");
+  public parseHtmlEntities(str): string {
+    str = str.replace(/&/g, '&amp;');
+    str = str.replace(/>/g, '&gt;');
+    str = str.replace(/</g, '&lt;');
+    str = str.replace(/"/g, '&quot;');
+    str = str.replace(/'/g, '&#039;');
     return str;
-}
+  }
   public mutateObject(data) {
     data.forEach(e => {
-      e.question = this.parseHtmlEntities(e.question);
+      e.question = decodeURIComponent(e.question);
+      console.log('question is ', e.question)
       e.incorrect_answers.push(e.correct_answer);
     });
     return data;
   }
   public filterCategories(data) {
     data.filter(el => {
+      // tslint:disable-next-line: quotemark
       if (el.type === "multiple") {
         this.jeopardyQuestion.push(el.question);
       }
     });
   }
+  public getUrl(): string {
+    return 'url(\'../assets/images/jeoback.png\')';
+  }
 
-  public userButtonClicked(event) {
+  public userButtonClicked(event): void {
     const firstCategory1Q = this.category1[0].question;
     const firstCategory1INQ = this.category1[0].incorrect_answers;
 
@@ -144,7 +156,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
     const thirdCategory5Q = this.category3[4].question;
     const thirdCategory5INQ = this.category3[4].incorrect_answers;
 
-
     const fourthCategory1Q = this.category4[0].question;
     const fourthCategory1INQ = this.category4[0].incorrect_answers;
 
@@ -174,150 +185,134 @@ export class JeoQuestions implements OnInit, OnDestroy {
 
     const fifthCategory5Q = this.category5[4].question;
     const fifthCategory5INQ = this.category5[4].incorrect_answers;
-    this.clicked = false;
     this.btnPressed = (event.target as Element).id;
 
     switch (this.btnPressed) {
       case 'cat1-btn1':
-          this.modalId = "cat1";
-          this.cat = firstCategory1Q;
-          this.incorrectAnswers = firstCategory1INQ;
-          setTimeout(() => {
-           this.clicked = true;
-          }, 2000);
-          break;
+        this.modalId = 'cat1';
+        this.cat = firstCategory1Q;
+        this.incorrectAnswers = firstCategory1INQ;
+        break;
       case 'cat1-btn2':
-          this.modalId = "cat2";
-          this.cat = firstCategory2Q;
-          this.incorrectAnswers = firstCategory2INQ;
-          break;
+        this.modalId = 'cat2';
+        this.cat = firstCategory2Q;
+        this.incorrectAnswers = firstCategory2INQ;
+        break;
       case 'cat1-btn3':
-          this.modalId = "cat3";
-          this.cat = firstCategory3Q;
-          this.incorrectAnswers = firstCategory3INQ;
-          break;
+        this.modalId = 'cat3';
+        this.cat = firstCategory3Q;
+        this.incorrectAnswers = firstCategory3INQ;
+        break;
       case 'cat1-btn4':
-          this.modalId = "cat4";
-          this.cat = firstCategory4Q;
-          this.incorrectAnswers = firstCategory4INQ;
-          break;
+        this.modalId = 'cat4';
+        this.cat = firstCategory4Q;
+        this.incorrectAnswers = firstCategory4INQ;
+        break;
       case 'cat1-btn5':
-          this.modalId = "cat5";
-          this.cat = firstCategory5Q;
-          this.incorrectAnswers = firstCategory5INQ;
-          break;
+        this.modalId = 'cat5';
+        this.cat = firstCategory5Q;
+        this.incorrectAnswers = firstCategory5INQ;
+        break;
       case 'cat2-btn1':
-          this.modalId = "cat2a";
-          this.cat = secondCategory1Q;
-          this.incorrectAnswers = secondCategory1INQ;
-          setTimeout(() => {
-            this.clicked2 = true;
-           }, 2000);
-          break;
+        this.modalId = 'cat2a';
+        this.cat = secondCategory1Q;
+        this.incorrectAnswers = secondCategory1INQ;
+        break;
       case 'cat2-btn2':
-          this.modalId = "cat2b";
-          this.cat = secondCategory2Q;
-          this.incorrectAnswers = secondCategory2INQ;
-          break;
+        this.modalId = 'cat2b';
+        this.cat = secondCategory2Q;
+        this.incorrectAnswers = secondCategory2INQ;
+        break;
       case 'cat2-btn3':
-          this.modalId = "cat2c";
-          this.cat = secondCategory3Q;
-          this.incorrectAnswers = secondCategory3INQ;
-          break;
+        this.modalId = 'cat2c';
+        this.cat = secondCategory3Q;
+        this.incorrectAnswers = secondCategory3INQ;
+        break;
       case 'cat2-btn4':
-          this.modalId = "cat2d";
-          this.cat = secondCategory4Q;
-          this.incorrectAnswers = secondCategory4INQ;
-          break;
+        this.modalId = 'cat2d';
+        this.cat = secondCategory4Q;
+        this.incorrectAnswers = secondCategory4INQ;
+        break;
       case 'cat2-btn5':
-          this.modalId = "cat2e";
-          this.cat = secondCategory5Q;
-          this.incorrectAnswers = secondCategory5INQ;
-          break;
+        this.modalId = 'cat2e';
+        this.cat = secondCategory5Q;
+        this.incorrectAnswers = secondCategory5INQ;
+        break;
       case 'cat3-btn1':
-          this.modalId = "cat3a";
-          this.cat = thirdCategory1Q;
-          this.incorrectAnswers = thirdCategory1INQ;
-          setTimeout(() => {
-            this.clicked3 = true;
-           }, 2000);
-          break;
+        this.modalId = 'cat3a';
+        this.cat = thirdCategory1Q;
+        this.incorrectAnswers = thirdCategory1INQ;
+        break;
       case 'cat3-btn2':
-          this.modalId = "cat3b";
-          this.cat = thirdCategory2Q;
-          this.incorrectAnswers = thirdCategory2INQ;
-          break;
+        this.modalId = 'cat3b';
+        this.cat = thirdCategory2Q;
+        this.incorrectAnswers = thirdCategory2INQ;
+        break;
       case 'cat3-btn3':
-          this.modalId = "cat3c";
-          this.cat = thirdCategory3Q;
-          this.incorrectAnswers = thirdCategory3INQ;
-          break;
+        this.modalId = 'cat3c';
+        this.cat = thirdCategory3Q;
+        this.incorrectAnswers = thirdCategory3INQ;
+        break;
       case 'cat3-btn4':
-          this.modalId = "cat3d";
-          this.cat = thirdCategory4Q;
-          this.incorrectAnswers = thirdCategory4INQ;
-          break;
+        this.modalId = 'cat3d';
+        this.cat = thirdCategory4Q;
+        this.incorrectAnswers = thirdCategory4INQ;
+        break;
       case 'cat3-btn5':
-          this.modalId = "cat3e";
-          this.cat = thirdCategory5Q;
-          this.incorrectAnswers = thirdCategory5INQ;
-          break;
+        this.modalId = 'cat3e';
+        this.cat = thirdCategory5Q;
+        this.incorrectAnswers = thirdCategory5INQ;
+        break;
       case 'cat4-btn1':
-          this.modalId = "cat4a";
-          this.cat = fourthCategory1Q;
-          this.incorrectAnswers = fourthCategory1INQ;
-          setTimeout(() => {
-            this.clicked4 = true;
-           }, 2000);
-          break;
+        this.modalId = 'cat4a';
+        this.cat = fourthCategory1Q;
+        this.incorrectAnswers = fourthCategory1INQ;
+        break;
       case 'cat4-btn2':
-          this.modalId = "cat4b";
-          this.cat = fourthCategory2Q;
-          this.incorrectAnswers = fourthCategory2INQ;
-          break;
+        this.modalId = 'cat4b';
+        this.cat = fourthCategory2Q;
+        this.incorrectAnswers = fourthCategory2INQ;
+        break;
       case 'cat4-btn3':
-          this.modalId = "cat4c";
-          this.cat = fourthCategory3Q;
-          this.incorrectAnswers = fourthCategory3INQ;
-          break;
+        this.modalId = 'cat4c';
+        this.cat = fourthCategory3Q;
+        this.incorrectAnswers = fourthCategory3INQ;
+        break;
       case 'cat4-btn4':
-          this.modalId = "cat4d";
-          this.cat = fourthCategory4Q;
-          this.incorrectAnswers = fourthCategory4INQ;
-          break;
+        this.modalId = 'cat4d';
+        this.cat = fourthCategory4Q;
+        this.incorrectAnswers = fourthCategory4INQ;
+        break;
       case 'cat4-btn5':
-          this.modalId = "cat4e";
-          this.cat = fourthCategory5Q;
-          this.incorrectAnswers = fourthCategory5INQ;
-          break;
+        this.modalId = 'cat4e';
+        this.cat = fourthCategory5Q;
+        this.incorrectAnswers = fourthCategory5INQ;
+        break;
       case 'cat5-btn1':
-          this.modalId = "cat5a";
-          this.cat = fifthCategory1Q;
-          this.incorrectAnswers = fifthCategory1INQ;
-          setTimeout(() => {
-            this.clicked5 = true;
-           }, 2000);
-          break;
+        this.modalId = 'cat5a';
+        this.cat = fifthCategory1Q;
+        this.incorrectAnswers = fifthCategory1INQ;
+        break;
       case 'cat5-btn2':
-          this.modalId = "cat5b";
-          this.cat = fifthCategory2Q;
-          this.incorrectAnswers = fifthCategory2INQ;
-          break;
+        this.modalId = 'cat5b';
+        this.cat = fifthCategory2Q;
+        this.incorrectAnswers = fifthCategory2INQ;
+        break;
       case 'cat5-btn3':
-          this.modalId = "cat5c";
-          this.cat = fifthCategory3Q;
-          this.incorrectAnswers = fifthCategory3INQ;
-          break;
+        this.modalId = 'cat5c';
+        this.cat = fifthCategory3Q;
+        this.incorrectAnswers = fifthCategory3INQ;
+        break;
       case 'cat5-btn4':
-          this.modalId = "cat5d";
-          this.cat = fifthCategory4Q;
-          this.incorrectAnswers = fifthCategory4INQ;
-          break;
+        this.modalId = 'cat5d';
+        this.cat = fifthCategory4Q;
+        this.incorrectAnswers = fifthCategory4INQ;
+        break;
       case 'cat5-btn5':
-          this.modalId = "cat5e";
-          this.cat = fifthCategory5Q;
-          this.incorrectAnswers = fifthCategory5INQ;
-          break;
+        this.modalId = 'cat5e';
+        this.cat = fifthCategory5Q;
+        this.incorrectAnswers = fifthCategory5INQ;
+        break;
     }
 
     // tslint:disable-next-line:radix
@@ -336,35 +331,35 @@ export class JeoQuestions implements OnInit, OnDestroy {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === "cat1-btn2") {
+    if (this.btnPressed === 'cat1-btn2') {
       if (this.userChoice === this.category2[1].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === "cat1-btn3") {
+    if (this.btnPressed === 'cat1-btn3') {
       if (this.userChoice === this.category2[2].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === "cat1-btn4") {
+    if (this.btnPressed === 'cat1-btn4') {
       if (this.userChoice === this.category2[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === "cat1-btn5") {
+    if (this.btnPressed === 'cat1-btn5') {
       if (this.userChoice === this.category2[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
   }
-  changeName($event) {
-    console.log('change name is running')
+  public changeName($event): void {
+    console.log('change name is running');
     this.userName = $event;
   }
 }

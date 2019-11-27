@@ -1,4 +1,5 @@
 
+<div class="background" [ngStyle]="{'background-image': getUrl()}">
 <div class="userDollars" style="text-align: right;">
   <p>Your Winnings ${{ userScore }}</p>
   <p>Player Name is {{ userName }}</p>
@@ -36,13 +37,14 @@
       <th scope="row">
         <button
           type="button"
-          (click)="userButtonClicked($event)"
           [disabled]="clicked"
+          (click)="userButtonClicked($event); clicked = true;" 
           class="btn btn-primary"
           id="cat1-btn1"
           value="100"
           data-toggle="modal"
           data-target="#cat1"
+          data-keyboard="false" data-backdrop="static"
         >
           $100
         </button>
@@ -57,6 +59,7 @@
           value="100"
           data-toggle="modal"
           data-target="#cat2a"
+          data-keyboard="false" data-backdrop="static"
         >
           $100
         </button>
@@ -70,6 +73,7 @@
           value="100"
           data-toggle="modal"
           data-target="#cat3a"
+          data-keyboard="false" data-backdrop="static"
         >
           $100
         </button>
@@ -83,6 +87,7 @@
           value="100"
           data-toggle="modal"
           data-target="#cat4a"
+          data-keyboard="false" data-backdrop="static"
         >
           $100
         </button>
@@ -96,6 +101,7 @@
           value="100"
           data-toggle="modal"
           data-target="#cat5a"
+          data-keyboard="false" data-backdrop="static"
         >
           $100
         </button>
@@ -112,6 +118,7 @@
           data-target="#cat2"
           id="cat1-btn2"
           value="200"
+          data-keyboard="false" data-backdrop="static"
         >
           $200
         </button>
@@ -125,6 +132,7 @@
           value="200"
           data-toggle="modal"
           data-target="#cat2b"
+          data-keyboard="false" data-backdrop="static"
         >
           $200
         </button>
@@ -139,6 +147,7 @@
           value="200"
           data-toggle="modal"
           data-target="#cat3b"
+          data-keyboard="false" data-backdrop="static"
         >
           $200
         </button>
@@ -152,6 +161,7 @@
           value="200"
           data-toggle="modal"
           data-target="#cat4b"
+          data-keyboard="false" data-backdrop="static"
         >
           $200
         </button>
@@ -165,6 +175,7 @@
           value="200"
           data-toggle="modal"
           data-target="#cat5b"
+          data-keyboard="false" data-backdrop="static"
         >
           $200
         </button>
@@ -181,6 +192,7 @@
           id="cat1-btn3"
           (click)="userButtonClicked($event)"
           value="500"
+          data-keyboard="false" data-backdrop="static"
         >
           $500
         </button>
@@ -194,6 +206,7 @@
           data-toggle="modal"
           data-target="#cat2c"
           value="500"
+          data-keyboard="false" data-backdrop="static"
         >
           $500
         </button>
@@ -207,6 +220,7 @@
           data-toggle="modal"
           data-target="#cat3c"
           value="500"
+          data-keyboard="false" data-backdrop="static"
         >
           $500
         </button>
@@ -220,6 +234,7 @@
           data-toggle="modal"
           data-target="#cat4c"
           value="500"
+          data-keyboard="false" data-backdrop="static"
         >
           $500
         </button>
@@ -233,6 +248,7 @@
           data-toggle="modal"
           data-target="#cat5c"
           value="500"
+          data-keyboard="false" data-backdrop="static"
         >
           $500
         </button>
@@ -249,6 +265,7 @@
           id="cat1-btn4"
           (click)="userButtonClicked($event)"
           value="1000"
+          data-keyboard="false" data-backdrop="static"
         >
           $1000
         </button>
@@ -262,6 +279,7 @@
           data-toggle="modal"
           data-target="#cat2d"
           value="1000"
+          data-keyboard="false" data-backdrop="static"
         >
           $1000
         </button>
@@ -275,6 +293,7 @@
           data-toggle="modal"
           data-target="#cat3d"
           value="1000"
+          data-keyboard="false" data-backdrop="static"
         >
           $1000
         </button>
@@ -288,6 +307,7 @@
           data-toggle="modal"
           data-target="#cat4d"
           value="1000"
+          data-keyboard="false" data-backdrop="static"
         >
           $1000
         </button>
@@ -301,6 +321,7 @@
           data-toggle="modal"
           data-target="#cat5d"
           value="1000"
+          data-keyboard="false" data-backdrop="static"
         >
           $1000
         </button>
@@ -317,6 +338,7 @@
           id="cat1-btn5"
           value="1200"
           (click)="userButtonClicked($event)"
+          data-keyboard="false" data-backdrop="static"
         >
           $1200
         </button>
@@ -330,6 +352,7 @@
           data-toggle="modal"
           data-target="#cat2e"
           value="1200"
+          data-keyboard="false" data-backdrop="static"
         >
           $1200
         </button>
@@ -343,6 +366,7 @@
           data-toggle="modal"
           data-target="#cat3e"
           value="1200"
+          data-keyboard="false" data-backdrop="static"
         >
           $1200
         </button>
@@ -356,6 +380,7 @@
           data-toggle="modal"
           data-target="#cat4e"
           value="1200"
+          data-keyboard="false" data-backdrop="static"
         >
           $1200
         </button>
@@ -369,6 +394,7 @@
           data-toggle="modal"
           data-target="#cat5e"
           value="1200"
+          data-keyboard="false" data-backdrop="static"
         >
           $1200
         </button>
@@ -417,9 +443,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">
           Close
-        </button>
+        </button> -->
         <button
           type="button"
           class="btn btn-primary"
@@ -431,4 +457,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
