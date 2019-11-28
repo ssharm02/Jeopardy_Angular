@@ -5,15 +5,15 @@ import {
   EventEmitter,
   ViewChild,
   OnDestroy
-} from '@angular/core';
-import { JeopardyService } from 'src/services/getQuestions';
-import { Subscription } from 'rxjs';
-import { LogMeIn } from '../login/login.component';
+} from "@angular/core";
+import { JeopardyService } from "src/services/getQuestions";
+import { Subscription } from "rxjs";
+import { LogMeIn } from "../login/login.component";
 
 @Component({
   selector: "jeo-questions",
-  templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css']
+  templateUrl: "./questions.component.html",
+  styleUrls: ["./questions.component.css"]
 })
 export class JeoQuestions implements OnInit, OnDestroy {
   public jeoSub: Subscription;
@@ -69,12 +69,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
-  constructor(public jeotest: JeopardyService, private data: LogMeIn) {}
+  constructor(public jeotest: JeopardyService) {}
 
   ngOnInit(): void {
     this.manipulateObject();
-    this.data.addPlayer().subscribe(message => this.message = message);
-
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();
@@ -103,22 +101,21 @@ export class JeoQuestions implements OnInit, OnDestroy {
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
-      console.log('this.cat 1', this.category1);
+      console.log("this.cat 1", this.category1);
     }, 5000);
   }
 
   public parseHtmlEntities(str): string {
-    str = str.replace(/&/g, '&amp;');
-    str = str.replace(/>/g, '&gt;');
-    str = str.replace(/</g, '&lt;');
-    str = str.replace(/"/g, '&quot;');
-    str = str.replace(/'/g, '&#039;');
+    str = str.replace(/&/g, "&amp;");
+    str = str.replace(/>/g, "&gt;");
+    str = str.replace(/</g, "&lt;");
+    str = str.replace(/"/g, "&quot;");
+    str = str.replace(/'/g, "&#039;");
     return str;
   }
   public mutateObject(data) {
     data.forEach(e => {
       e.question = decodeURIComponent(e.question);
-      console.log('question is ', e.question)
       e.incorrect_answers.push(e.correct_answer);
     });
     return data;
@@ -194,208 +191,232 @@ export class JeoQuestions implements OnInit, OnDestroy {
     this.btnPressed = (event.target as Element).id;
 
     switch (this.btnPressed) {
-      case 'cat1-btn1':
-        this.modalId = 'cat1';
+      case "cat1-btn1":
+        this.modalId = "cat1";
         this.cat = firstCategory1Q;
         this.incorrectAnswers = firstCategory1INQ;
+        this.questionCounter++;
         setTimeout(() => {
-         this.clicked = true;
+          this.clicked = true;
         }, 2000);
         break;
-      case 'cat1-btn2':
-        this.modalId = 'cat2';
+      case "cat1-btn2":
+        this.modalId = "cat2";
         this.cat = firstCategory2Q;
         this.incorrectAnswers = firstCategory2INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.clicked2 = true;
         }, 2000);
         break;
-      case 'cat1-btn3':
-        this.modalId = 'cat3';
+      case "cat1-btn3":
+        this.modalId = "cat3";
         this.cat = firstCategory3Q;
         this.incorrectAnswers = firstCategory3INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.clicked3 = true;
         }, 2000);
         break;
-      case 'cat1-btn4':
-        this.modalId = 'cat4';
+      case "cat1-btn4":
+        this.modalId = "cat4";
         this.cat = firstCategory4Q;
         this.incorrectAnswers = firstCategory4INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.clicked4 = true;
         }, 2000);
         break;
-      case 'cat1-btn5':
-        this.modalId = 'cat5';
+      case "cat1-btn5":
+        this.modalId = "cat5";
         this.cat = firstCategory5Q;
         this.incorrectAnswers = firstCategory5INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.clicked5 = true;
         }, 2000);
         break;
-      case 'cat2-btn1':
-        this.modalId = 'cat2a';
+      case "cat2-btn1":
+        this.modalId = "cat2a";
         this.cat = secondCategory1Q;
         this.incorrectAnswers = secondCategory1INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat2Clicked1 = true;
         }, 2000);
         break;
-      case 'cat2-btn2':
-        this.modalId = 'cat2b';
+      case "cat2-btn2":
+        this.modalId = "cat2b";
         this.cat = secondCategory2Q;
         this.incorrectAnswers = secondCategory2INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat2Clicked2 = true;
         }, 2000);
         break;
-      case 'cat2-btn3':
-        this.modalId = 'cat2c';
+      case "cat2-btn3":
+        this.modalId = "cat2c";
         this.cat = secondCategory3Q;
         this.incorrectAnswers = secondCategory3INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat2Clicked3 = true;
         }, 2000);
         break;
-      case 'cat2-btn4':
-        this.modalId = 'cat2d';
+      case "cat2-btn4":
+        this.modalId = "cat2d";
         this.cat = secondCategory4Q;
         this.incorrectAnswers = secondCategory4INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat2Clicked4 = true;
         }, 2000);
         break;
-      case 'cat2-btn5':
-        this.modalId = 'cat2e';
+      case "cat2-btn5":
+        this.modalId = "cat2e";
         this.cat = secondCategory5Q;
         this.incorrectAnswers = secondCategory5INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat2Clicked5 = true;
         }, 2000);
         break;
-      case 'cat3-btn1':
-        this.modalId = 'cat3a';
+      case "cat3-btn1":
+        this.modalId = "cat3a";
         this.cat = thirdCategory1Q;
         this.incorrectAnswers = thirdCategory1INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat3Clicked1 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat3-btn2':
-        this.modalId = 'cat3b';
+      case "cat3-btn2":
+        this.modalId = "cat3b";
         this.cat = thirdCategory2Q;
         this.incorrectAnswers = thirdCategory2INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat3Clicked2 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat3-btn3':
-        this.modalId = 'cat3c';
+      case "cat3-btn3":
+        this.modalId = "cat3c";
         this.cat = thirdCategory3Q;
         this.incorrectAnswers = thirdCategory3INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat3Clicked3 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat3-btn4':
-        this.modalId = 'cat3d';
+      case "cat3-btn4":
+        this.modalId = "cat3d";
         this.cat = thirdCategory4Q;
         this.incorrectAnswers = thirdCategory4INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat3Clicked4 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat3-btn5':
-        this.modalId = 'cat3e';
+      case "cat3-btn5":
+        this.modalId = "cat3e";
         this.cat = thirdCategory5Q;
         this.incorrectAnswers = thirdCategory5INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat3Clicked5 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat4-btn1':
-        this.modalId = 'cat4a';
+      case "cat4-btn1":
+        this.modalId = "cat4a";
         this.cat = fourthCategory1Q;
         this.incorrectAnswers = fourthCategory1INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat4Clicked1 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat4-btn2':
-        this.modalId = 'cat4b';
+      case "cat4-btn2":
+        this.modalId = "cat4b";
         this.cat = fourthCategory2Q;
         this.incorrectAnswers = fourthCategory2INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat4Clicked2 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat4-btn3':
-        this.modalId = 'cat4c';
+      case "cat4-btn3":
+        this.modalId = "cat4c";
         this.cat = fourthCategory3Q;
         this.incorrectAnswers = fourthCategory3INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat4Clicked3 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat4-btn4':
-        this.modalId = 'cat4d';
+      case "cat4-btn4":
+        this.modalId = "cat4d";
         this.cat = fourthCategory4Q;
         this.incorrectAnswers = fourthCategory4INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat4Clicked4 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat4-btn5':
-        this.modalId = 'cat4e';
+      case "cat4-btn5":
+        this.modalId = "cat4e";
         this.cat = fourthCategory5Q;
         this.incorrectAnswers = fourthCategory5INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat4Clicked5 = true;
-         }, 2000);
+        }, 2000);
         break;
-      case 'cat5-btn1':
-        this.modalId = 'cat5a';
+      case "cat5-btn1":
+        this.modalId = "cat5a";
         this.cat = fifthCategory1Q;
         this.incorrectAnswers = fifthCategory1INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat5Clicked1 = true;
         }, 2000);
         break;
-      case 'cat5-btn2':
-        this.modalId = 'cat5b';
+      case "cat5-btn2":
+        this.modalId = "cat5b";
         this.cat = fifthCategory2Q;
         this.incorrectAnswers = fifthCategory2INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat5Clicked2 = true;
         }, 2000);
         break;
-      case 'cat5-btn3':
-        this.modalId = 'cat5c';
+      case "cat5-btn3":
+        this.modalId = "cat5c";
         this.cat = fifthCategory3Q;
         this.incorrectAnswers = fifthCategory3INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat5Clicked3 = true;
         }, 2000);
         break;
-      case 'cat5-btn4':
-        this.modalId = 'cat5d';
+      case "cat5-btn4":
+        this.modalId = "cat5d";
         this.cat = fifthCategory4Q;
         this.incorrectAnswers = fifthCategory4INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat5Clicked4 = true;
         }, 2000);
         break;
-      case 'cat5-btn5':
-        this.modalId = 'cat5e';
+      case "cat5-btn5":
+        this.modalId = "cat5e";
         this.cat = fifthCategory5Q;
         this.incorrectAnswers = fifthCategory5INQ;
+        this.questionCounter++;
         setTimeout(() => {
           this.cat5Clicked5 = true;
         }, 2000);
         break;
     }
-
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
   }
@@ -406,41 +427,161 @@ export class JeoQuestions implements OnInit, OnDestroy {
     this.closeModalEvent.emit(false);
     // tslint:disable-next-line: quotemark
     if (this.btnPressed === "cat1-btn1") {
+      if (this.userChoice === this.category1[0].correct_answer) {
+        this.userScore += this.dollarAmount;
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat1-btn2") {
+      if (this.userChoice === this.category1[1].correct_answer) {
+        this.userScore += this.dollarAmount;
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat1-btn3") {
+      if (this.userChoice === this.category1[2].correct_answer) {
+        this.userScore += this.dollarAmount;
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat1-btn4") {
+      if (this.userChoice === this.category1[3].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat1-btn5") {
+      if (this.userChoice === this.category1[4].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat2-btn1") {
       if (this.userChoice === this.category2[0].correct_answer) {
-        this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn2') {
+    if (this.btnPressed === "cat2-btn2") {
       if (this.userChoice === this.category2[1].correct_answer) {
-        this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn3') {
+    if (this.btnPressed === "cat2-btn3") {
       if (this.userChoice === this.category2[2].correct_answer) {
-        this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn4') {
+    if (this.btnPressed === "cat2-btn4") {
       if (this.userChoice === this.category2[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn5') {
+    if (this.btnPressed === "cat2-btn5") {
       if (this.userChoice === this.category2[4].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat3-btn1") {
+      if (this.userChoice === this.category3[0].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat3-btn2") {
+      if (this.userChoice === this.category3[1].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat3-btn3") {
+      if (this.userChoice === this.category3[2].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat3-btn4") {
+      if (this.userChoice === this.category3[3].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat3-btn5") {
+      if (this.userChoice === this.category3[4].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat4-btn1") {
+      if (this.userChoice === this.category4[0].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat4-btn2") {
+      if (this.userChoice === this.category4[1].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat4-btn3") {
+      if (this.userChoice === this.category4[2].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat4-btn4") {
+      if (this.userChoice === this.category4[3].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat4-btn5") {
+      if (this.userChoice === this.category4[4].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat5-btn1") {
+      if (this.userChoice === this.category5[0].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat5-btn2") {
+      if (this.userChoice === this.category5[1].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat5-btn3") {
+      if (this.userChoice === this.category5[2].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat5-btn4") {
+      if (this.userChoice === this.category5[3].correct_answer) {
+      } else {
+        this.userScore -= this.dollarAmount;
+      }
+    }
+    if (this.btnPressed === "cat5-btn5") {
+      if (this.userChoice === this.category5[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
   }
   public changeName($event): void {
-    console.log('change name is running');
+    console.log("change name is running");
     this.userName = $event;
   }
 }
