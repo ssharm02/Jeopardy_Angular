@@ -16,8 +16,8 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 
 ## TODO
-Implement Redux and Redux Persist for state management and persistance 
-Clean up code --- follow clean code practices
-Implement Score component
-Pass data back and forth between components using service injection
-Implement mongoDB to save user names and high scores
+Implement Redux and Redux Persist for state management and persistance, 
+Clean up code --- follow clean code practices,
+Implement Score component,
+Pass data back and forth between components using service injection,
+Implement mongoDB to save user names and high scores,
