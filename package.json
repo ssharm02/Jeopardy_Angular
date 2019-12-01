@@ -26,6 +26,7 @@
     "core-js": "^2.5.4",
     "jquery": "^3.4.1",
     "ng-zorro-antd": "^8.5.0",
+    "ngx-countdown": "^8.0.3",
     "ngx-spinner": "^8.0.3",
     "popper": "^1.0.1",
     "rxjs": "~6.3.3",

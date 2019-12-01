@@ -1,29 +1,12 @@
 <div class="background" [ngStyle]="{ 'background-image': getUrl() }">
   <div class="userDollars" style="text-align: right;">
     <p>Your Winnings ${{ userScore }}</p>
-    <p>Player Name is {{ message }}</p>
-    <p>You have answered {{questionCounter}} of 25 Questions</p>
+    <p>Player Name is {{ userName }}</p>
+    <p>You have answered {{ questionCounter }} of 25 Questions</p>
   </div>
 
-  <!-- <ng-template #MsgRef >
-  <button
-  type="button"
-  (click)="userButtonClicked($event)"
-  [disabled]="clicked"
-  class="btn btn-primary"
-  id="cat1-btn1"
-  value="100"
-  data-toggle="modal"
-  
-  data-target="#cat1">
-  $100
-</button>
-</ng-template>
-
-<ng-template [ngTemplateOutlet]="MsgRef"></ng-template> //reuse any number of times
-<ng-template [ngTemplateOutlet]="MsgRef"></ng-template> //reuse any number of times
-<ng-template [ngTemplateOutlet]="MsgRef"></ng-template> //reuse any number of times -->
   <hr />
+
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -33,414 +16,92 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">
+      <tr *ngFor="let x of category1; let i = index">
+          <td>
           <button
             type="button"
-            [disabled]="clicked"
-            (click)="userButtonClicked($event)"
+            id="cat1-btn{{ i + 1 }}"
+            (click)="userButtonClicked($event);"
+            [disabled]="x.disabled"
             class="btn btn-primary"
-            id="cat1-btn1"
-            value="100"
+            value="{{ i + 1 }}00"
             data-toggle="modal"
-            data-target="#cat1"
+            attr.data-target="#cat{{ i + 1 }}"
             data-keyboard="false"
             data-backdrop="static"
-          >
-            $100
-          </button>
-          <!-- [attr.data-target] = "theme.themeId" -->
-        </th>
-        <td>
-          <button
-            type="button"
-            [disabled]="cat2Clicked1"
-            (click)="userButtonClicked($event)"
-            class="btn btn-primary"
-            id="cat2-btn1"
-            value="100"
-            data-toggle="modal"
-            data-target="#cat2a"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $100
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            [disabled]="cat3Clicked1"
-            (click)="userButtonClicked($event)"
-            class="btn btn-primary"
-            id="cat3-btn1"
-            value="100"
-            data-toggle="modal"
-            data-target="#cat3a"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $100
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            [disabled]="cat4Clicked1"
-            (click)="userButtonClicked($event)"
-            class="btn btn-primary"
-            id="cat4-btn1"
-            value="100"
-            data-toggle="modal"
-            data-target="#cat4a"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $100
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            [disabled]="cat5Clicked1"
-            (click)="userButtonClicked($event)"
-            class="btn btn-primary"
-            id="cat5-btn1"
-            value="100"
-            data-toggle="modal"
-            data-target="#cat5a"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $100
+          >${{ i + 1 }}00
           </button>
         </td>
       </tr>
-      <tr>
-        <th scope="row">
+        <tr *ngFor="let x of category2; let i = index">
+          <td>
           <button
             type="button"
+            id="cat2-btn{{ i + 1 }}"
+            (click)="userButtonClicked($event);"
+            [disabled]="x.disabled"
             class="btn btn-primary"
-            [disabled]="clicked2"
-            (click)="userButtonClicked($event)"
+            value="{{ i + 1 }}00"
             data-toggle="modal"
-            data-target="#cat2"
-            id="cat1-btn2"
-            value="200"
+            attr.data-target="#cat{{ i + 1 }}a"
             data-keyboard="false"
             data-backdrop="static"
           >
-            $200
-          </button>
-        </th>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            [disabled]="cat2Clicked2"
-            (click)="userButtonClicked($event)"
-            id="cat2-btn2"
-            value="200"
-            data-toggle="modal"
-            data-target="#cat2b"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $200
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat3-btn2"
-            [disabled]="cat3Clicked2"
-            (click)="userButtonClicked($event)"
-            value="200"
-            data-toggle="modal"
-            data-target="#cat3b"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $200
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat4-btn2"
-            [disabled]="cat4Clicked2"
-            (click)="userButtonClicked($event)"
-            value="200"
-            data-toggle="modal"
-            data-target="#cat4b"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $200
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            [disabled]="cat5Clicked2"
-            (click)="userButtonClicked($event)"
-            id="cat5-btn2"
-            value="200"
-            data-toggle="modal"
-            data-target="#cat5b"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $200
+            ${{ i + 1 }}00
           </button>
         </td>
       </tr>
-      <tr>
-        <th scope="row">
+      <tr *ngFor="let x of category3; let i = index">
+          <td>
           <button
             type="button"
+            id="cat3-btn{{ i + 1 }}"
+            (click)="userButtonClicked($event);"
+            [disabled]="x.disabled"
             class="btn btn-primary"
+            value="{{ i + 1 }}00"
             data-toggle="modal"
-            [disabled]="clicked3"
-            data-target="#cat3"
-            id="cat1-btn3"
-            (click)="userButtonClicked($event)"
-            value="500"
+            attr.data-target="#cat{{ i + 1 }}b"
             data-keyboard="false"
             data-backdrop="static"
           >
-            $500
-          </button>
-        </th>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat2-btn3"
-            [disabled]="cat2Clicked3"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat2c"
-            value="500"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $500
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat3-btn3"
-            [disabled]="cat3Clicked3"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat3c"
-            value="500"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $500
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat4-btn3"
-            [disabled]="cat4Clicked3"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat4c"
-            value="500"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $500
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat5-btn3"
-            [disabled]="cat5Clicked3"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat5c"
-            value="500"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $500
+            ${{ i + 1 }}00
           </button>
         </td>
       </tr>
-      <tr>
-        <th scope="row">
+      <tr *ngFor="let x of category4; let i = index">
+          <td>
           <button
             type="button"
+            id="cat4-btn{{ i + 1 }}"
+            (click)="userButtonClicked($event);"
+            [disabled]="x.disabled"
             class="btn btn-primary"
-            [disabled]="clicked4"
+            value="{{ i + 1 }}00"
             data-toggle="modal"
-            data-target="#cat4"
-            id="cat1-btn4"
-            (click)="userButtonClicked($event)"
-            value="1000"
+            attr.data-target="#cat{{ i + 1 }}aa"
             data-keyboard="false"
             data-backdrop="static"
           >
-            $1000
-          </button>
-        </th>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat2-btn4"
-            [disabled]="cat2Clicked4"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat2d"
-            value="1000"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1000
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat3-btn4"
-            [disabled]="cat3Clicked4"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat3d"
-            value="1000"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1000
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat4-btn4"
-            [disabled]="cat4Clicked4"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat4d"
-            value="1000"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1000
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat5-btn4"
-            [disabled]="cat5Clicked4"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat5d"
-            value="1000"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1000
+            ${{ i + 1 }}00
           </button>
         </td>
       </tr>
-      <tr>
-        <th scope="row">
+      <tr *ngFor="let x of category5; let i = index">
+          <td>
           <button
             type="button"
+            id="cat5-btn{{ i + 1 }}"
+            (click)="userButtonClicked($event);"
+            [disabled]="x.disabled"
             class="btn btn-primary"
+            value="{{ i + 1 }}00"
             data-toggle="modal"
-            [disabled]="clicked5"
-            data-target="#cat5"
-            id="cat1-btn5"
-            value="1200"
-            (click)="userButtonClicked($event)"
+            attr.data-target="#cat{{ i + 1 }}bb"
             data-keyboard="false"
             data-backdrop="static"
           >
-            $1200
-          </button>
-        </th>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat2-btn5"
-            [disabled]="cat2Clicked5"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat2e"
-            value="1200"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1200
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat3-btn5"
-            [disabled]="cat3Clicked5"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat3e"
-            value="1200"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1200
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat4-btn5"
-            [disabled]="cat4Clicked5"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat4e"
-            value="1200"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1200
-          </button>
-        </td>
-        <td>
-          <button
-            type="button"
-            class="btn btn-primary"
-            id="cat5-btn5"
-            [disabled]="cat5Clicked5"
-            (click)="userButtonClicked($event)"
-            data-toggle="modal"
-            data-target="#cat5e"
-            value="1200"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            $1200
+            ${{ i + 1 }}00
           </button>
         </td>
       </tr>
@@ -487,9 +148,9 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button> -->
+          `
+          <h2>{{ counter$ | async }}</h2>
+          `
           <button
             type="button"
             class="btn btn-primary"

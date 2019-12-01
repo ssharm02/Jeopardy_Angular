@@ -8,6 +8,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { JeoQuestions } from "src/questions/questions.component";
 import { LogMeIn } from "src/login/login.component";
 
+
 const appRoutes: Routes = [
   { path: "", component: LogMeIn },
   { path: "jeoQuestionsx", component: JeoQuestions }

@@ -58,6 +58,6 @@ export class JeopardyService {
       .get(
         `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${category}`
       )
-      .pipe(map(data => data["results"]));
+      .pipe(map(jeopardyData => jeopardyData["results"]));
   }
 }
