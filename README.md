@@ -10,9 +10,10 @@ Features:
 
 
 ## TODO
-Implement Redux and Redux Persist for state management and persistance, 
-Clean up code --- follow clean code practices,
-Implement mongoDB to save user names and high scores 
-
+* Implement Redux and Redux Persist for state management and persistance
+* Clean up code --- follow clean code practices
+* Implement mongoDB to save user names and high scores 
+* Make scoring page more attractive
+* Add daily double
 
 <img src="jeopardyGif.gif?raw=true" width="600px">
