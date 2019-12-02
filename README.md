@@ -16,4 +16,5 @@ Features:
 * Make scoring page more attractive
 * Add daily double
 
-<img src="jeopardyGif.gif?raw=true" width="600px">
+<img src="jeopardy1.png?raw=true" width="600px">
+<img src="jeopardy2.png?raw=true" width="500px">
