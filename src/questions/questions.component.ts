@@ -11,13 +11,16 @@ import { LogMeIn } from '../login/login.component';
 import { Subject, Observable, Subscription, timer } from 'rxjs';
 import { switchMap, take, tap, map } from 'rxjs/operators';
 import { interval } from 'rxjs';
+import { User } from 'src/models/User';
+import { UserInfoService } from 'src/services/getUserInfo';
 
 @Component({
   selector: 'jeo-questions',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css']
 })
-export class JeoQuestions implements OnInit, OnDestroy {
+// tslint:disable-next-line:component-class-suffix
+export class JeoQuestions implements OnInit, OnDestroy, User {
   public jeoSub: Subscription;
   public categories;
   public allQuestions = new Array();
@@ -41,18 +44,21 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public userAnswer: string;
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
-  public message: string;
   public lastClicked;
+  message$: any;
+  subscription: Subscription;
+
   counter$: Observable<number>;
   count = 60;
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
-  constructor(public jeotest: JeopardyService, public loginService: LogMeIn) {
-    this.counter$ = timer(0, 1000).pipe(
-      take(this.count),
-      map(() => --this.count)
-    );
+  constructor(public jeotest: JeopardyService, public getUserInfoService: UserInfoService) {
+    // this.counter$ = timer(0, 1000).pipe(
+    //   take(this.count),
+    //   map(() => --this.count)
+    // );
+    this.getUserInfoService.currentMessage.subscribe(data => this.message$ = data);
   }
 
   ngOnInit(): void {
@@ -124,7 +130,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
     const firstCategory2Q = this.category1[1].question;
     const firstCategory2INQ = this.category1[1].incorrect_answers;
     const firstCategory3Q = this.category1[2].question;
-    const firstCategory3INQ = this.category1[1].incorrect_answers;
+    const firstCategory3INQ = this.category1[2].incorrect_answers;
     const firstCategory4Q = this.category1[3].question;
     const firstCategory4INQ = this.category1[3].incorrect_answers;
     const firstCategory5Q = this.category1[4].question;

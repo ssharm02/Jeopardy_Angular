@@ -26,10 +26,10 @@
         name="uname"
         autofocus
         autocomplete="off"
-        required
+        required minlength="4" 
       />
       <a [routerLink]="['../jeoQuestionsx']">
-        <button id="login-button" (click)="addPlayer()" (input)="onInputChange()">Login</button></a
+        <button id="login-button" (click)="addPlayer()">Login</button></a
       >
 
       <div id="credits-text">Sarthak's Jeopardy</div>
