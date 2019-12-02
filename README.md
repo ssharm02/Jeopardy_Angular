@@ -9,4 +9,4 @@ Clean up code --- follow clean code practices,
 Implement mongoDB to save user names and high scores 
 
 
-<img src="jeopardyGif.gif?raw=true" width="300px">
+<img src="jeopardyGif.gif?raw=true" width="600px">
