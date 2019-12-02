@@ -1,165 +1,180 @@
 <!-- <router-outlet> -->
-<div class="background" *ngIf="showSpinner else loaded" [ngStyle]="{ 'background-image': getUrl() }">
-  <mat-spinner [color]="'warn'" [mode]="'indeterminate'" [strokeWidth]="5" [diameter]="55" [value]="56" style="margin:0 auto;"></mat-spinner>
-  <div style="position:relative; top: -60px; left: 30px;">
-
-</div>
+<div
+  class="background"
+  *ngIf="showSpinner; else loaded"
+  [ngStyle]="{ 'background-image': getUrl() }"
+>
+  <mat-spinner
+    [color]="'warn'"
+    [mode]="'indeterminate'"
+    [strokeWidth]="5"
+    [diameter]="55"
+    [value]="56"
+    style="margin:0 auto;"
+  ></mat-spinner>
+  <div style="position:relative; top: -60px; left: 30px;"></div>
 </div>
 <!-- </router-outlet> -->
 <ng-template #loaded>
-<div class="background" [ngStyle]="{ 'background-image': getUrl() }">
-  <div class="userDollars" style="text-align: right;">
-    <p>Your Winnings ${{ userScore }}</p>
-    <p *ngIf="name$">Welcome to Jeopardy {{ name$ }}!!</p>
-    <p>You have answered {{ questionCounter }} of 25 Questions</p>
-  </div>
-  <hr />
+  <div class="background" [ngStyle]="{ 'background-image': getUrl() }">
+    <div class="userDollars" style="text-align: right;">
+      <p>Your Winnings ${{ userScore }}</p>
+      <p *ngIf="name$">Welcome to Jeopardy {{ name$ }}!!</p>
+      <p>You have answered {{ questionCounter }} of 25 Questions</p>
+    </div>
+    <hr />
 
-  <table class="table table-bordered">
-    <thead>
-      <tr *ngFor="let item of allQuestions">
-          {{ item[0].category }}       
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td *ngFor="let x of category1; let i = index">
-          <button
-            type="button"
-            id="cat1-btn{{ i + 1 }}"
-            (click)="userButtonClicked($event)"
-            [disabled]="x.disabled"
-            class="btn btn-primary"
-            value="{{ i + 1 }}00"
-            data-toggle="modal"
-            attr.data-target="#cat{{ i + 1 }}"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            ${{ i + 1 }}00
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td *ngFor="let x of category2; let i = index">
-          <button
-            type="button"
-            id="cat2-btn{{ i + 1 }}"
-            (click)="userButtonClicked($event)"
-            [disabled]="x.disabled"
-            class="btn btn-primary"
-            value="{{ i + 1 }}00"
-            data-toggle="modal"
-            attr.data-target="#cat{{ i + 1 }}a"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            ${{ i + 1 }}00
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td *ngFor="let x of category3; let i = index">
-          <button
-            type="button"
-            id="cat3-btn{{ i + 1 }}"
-            (click)="userButtonClicked($event)"
-            [disabled]="x.disabled"
-            class="btn btn-primary"
-            value="{{ i + 1 }}00"
-            data-toggle="modal"
-            attr.data-target="#cat{{ i + 1 }}b"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            ${{ i + 1 }}00
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td *ngFor="let x of category4; let i = index">
-          <button
-            type="button"
-            id="cat4-btn{{ i + 1 }}"
-            (click)="userButtonClicked($event)"
-            [disabled]="x.disabled"
-            class="btn btn-primary"
-            value="{{ i + 1 }}00"
-            data-toggle="modal"
-            attr.data-target="#cat{{ i + 1 }}aa"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            ${{ i + 1 }}00
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td *ngFor="let x of category5; let i = index">
-          <button
-            type="button"
-            id="cat5-btn{{ i + 1 }}"
-            (click)="userButtonClicked($event)"
-            [disabled]="x.disabled"
-            class="btn btn-primary"
-            value="{{ i + 1 }}00"
-            data-toggle="modal"
-            attr.data-target="#cat{{ i + 1 }}bb"
-            data-keyboard="false"
-            data-backdrop="static"
-          >
-            ${{ i + 1 }}00
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div
-    *ngFor="let item of category1; let i = index"
-    class="modal fade"
-    id="{{ modalId }}"
-    tabindex="-1"
-    role="dialog"
-    aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">
-            {{ cat }}
-          </h5>
-        </div>
-        <div *ngFor="let itemx of incorrectAnswers" class="modal-body">
-          <div class="input-group-text">
-            <label class="form-check-label" for="question">
-              <input
-                type="radio"
-                (change)="onSelectionChange($event)"
-                name="question"
-                id="question"
-                aria-label="Radio button for following text input"
-                [value]="itemx"
-              />
-              {{ itemx }}</label
+    <table class="table table-bordered">
+      <thead>
+        <tr *ngFor="let item of allQuestions">
+          {{
+            item[0].category
+          }}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td *ngFor="let x of category1; let i = index">
+            <button
+              type="button"
+              id="cat1-btn{{ i + 1 }}"
+              (click)="userButtonClicked($event)"
+              [ngClass]="x.disabled ? 'strikethrough' : 'null'"
+              [disabled]="x.disabled"
+              class="btn btn-primary"
+              value="{{ i + 1 }}00"
+              data-toggle="modal"
+              attr.data-target="#cat{{ i + 1 }}"
+              data-keyboard="false"
+              data-backdrop="static"
             >
+              ${{ i + 1 }}00
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let x of category2; let i = index">
+            <button
+              type="button"
+              id="cat2-btn{{ i + 1 }}"
+              (click)="userButtonClicked($event)"
+              [ngClass]="x.disabled ? 'strikethrough' : 'null'"
+              [disabled]="x.disabled"
+              class="btn btn-primary"
+              value="{{ i + 1 }}00"
+              data-toggle="modal"
+              attr.data-target="#cat{{ i + 1 }}a"
+              data-keyboard="false"
+              data-backdrop="static"
+            >
+              ${{ i + 1 }}00
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let x of category3; let i = index">
+            <button
+              type="button"
+              id="cat3-btn{{ i + 1 }}"
+              (click)="userButtonClicked($event)"
+              [ngClass]="x.disabled ? 'strikethrough' : 'null'"
+              [disabled]="x.disabled"
+              class="btn btn-primary"
+              value="{{ i + 1 }}00"
+              data-toggle="modal"
+              attr.data-target="#cat{{ i + 1 }}b"
+              data-keyboard="false"
+              data-backdrop="static"
+            >
+              ${{ i + 1 }}00
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let x of category4; let i = index">
+            <button
+              type="button"
+              id="cat4-btn{{ i + 1 }}"
+              (click)="userButtonClicked($event)"
+              [ngClass]="x.disabled ? 'strikethrough' : 'null'"
+              [disabled]="x.disabled"
+              class="btn btn-primary"
+              value="{{ i + 1 }}00"
+              data-toggle="modal"
+              attr.data-target="#cat{{ i + 1 }}aa"
+              data-keyboard="false"
+              data-backdrop="static"
+            >
+              ${{ i + 1 }}00
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td *ngFor="let x of category5; let i = index">
+            <button
+              type="button"
+              id="cat5-btn{{ i + 1 }}"
+              (click)="userButtonClicked($event)"
+              [ngClass]="x.disabled ? 'strikethrough' : 'null'"
+              [disabled]="x.disabled"
+              class="btn btn-primary"
+              value="{{ i + 1 }}00"
+              data-toggle="modal"
+              attr.data-target="#cat{{ i + 1 }}bb"
+              data-keyboard="false"
+              data-backdrop="static"
+            >
+              ${{ i + 1 }}00
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div
+      *ngFor="let item of category1; let i = index"
+      class="modal fade"
+      id="{{ modalId }}"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">
+              {{ cat }}
+            </h5>
           </div>
-        </div>
-        <div class="modal-footer">
-          <h2>{{ timeLeft }}</h2>
-          <button
-            type="button"
-            class="btn btn-primary"
-            data-dismiss="modal"
-            (click)="checkAnswerGiveDollars()"
-          >
-            Submit
-          </button>
+          <div *ngFor="let itemx of incorrectAnswers" class="modal-body">
+            <div class="input-group-text">
+              <label class="form-check-label" for="question">
+                <input
+                  type="radio"
+                  (change)="onSelectionChange($event)"
+                  name="question"
+                  id="question"
+                  aria-label="Radio button for following text input"
+                  [value]="itemx"
+                />
+                {{ itemx }}</label
+              >
+            </div>
+          </div>
+          <div class="modal-footer">
+            <h2>{{ timeLeft }}</h2>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-dismiss="modal"
+              (click)="checkAnswerGiveDollars()"
+            >
+              Submit
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div> 
 </ng-template>
-

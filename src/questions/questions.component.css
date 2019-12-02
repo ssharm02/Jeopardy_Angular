@@ -31,3 +31,6 @@
   table tr td {
     display: block;
   }
+  .strikethrough {
+    text-decoration: line-through;
+  }
