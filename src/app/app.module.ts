@@ -4,6 +4,8 @@ import { AppComponent } from "./app.component";
 import { JeopardyService } from "src/services/getQuestions";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule, Routes } from "@angular/router";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 import { JeoQuestions } from "src/questions/questions.component";
 import { LogMeIn } from "src/login/login.component";
@@ -21,7 +23,7 @@ const appRoutes: Routes = [
 ];
 @NgModule({
   declarations: [AppComponent, LogMeIn, JeoQuestions, ScoreComponent, DailyDComponent],
-  imports: [BrowserModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
+  imports: [BrowserModule, HttpClientModule, MatProgressSpinnerModule, RouterModule.forRoot(appRoutes)],
   providers: [JeopardyService, UserInfoService],
   bootstrap: [AppComponent]
 })

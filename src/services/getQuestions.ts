@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -9,6 +10,7 @@ import { map } from "rxjs/operators";
 })
 export class JeopardyService {
   constructor(public http: HttpClient) {}
+  public status: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   // The following methods return an observables
   public categoryArray = [
@@ -35,7 +37,9 @@ export class JeopardyService {
     10,
     9
   ];
-
+  display(value: boolean) {
+    this.status.next(value);
+}
   public selectRandomCategory(maximum, minimum) {
     const num = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
     this.categoryArray.splice(num, 1);
@@ -51,6 +55,7 @@ export class JeopardyService {
     }
     return uniqueSet.values();
   }
+  // Observable shouldn't be any
   public getItems(): Observable<any> {
     const category = this.selectRandomCategory(32, 9);
     const NUMBER_OF_QUESTIONS = 5;

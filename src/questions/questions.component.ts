@@ -4,8 +4,7 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  OnDestroy,
-  OnChanges
+  OnDestroy
 } from '@angular/core';
 import { JeopardyService } from 'src/services/getQuestions';
 import { LogMeIn } from '../login/login.component';
@@ -24,6 +23,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public jeoSub: Subscription;
   public nameSub: Subscription;
   public categories;
+  public showSpinner = true;
   public allQuestions = new Array();
   public GET_QUESTIONS = 4;
   public questionCounter = 0;
@@ -61,6 +61,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.manipulateObject();
+
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();
@@ -72,13 +73,17 @@ export class JeoQuestions implements OnInit, OnDestroy {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        console.log('closing modal')
+        console.log('closing modal');
         // this.closeModalEvent.emit(false);
       }
     }, 1000);
   }
   public getServiceData() {
     this.jeoSub = this.jeotest.getItems().subscribe(data => {
+      setTimeout(() => {
+        this.showSpinner = false;
+      }, 5000);
+
       this.allQuestions.push(data);
       return this.allQuestions;
     });

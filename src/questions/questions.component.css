@@ -25,6 +25,8 @@
   }
   table tr {
     display: table-cell;
+    font-size: 15px;
+    color: #ffffff;
   }
   table tr td {
     display: block;

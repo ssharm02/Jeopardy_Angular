@@ -1,14 +1,20 @@
+<!-- <router-outlet> -->
+<div class="background" *ngIf="showSpinner else loaded" [ngStyle]="{ 'background-image': getUrl() }">
+  <mat-spinner [color]="'warn'" [mode]="'indeterminate'" [strokeWidth]="5" [diameter]="55" [value]="56" style="margin:0 auto;"></mat-spinner>
+  <div style="position:relative; top: -60px; left: 30px;">
+    {{ interval }}
+</div>
+</div>
+<!-- </router-outlet> -->
+<ng-template #loaded>
 <div class="background" [ngStyle]="{ 'background-image': getUrl() }">
   <div class="userDollars" style="text-align: right;">
     <p>Your Winnings ${{ userScore }}</p>
-    <p *ngIf="message$">Welcome to Jeopardy {{ (name$ ) }}!!</p>
+    <p *ngIf="name$">Welcome to Jeopardy {{ name$ }}!!</p>
     <p>You have answered {{ questionCounter }} of 25 Questions</p>
   </div>
-
   <hr />
-  <ng-container *ngFor="let item of allQuestions; let i = index">
-      
-  </ng-container>
+
   <table class="table table-bordered">
     <thead>
       <tr *ngFor="let item of allQuestions">
@@ -154,5 +160,6 @@
       </div>
     </div>
   </div>
-  
-</div>
+</div> 
+</ng-template>
+
