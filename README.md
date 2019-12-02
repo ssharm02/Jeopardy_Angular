@@ -10,9 +10,9 @@ Features:
 
 
 ## TODO
-* Implement Redux and Redux Persist for state management and persistance
+* Implement state management and persistance for username, user score, disabled buttons, categories and questions displayed
 * Clean up code --- follow clean code practices
-* Implement mongoDB to save user names and high scores 
+* Implement mongoDB or firebase to save user names and high scores 
 * Make scoring page more attractive
 * Add daily double
 
