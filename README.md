@@ -4,6 +4,10 @@ In college one of my favourite professors (Jonathan Penava) gave us this assignm
 
 I am recreating that application with angular 7+.  :)  Work in progress - more features to be added/bugs to fixed
 
+Features: 
+* Questions and categories randomly picked from: https://opentdb.com/api_config.php
+* Buttons are disabled after the user clicks on them
+
 
 ## TODO
 Implement Redux and Redux Persist for state management and persistance, 
