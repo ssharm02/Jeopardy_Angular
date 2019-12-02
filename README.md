@@ -1,13 +1,19 @@
-# MyJeopardy
+# Jeopardy Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+In college one of my favourite professors (Jonathan Penava) gave us this assignment to complete for Java Enterprise.  Task was to create a jeopardy web application that displays 5 categories and 5 questions and keeps track of user's name and score across various routes in the web app.  Furthermore, the application would keep track of the user's score, disabled buttons etc with session management and featured a random daily double component.  
 
-## Development server
+I am recreating that application with angular 7+.  :)  Work in progress - more features to be added/bugs to fixed
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Features: 
+* Questions and categories randomly picked from: https://opentdb.com/api_config.php
+* Buttons are disabled after the user clicks on them
 
 
 ## TODO
-Implement Redux and Redux Persist for state management and persistance, 
-Clean up code --- follow clean code practices,
-Implement mongoDB to save user names and high scores, 
+* Implement state management and persistance for username, user score, disabled buttons, categories and questions displayed
+* Clean up code --- follow clean code practices
+* Implement mongoDB or firebase to save user names and high scores 
+* Make scoring page more attractive
+* Add daily double
+
+<img src="jeopardyGif.gif?raw=true" width="600px">
