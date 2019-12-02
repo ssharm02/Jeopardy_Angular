@@ -5,13 +5,18 @@ import { BehaviorSubject } from "rxjs";
   providedIn: "root"
 })
 export class UserInfoService {
-    private messageSource = new BehaviorSubject<string>('Default Player');
-    currentMessage = this.messageSource.asObservable();
+    private userName = new BehaviorSubject<string>('Default Player');
+    private userScore = new BehaviorSubject<number>(0);
+    currentMessage = this.userName.asObservable();
+    currentScore = this.userScore.asObservable();
 
     constructor() {}
 
     getUserName(message: string) {
-      this.messageSource.next(message);
+      this.userName.next(message);
+    }
+    getUserScore(score: number) {
+        this.userScore.next(score);
     }
 
 }

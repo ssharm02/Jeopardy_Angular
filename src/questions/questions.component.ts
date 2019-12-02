@@ -4,15 +4,15 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  OnDestroy
+  OnDestroy,
+  OnChanges
 } from '@angular/core';
 import { JeopardyService } from 'src/services/getQuestions';
 import { LogMeIn } from '../login/login.component';
-import { Subject, Observable, Subscription, timer } from 'rxjs';
-import { switchMap, take, tap, map } from 'rxjs/operators';
-import { interval } from 'rxjs';
-import { User } from 'src/models/User';
+import { Observable, Subscription, timer } from 'rxjs';
 import { UserInfoService } from 'src/services/getUserInfo';
+import { map, take } from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'jeo-questions',
@@ -20,8 +20,9 @@ import { UserInfoService } from 'src/services/getUserInfo';
   styleUrls: ['./questions.component.css']
 })
 // tslint:disable-next-line:component-class-suffix
-export class JeoQuestions implements OnInit, OnDestroy, User {
+export class JeoQuestions implements OnInit, OnDestroy {
   public jeoSub: Subscription;
+  public nameSub: Subscription;
   public categories;
   public allQuestions = new Array();
   public GET_QUESTIONS = 4;
@@ -40,25 +41,22 @@ export class JeoQuestions implements OnInit, OnDestroy, User {
   public category5 = new Object();
   public allCategories = new Object();
   public userScore = 0;
-  public userName: string;
   public userAnswer: string;
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
   public lastClicked;
-  message$: any;
+  name$: any;
   subscription: Subscription;
-
+  public timeLeft;
+  public interval;
   counter$: Observable<number>;
   count = 60;
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
-  constructor(public jeotest: JeopardyService, public getUserInfoService: UserInfoService) {
-    // this.counter$ = timer(0, 1000).pipe(
-    //   take(this.count),
-    //   map(() => --this.count)
-    // );
-    this.getUserInfoService.currentMessage.subscribe(data => this.message$ = data);
+  constructor(public jeotest: JeopardyService, public getUserInfoService: UserInfoService, private router: Router) {
+
+    this.getUserInfoService.currentMessage.subscribe(data => this.name$ = data);
   }
 
   ngOnInit(): void {
@@ -66,6 +64,18 @@ export class JeoQuestions implements OnInit, OnDestroy, User {
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();
+    // this.nameSub.unsubscribe();
+  }
+  public startTimer() {
+    this.timeLeft = 15;
+    this.interval = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        console.log('closing modal')
+        // this.closeModalEvent.emit(false);
+      }
+    }, 1000);
   }
   public getServiceData() {
     this.jeoSub = this.jeotest.getItems().subscribe(data => {
@@ -124,7 +134,14 @@ export class JeoQuestions implements OnInit, OnDestroy, User {
   public changeActiveButtons(i) {
     return this.category1[i].disabled = !this.category1[i].disabled;
   }
+  public navigateToScore(): void {
+    if (this.questionCounter === 5) {
+      this.getUserInfoService.getUserScore(this.userScore);
+      this.router.navigateByUrl('/userScore');
+    }
+  }
   public userButtonClicked(event): void {
+
     const firstCategory1Q = this.category1[0].question;
     const firstCategory1INQ = this.category1[0].incorrect_answers;
     const firstCategory2Q = this.category1[1].question;
@@ -179,11 +196,11 @@ export class JeoQuestions implements OnInit, OnDestroy, User {
     const fifthCategory4INQ = this.category5[3].incorrect_answers;
     const fifthCategory5Q = this.category5[4].question;
     const fifthCategory5INQ = this.category5[4].incorrect_answers;
-
+    this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
-    console.log('btn pressed ', this.btnPressed)
     switch (this.btnPressed) {
       case 'cat1-btn1':
+        this.startTimer();
         this.modalId = 'cat1';
         this.cat = firstCategory1Q;
         this.incorrectAnswers = firstCategory1INQ;
@@ -193,6 +210,7 @@ export class JeoQuestions implements OnInit, OnDestroy, User {
         }, 2000);
         break;
       case 'cat1-btn2':
+        this.startTimer();
         this.modalId = 'cat2';
         this.cat = firstCategory2Q;
         this.incorrectAnswers = firstCategory2INQ;
@@ -202,6 +220,7 @@ export class JeoQuestions implements OnInit, OnDestroy, User {
         }, 2000);
         break;
       case 'cat1-btn3':
+        this.startTimer();
         this.modalId = 'cat3';
         this.cat = firstCategory3Q;
         this.incorrectAnswers = firstCategory3INQ;
