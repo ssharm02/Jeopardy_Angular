@@ -11,7 +11,7 @@
     />
   </head>
 
-  <body [ngStyle]="{'background-image': getUrl()}">
+  <body [ngStyle]="{ 'background-image': getUrl() }">
     <div id="splash"></div>
     <div class="splash-overlay" id="overlay-top"></div>
     <div class="splash-overlay" id="overlay-bottom"></div>
@@ -26,7 +26,8 @@
         name="uname"
         autofocus
         autocomplete="off"
-        required minlength="4" 
+        required
+        minlength="4"
       />
       <a [routerLink]="['../jeopardyBoard']">
         <button id="login-button" (click)="addPlayer()">Login</button></a

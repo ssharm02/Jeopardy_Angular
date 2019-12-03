@@ -1,3 +1,33 @@
-<h1>Welcome to the Scoreboard</h1>
-<p>Player {{name$}}</p>
-<p>Score {{score$}}</p>
+<div class="scoreBackground">
+<body [ngStyle]="{'background-image': getUrl()}">
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User Name</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>{{name$}}</td>
+            <td>{{score$}}</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>$500</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>-$1000</td>
+          </tr>
+        </tbody>
+      </table>
+      </body>
+      <a [routerLink]="['']">
+        <button id="login-button" (click)="addPlayer()">Back to Main Page</button></a
+      >
+</div>

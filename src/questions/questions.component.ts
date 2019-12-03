@@ -73,7 +73,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        console.log('closing modal');
         // this.closeModalEvent.emit(false);
       }
     }, 1000);
@@ -140,7 +139,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
     return this.category1[i].disabled = !this.category1[i].disabled;
   }
   public navigateToScore(): void {
-    if (this.questionCounter === 5) {
+    if (this.questionCounter === 25) {
       this.getUserInfoService.getUserScore(this.userScore);
       this.router.navigateByUrl('/userScore');
     }

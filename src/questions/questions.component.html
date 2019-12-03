@@ -16,7 +16,9 @@
 </div>
 <!-- </router-outlet> -->
 <ng-template #loaded>
+
   <div class="background" [ngStyle]="{ 'background-image': getUrl() }">
+  
     <div class="userDollars" style="text-align: right;">
       <p>Your Winnings ${{ userScore }}</p>
       <p *ngIf="name$">Welcome to Jeopardy {{ name$ }}!!</p>

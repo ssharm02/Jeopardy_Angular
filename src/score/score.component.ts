@@ -23,4 +23,8 @@ export class ScoreComponent implements OnInit, OnDestroy {
     this.nameSub.unsubscribe();
     this.scoreSub.unsubscribe();
   }
+
+  public getUrl(): string {
+    return 'url(\'../assets/images/cashmoney.jpg\')';
+  }
 }

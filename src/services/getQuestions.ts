@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, first } from "rxjs/operators";
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -43,21 +43,46 @@ export class JeopardyService {
   public selectRandomCategory(maximum, minimum) {
     const num = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
     this.categoryArray.splice(num, 1);
-    console.log('splice val', this.categoryArray.splice(num, 1));
-    return num;
+    this.randomizeArray(this.categoryArray).then(() => {
+      this.spliceArray(this.categoryArray);
+      console.log('final spliced array is ', this.categoryArray);
+    });
+    return this.categoryArray[Math.floor((Math.random() * this.categoryArray.length))];
+  }
+
+  async randomizeArray(arr) {
+    arr.sort(() => {
+      return .5 - Math.random();
+    });
+  }
+  async spliceArray(arr) {
+    return arr.splice(-12);
+  }
+  returnUniqueElement() {
+    const shuffled = this.categoryArray.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 5);
+    const uniqueElement = selected[Math.floor(Math.random()*selected.length)];
+    return uniqueElement;
   }
 
   public createRandomSet() {
+    let setIterator;
+    let firstValueInSet;
+    let valueToEject;
     const uniqueSet = new Set();
     while (uniqueSet.size < 5) {
       const category = this.selectRandomCategory(32, 9);
       uniqueSet.add(category);
     }
-    return uniqueSet.values();
+    setIterator = uniqueSet.values();
+    firstValueInSet = setIterator.next();
+    valueToEject = firstValueInSet.value;
+    return valueToEject;
   }
   // Observable shouldn't be any
   public getItems(): Observable<any> {
-    const category = this.selectRandomCategory(32, 9);
+
+    const category = this.returnUniqueElement();
     const NUMBER_OF_QUESTIONS = 5;
     return this.http
       .get(
