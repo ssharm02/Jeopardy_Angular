@@ -17,3 +17,5 @@ Features:
 * Add daily double
 
 <img src="jeopardyGif.gif?raw=true" width="600px">
+<img src="jeopardy1.PNG?raw=true" width="600px">
+<img src="jeopardy2.PNG?raw=true" width="500px">
