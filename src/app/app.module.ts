@@ -18,7 +18,8 @@ import { UserInfoService } from 'src/services/getUserInfo';
 const appRoutes: Routes = [
   { path: '', component: LogMeIn },
   { path: "jeopardyBoard", component: JeoQuestions },
-  { path: "userScore", component: ScoreComponent }
+  { path: "userScore", component: ScoreComponent },
+  { path: "dailyD", component: DailyDComponent }
   // following has to be the last path nofound component
   // { path: '**', component: NotFoundComponent }
 ];

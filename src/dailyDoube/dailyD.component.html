@@ -1,0 +1,25 @@
+<div class="dailyDoubleScreen" >
+<h1>Welcome To Daily Double!</h1>
+    <body [ngStyle]="{ 'background-image': getUrl() }">
+
+        <div id="wrapper">
+          <input
+            id="score-field"
+            type="number"
+            #nameInput
+            placeholder="Enter Amount "
+            maxlength="40"
+            name="uname"
+            autofocus
+            autocomplete="off"
+            required
+            minlength="4"
+          />
+          <br />
+          <a [routerLink]="['../jeopardyBoard']">
+            <button id="login-button" (click)="addPlayer()">Bet Amount</button></a
+          >
+        </div>  
+        </body>
+
+</div>

@@ -16,9 +16,7 @@
 </div>
 <!-- </router-outlet> -->
 <ng-template #loaded>
-
   <div class="background" [ngStyle]="{ 'background-image': getUrl() }">
-  
     <div class="userDollars" style="text-align: right;">
       <p>Your Winnings ${{ userScore }}</p>
       <p *ngIf="name$">Welcome to Jeopardy {{ name$ }}!!</p>
@@ -28,7 +26,7 @@
 
     <table class="table table-bordered">
       <thead>
-        <tr *ngFor="let item of allQuestions">
+        <tr class="text-center align-middle" *ngFor="let item of allQuestions">
           {{
             item[0].category
           }}
@@ -36,7 +34,10 @@
       </thead>
       <tbody>
         <tr>
-          <td *ngFor="let x of category1; let i = index">
+          <td
+            *ngFor="let x of category1; let i = index"
+            class="text-center align-middle"
+          >
             <button
               type="button"
               id="cat1-btn{{ i + 1 }}"
@@ -55,7 +56,10 @@
           </td>
         </tr>
         <tr>
-          <td *ngFor="let x of category2; let i = index">
+          <td
+            *ngFor="let x of category2; let i = index"
+            class="text-center align-middle"
+          >
             <button
               type="button"
               id="cat2-btn{{ i + 1 }}"
@@ -74,7 +78,10 @@
           </td>
         </tr>
         <tr>
-          <td *ngFor="let x of category3; let i = index">
+          <td
+            *ngFor="let x of category3; let i = index"
+            class="text-center align-middle"
+          >
             <button
               type="button"
               id="cat3-btn{{ i + 1 }}"
@@ -93,7 +100,10 @@
           </td>
         </tr>
         <tr>
-          <td *ngFor="let x of category4; let i = index">
+          <td
+            *ngFor="let x of category4; let i = index"
+            class="text-center align-middle"
+          >
             <button
               type="button"
               id="cat4-btn{{ i + 1 }}"
@@ -112,7 +122,10 @@
           </td>
         </tr>
         <tr>
-          <td *ngFor="let x of category5; let i = index">
+          <td
+            *ngFor="let x of category5; let i = index"
+            class="text-center align-middle"
+          >
             <button
               type="button"
               id="cat5-btn{{ i + 1 }}"
