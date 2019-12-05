@@ -12,14 +12,17 @@ import { Observable, Subscription, timer } from "rxjs";
 import { UserInfoService } from "src/services/getUserInfo";
 import { map, take } from "rxjs/operators";
 import { Router } from "@angular/router";
-
+import { User } from '../models/User';
 @Component({
   selector: "jeo-questions",
   templateUrl: "./questions.component.html",
   styleUrls: ["./questions.component.css"]
 })
+
+
 // tslint:disable-next-line:component-class-suffix
 export class JeoQuestions implements OnInit, OnDestroy {
+  // Move all fieds to a seperate class
   public jeoSub: Subscription;
   public nameSub: Subscription;
   public categories;
