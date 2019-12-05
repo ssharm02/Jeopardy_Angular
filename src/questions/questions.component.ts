@@ -5,18 +5,18 @@ import {
   EventEmitter,
   ViewChild,
   OnDestroy
-} from '@angular/core';
-import { JeopardyService } from 'src/services/getQuestions';
-import { LogMeIn } from '../login/login.component';
-import { Observable, Subscription, timer } from 'rxjs';
-import { UserInfoService } from 'src/services/getUserInfo';
-import { map, take } from 'rxjs/operators';
-import {Router} from '@angular/router';
+} from "@angular/core";
+import { JeopardyService } from "src/services/getQuestions";
+import { LogMeIn } from "../login/login.component";
+import { Observable, Subscription, timer } from "rxjs";
+import { UserInfoService } from "src/services/getUserInfo";
+import { map, take } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'jeo-questions',
-  templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css']
+  selector: "jeo-questions",
+  templateUrl: "./questions.component.html",
+  styleUrls: ["./questions.component.css"]
 })
 // tslint:disable-next-line:component-class-suffix
 export class JeoQuestions implements OnInit, OnDestroy {
@@ -51,17 +51,30 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public interval;
   counter$: Observable<number>;
   count = 60;
+  public dailyDoubleNum1;
+  public dailyDoubleNum2;
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
-  constructor(public jeotest: JeopardyService, public getUserInfoService: UserInfoService, private router: Router) {
-
-    this.getUserInfoService.currentMessage.subscribe(data => this.name$ = data);
+  constructor(
+    public jeotest: JeopardyService,
+    public getUserInfoService: UserInfoService,
+    private router: Router
+  ) {
+    this.getUserInfoService.currentMessage.subscribe(
+      data => (this.name$ = data)
+    );
   }
 
   ngOnInit(): void {
     this.manipulateObject();
-
+    this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
+    this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
+    if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
+      this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
+    }
+    console.log("daily double 1 is ", this.dailyDoubleNum1);
+    console.log("daily double 2 is ", this.dailyDoubleNum2);
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();
@@ -104,15 +117,14 @@ export class JeoQuestions implements OnInit, OnDestroy {
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
     }, 5000);
-
   }
 
   public parseHtmlEntities(str): string {
-    str = str.replace(/&/g, '&amp;');
-    str = str.replace(/>/g, '&gt;');
-    str = str.replace(/</g, '&lt;');
-    str = str.replace(/"/g, '&quot;');
-    str = str.replace(/'/g, '&#039;');
+    str = str.replace(/&/g, "&amp;");
+    str = str.replace(/>/g, "&gt;");
+    str = str.replace(/</g, "&lt;");
+    str = str.replace(/"/g, "&quot;");
+    str = str.replace(/'/g, "&#039;");
     return str;
   }
   public mutateObject(data) {
@@ -136,16 +148,26 @@ export class JeoQuestions implements OnInit, OnDestroy {
   }
 
   public changeActiveButtons(i) {
-    return this.category1[i].disabled = !this.category1[i].disabled;
+    return (this.category1[i].disabled = !this.category1[i].disabled);
   }
   public navigateToScore(): void {
     if (this.questionCounter === 25) {
       this.getUserInfoService.getUserScore(this.userScore);
-      this.router.navigateByUrl('/userScore');
+      this.router.navigateByUrl("/userScore");
+    }
+    if (this.dailyDoubleNum1 === this.questionCounter) {
+      this.router.navigateByUrl("dailyD");
+    }
+    if (this.dailyDoubleNum2 === this.questionCounter) {
+      this.router.navigateByUrl("dailyD");
     }
   }
+  public launchDailyDouble(maximum, minimum): number {
+    const randomNum =
+      Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+    return randomNum;
+  }
   public userButtonClicked(event): void {
-
     const firstCategory1Q = this.category1[0].question;
     const firstCategory1INQ = this.category1[0].incorrect_answers;
     const firstCategory2Q = this.category1[1].question;
@@ -203,9 +225,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
     this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
     switch (this.btnPressed) {
-      case 'cat1-btn1':
+      case "cat1-btn1":
         this.startTimer();
-        this.modalId = 'cat1';
+        this.modalId = "cat1";
         this.cat = firstCategory1Q;
         this.incorrectAnswers = firstCategory1INQ;
         this.questionCounter++;
@@ -213,9 +235,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category1[0].disabled = true;
         }, 2000);
         break;
-      case 'cat1-btn2':
+      case "cat1-btn2":
         this.startTimer();
-        this.modalId = 'cat2';
+        this.modalId = "cat2";
         this.cat = firstCategory2Q;
         this.incorrectAnswers = firstCategory2INQ;
         this.questionCounter++;
@@ -223,9 +245,9 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category1[1].disabled = true;
         }, 2000);
         break;
-      case 'cat1-btn3':
+      case "cat1-btn3":
         this.startTimer();
-        this.modalId = 'cat3';
+        this.modalId = "cat3";
         this.cat = firstCategory3Q;
         this.incorrectAnswers = firstCategory3INQ;
         this.questionCounter++;
@@ -233,8 +255,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category1[2].disabled = true;
         }, 2000);
         break;
-      case 'cat1-btn4':
-        this.modalId = 'cat4';
+      case "cat1-btn4":
+        this.modalId = "cat4";
         this.cat = firstCategory4Q;
         this.incorrectAnswers = firstCategory4INQ;
         this.questionCounter++;
@@ -242,8 +264,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category1[3].disabled = true;
         }, 2000);
         break;
-      case 'cat1-btn5':
-        this.modalId = 'cat5';
+      case "cat1-btn5":
+        this.modalId = "cat5";
         this.cat = firstCategory5Q;
         this.incorrectAnswers = firstCategory5INQ;
         this.questionCounter++;
@@ -251,8 +273,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category1[4].disabled = true;
         }, 2000);
         break;
-      case 'cat2-btn1':
-        this.modalId = 'cat1a';
+      case "cat2-btn1":
+        this.modalId = "cat1a";
         this.cat = secondCategory1Q;
         this.incorrectAnswers = secondCategory1INQ;
         this.questionCounter++;
@@ -260,8 +282,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category2[0].disabled = true;
         }, 2000);
         break;
-      case 'cat2-btn2':
-        this.modalId = 'cat2a';
+      case "cat2-btn2":
+        this.modalId = "cat2a";
         this.cat = secondCategory2Q;
         this.incorrectAnswers = secondCategory2INQ;
         this.questionCounter++;
@@ -269,8 +291,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category2[1].disabled = true;
         }, 2000);
         break;
-      case 'cat2-btn3':
-        this.modalId = 'cat3a';
+      case "cat2-btn3":
+        this.modalId = "cat3a";
         this.cat = secondCategory3Q;
         this.incorrectAnswers = secondCategory3INQ;
         this.questionCounter++;
@@ -278,8 +300,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category2[2].disabled = true;
         }, 2000);
         break;
-      case 'cat2-btn4':
-        this.modalId = 'cat4a';
+      case "cat2-btn4":
+        this.modalId = "cat4a";
         this.cat = secondCategory4Q;
         this.incorrectAnswers = secondCategory4INQ;
         this.questionCounter++;
@@ -287,8 +309,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category2[3].disabled = true;
         }, 2000);
         break;
-      case 'cat2-btn5':
-        this.modalId = 'cat5a';
+      case "cat2-btn5":
+        this.modalId = "cat5a";
         this.cat = secondCategory5Q;
         this.incorrectAnswers = secondCategory5INQ;
         this.questionCounter++;
@@ -296,8 +318,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category2[4].disabled = true;
         }, 2000);
         break;
-      case 'cat3-btn1':
-        this.modalId = 'cat1b';
+      case "cat3-btn1":
+        this.modalId = "cat1b";
         this.cat = thirdCategory1Q;
         this.incorrectAnswers = thirdCategory1INQ;
         this.questionCounter++;
@@ -305,8 +327,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category3[0].disabled = true;
         }, 2000);
         break;
-      case 'cat3-btn2':
-        this.modalId = 'cat2b';
+      case "cat3-btn2":
+        this.modalId = "cat2b";
         this.cat = thirdCategory2Q;
         this.incorrectAnswers = thirdCategory2INQ;
         this.questionCounter++;
@@ -314,8 +336,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category3[1].disabled = true;
         }, 2000);
         break;
-      case 'cat3-btn3':
-        this.modalId = 'cat3b';
+      case "cat3-btn3":
+        this.modalId = "cat3b";
         this.cat = thirdCategory3Q;
         this.incorrectAnswers = thirdCategory3INQ;
         this.questionCounter++;
@@ -323,8 +345,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category3[2].disabled = true;
         }, 2000);
         break;
-      case 'cat3-btn4':
-        this.modalId = 'cat4b';
+      case "cat3-btn4":
+        this.modalId = "cat4b";
         this.cat = thirdCategory4Q;
         this.incorrectAnswers = thirdCategory4INQ;
         this.questionCounter++;
@@ -332,8 +354,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category3[3].disabled = true;
         }, 2000);
         break;
-      case 'cat3-btn5':
-        this.modalId = 'cat5b';
+      case "cat3-btn5":
+        this.modalId = "cat5b";
         this.cat = thirdCategory5Q;
         this.incorrectAnswers = thirdCategory5INQ;
         this.questionCounter++;
@@ -341,8 +363,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category3[4].disabled = true;
         }, 2000);
         break;
-      case 'cat4-btn1':
-        this.modalId = 'cat1aa';
+      case "cat4-btn1":
+        this.modalId = "cat1aa";
         this.cat = fourthCategory1Q;
         this.incorrectAnswers = fourthCategory1INQ;
         this.questionCounter++;
@@ -350,8 +372,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category4[0].disabled = true;
         }, 2000);
         break;
-      case 'cat4-btn2':
-        this.modalId = 'cat2aa';
+      case "cat4-btn2":
+        this.modalId = "cat2aa";
         this.cat = fourthCategory2Q;
         this.incorrectAnswers = fourthCategory2INQ;
         this.questionCounter++;
@@ -359,8 +381,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category4[1].disabled = true;
         }, 2000);
         break;
-      case 'cat4-btn3':
-        this.modalId = 'cat3aa';
+      case "cat4-btn3":
+        this.modalId = "cat3aa";
         this.cat = fourthCategory3Q;
         this.incorrectAnswers = fourthCategory3INQ;
         this.questionCounter++;
@@ -368,8 +390,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category4[2].disabled = true;
         }, 2000);
         break;
-      case 'cat4-btn4':
-        this.modalId = 'cat4aa';
+      case "cat4-btn4":
+        this.modalId = "cat4aa";
         this.cat = fourthCategory4Q;
         this.incorrectAnswers = fourthCategory4INQ;
         this.questionCounter++;
@@ -377,8 +399,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category4[3].disabled = true;
         }, 2000);
         break;
-      case 'cat4-btn5':
-        this.modalId = 'cat5aa';
+      case "cat4-btn5":
+        this.modalId = "cat5aa";
         this.cat = fourthCategory5Q;
         this.incorrectAnswers = fourthCategory5INQ;
         this.questionCounter++;
@@ -386,8 +408,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category4[4].disabled = true;
         }, 2000);
         break;
-      case 'cat5-btn1':
-        this.modalId = 'cat1bb';
+      case "cat5-btn1":
+        this.modalId = "cat1bb";
         this.cat = fifthCategory1Q;
         this.incorrectAnswers = fifthCategory1INQ;
         this.questionCounter++;
@@ -395,8 +417,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category5[0].disabled = true;
         }, 2000);
         break;
-      case 'cat5-btn2':
-        this.modalId = 'cat2bb';
+      case "cat5-btn2":
+        this.modalId = "cat2bb";
         this.cat = fifthCategory2Q;
         this.incorrectAnswers = fifthCategory2INQ;
         this.questionCounter++;
@@ -404,8 +426,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category5[1].disabled = true;
         }, 2000);
         break;
-      case 'cat5-btn3':
-        this.modalId = 'cat3bb';
+      case "cat5-btn3":
+        this.modalId = "cat3bb";
         this.cat = fifthCategory3Q;
         this.incorrectAnswers = fifthCategory3INQ;
         this.questionCounter++;
@@ -413,8 +435,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category5[2].disabled = true;
         }, 2000);
         break;
-      case 'cat5-btn4':
-        this.modalId = 'cat4bb';
+      case "cat5-btn4":
+        this.modalId = "cat4bb";
         this.cat = fifthCategory4Q;
         this.incorrectAnswers = fifthCategory4INQ;
         this.questionCounter++;
@@ -422,8 +444,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
           this.category5[3].disabled = true;
         }, 2000);
         break;
-      case 'cat5-btn5':
-        this.modalId = 'cat5bb';
+      case "cat5-btn5":
+        this.modalId = "cat5bb";
         this.cat = fifthCategory5Q;
         this.incorrectAnswers = fifthCategory5INQ;
         this.questionCounter++;
@@ -448,147 +470,147 @@ export class JeoQuestions implements OnInit, OnDestroy {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn2') {
+    if (this.btnPressed === "cat1-btn2") {
       if (this.userChoice === this.category1[1].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn3') {
+    if (this.btnPressed === "cat1-btn3") {
       if (this.userChoice === this.category1[2].correct_answer) {
         this.userScore += this.dollarAmount;
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn4') {
+    if (this.btnPressed === "cat1-btn4") {
       if (this.userChoice === this.category1[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat1-btn5') {
+    if (this.btnPressed === "cat1-btn5") {
       if (this.userChoice === this.category1[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn1') {
+    if (this.btnPressed === "cat2-btn1") {
       if (this.userChoice === this.category2[0].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn2') {
+    if (this.btnPressed === "cat2-btn2") {
       if (this.userChoice === this.category2[1].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn3') {
+    if (this.btnPressed === "cat2-btn3") {
       if (this.userChoice === this.category2[2].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn4') {
+    if (this.btnPressed === "cat2-btn4") {
       if (this.userChoice === this.category2[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat2-btn5') {
+    if (this.btnPressed === "cat2-btn5") {
       if (this.userChoice === this.category2[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat3-btn1') {
+    if (this.btnPressed === "cat3-btn1") {
       if (this.userChoice === this.category3[0].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat3-btn2') {
+    if (this.btnPressed === "cat3-btn2") {
       if (this.userChoice === this.category3[1].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat3-btn3') {
+    if (this.btnPressed === "cat3-btn3") {
       if (this.userChoice === this.category3[2].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat3-btn4') {
+    if (this.btnPressed === "cat3-btn4") {
       if (this.userChoice === this.category3[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat3-btn5') {
+    if (this.btnPressed === "cat3-btn5") {
       if (this.userChoice === this.category3[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat4-btn1') {
+    if (this.btnPressed === "cat4-btn1") {
       if (this.userChoice === this.category4[0].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat4-btn2') {
+    if (this.btnPressed === "cat4-btn2") {
       if (this.userChoice === this.category4[1].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat4-btn3') {
+    if (this.btnPressed === "cat4-btn3") {
       if (this.userChoice === this.category4[2].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat4-btn4') {
+    if (this.btnPressed === "cat4-btn4") {
       if (this.userChoice === this.category4[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat4-btn5') {
+    if (this.btnPressed === "cat4-btn5") {
       if (this.userChoice === this.category4[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat5-btn1') {
+    if (this.btnPressed === "cat5-btn1") {
       if (this.userChoice === this.category5[0].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat5-btn2') {
+    if (this.btnPressed === "cat5-btn2") {
       if (this.userChoice === this.category5[1].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat5-btn3') {
+    if (this.btnPressed === "cat5-btn3") {
       if (this.userChoice === this.category5[2].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat5-btn4') {
+    if (this.btnPressed === "cat5-btn4") {
       if (this.userChoice === this.category5[3].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
       }
     }
-    if (this.btnPressed === 'cat5-btn5') {
+    if (this.btnPressed === "cat5-btn5") {
       if (this.userChoice === this.category5[4].correct_answer) {
       } else {
         this.userScore -= this.dollarAmount;
