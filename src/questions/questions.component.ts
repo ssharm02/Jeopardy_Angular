@@ -30,6 +30,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public GET_QUESTIONS = 4;
   public questionCounter = 0;
   public dollarAmount = 0;
+  public userScore = 0;
+  public count = 60;
 
   public selectCategory: string;
   public modalId: string;
@@ -45,7 +47,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public incorrectAnswers = new Object();
   public allCategories = new Object();
 
-  public userScore = 0;
   public userAnswer: string;
 
   public allQuestions = new Array();
@@ -56,7 +57,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public counter$: Observable<number>;
   public timeLeft;
   public interval;
-  public count = 60;
   public dailyDoubleNum1: number;
   public dailyDoubleNum2: number;
   @ViewChild(LogMeIn) playerNameRef;
@@ -135,6 +135,8 @@ export class JeoQuestions implements OnInit, OnDestroy {
   }
   public mutateObject(data) {
     data.forEach(e => {
+      console.log('good questions are')
+      console.log(this.parseHtmlEntities(e.question))
       e.question = this.parseHtmlEntities(e.question);
       e.incorrect_answers.push(e.correct_answer);
     });
@@ -507,7 +509,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
   }
   public checkAnswerGiveDollars(): void {
     this.closeModalEvent.emit(false);
-    // tslint:disable-next-line: quotemark
     const catOnebuttonArray = [
       "cat1-btn1",
       "cat1-btn2",
@@ -544,7 +545,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
       "cat5-btn5"
     ];
 
-    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < catOnebuttonArray.length; i++) {
       if (this.btnPressed === catOnebuttonArray[i]) {
         if (this.userChoice === this.category1[i].correct_answer) {
