@@ -32,23 +32,26 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public dollarAmount = 0;
 
   public selectCategory: string;
-  public cat = new Object();
   public modalId: string;
   public btnPressed: string;
   public userChoice: string;
+
+  public cat = new Object();
   public category1 = new Object();
   public category2 = new Object();
   public category3 = new Object();
   public category4 = new Object();
   public category5 = new Object();
+  public incorrectAnswers = new Object();
   public allCategories = new Object();
+
   public userScore = 0;
   public userAnswer: string;
 
   public allQuestions = new Array();
-  public incorrectAnswers = new Object();
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
+
   public name$: any;
   public counter$: Observable<number>;
   public timeLeft;
@@ -505,38 +508,82 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public checkAnswerGiveDollars(): void {
     this.closeModalEvent.emit(false);
     // tslint:disable-next-line: quotemark
-    const buttonArray = [
+    const catOnebuttonArray = [
       "cat1-btn1",
       "cat1-btn2",
       "cat1-btn3",
       "cat1-btn4",
       "cat1-btn5",
+    ];
+    const catTwobuttonArray = [
       "cat2-btn1",
       "cat2-btn2",
       "cat2-btn3",
       "cat2-btn4",
-      "cat2-btn5",
+      "cat2-btn5"
+    ];
+    const catThreebuttonArray = [
       "cat3-btn1",
       "cat3-btn2",
       "cat3-btn3",
       "cat3-btn4",
       "cat3-btn5",
+    ];
+    const catFourbuttonArray = [
       "cat4-btn1",
       "cat4-btn2",
       "cat4-btn3",
       "cat4-btn4",
       "cat4-btn5",
+    ]
+    const catFivebuttonArray = [
       "cat5-btn1",
       "cat5-btn2",
       "cat5-btn3",
       "cat5-btn4",
-      "cat5-btn5",
+      "cat5-btn5"
     ];
 
     // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < buttonArray.length; i++) {
-      if (this.btnPressed === buttonArray[i]) {
-        if (this.userChoice === this.category1[0].correct_answer) {
+    for (let i = 0; i < catOnebuttonArray.length; i++) {
+      if (this.btnPressed === catOnebuttonArray[i]) {
+        if (this.userChoice === this.category1[i].correct_answer) {
+          this.userScore += this.dollarAmount;
+        } else {
+          this.userScore -= this.dollarAmount;
+        }
+      }
+    }
+    for (let i = 0; i < catTwobuttonArray.length; i++) {
+      if (this.btnPressed === catTwobuttonArray[i]) {
+        if (this.userChoice === this.category2[i].correct_answer) {
+          this.userScore += this.dollarAmount;
+        } else {
+          this.userScore -= this.dollarAmount;
+        }
+      }
+    }
+    for (let i = 0; i < catThreebuttonArray.length; i++) {
+      if (this.btnPressed === catThreebuttonArray[i]) {
+        if (this.userChoice === this.category3[i].correct_answer) {
+          this.userScore += this.dollarAmount;
+        } else {
+          this.userScore -= this.dollarAmount;
+        }
+      }
+    }
+    for (let i = 0; i < catFourbuttonArray.length; i++) {
+      if (this.btnPressed === catFourbuttonArray[i]) {
+        if (this.userChoice === this.category4[i].correct_answer) {
+          this.userScore += this.dollarAmount;
+        } else {
+          this.userScore -= this.dollarAmount;
+        }
+      }
+    }
+    for (let i = 0; i < catFivebuttonArray.length; i++) {
+      if (this.btnPressed === catFivebuttonArray[i]) {
+        if (this.userChoice === this.category5[i].correct_answer) {
           this.userScore += this.dollarAmount;
         } else {
           this.userScore -= this.dollarAmount;
