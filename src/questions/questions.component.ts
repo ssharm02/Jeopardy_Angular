@@ -25,15 +25,15 @@ export class JeoQuestions implements OnInit, OnDestroy {
   // Move all fieds to a seperate class
   public jeoSub: Subscription;
   public nameSub: Subscription;
-  public categories;
+  public subscription: Subscription;
+
   public showSpinner = true;
-  public allQuestions = new Array();
   public GET_QUESTIONS = 4;
   public questionCounter = 0;
-  public selectCategory: string;
   public dollarAmount = 0;
+
+  public selectCategory: string;
   public cat: string;
-  public incorrectAnswers;
   public modalId: string;
   public btnPressed: string;
   public userChoice: string;
@@ -45,17 +45,18 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public allCategories = new Object();
   public userScore = 0;
   public userAnswer: string;
+
+  public allQuestions = new Array();
+  public incorrectAnswers = new Array();
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
-  public lastClicked;
-  name$: any;
-  subscription: Subscription;
+  public name$: any;
+  public counter$: Observable<number>;
   public timeLeft;
   public interval;
-  counter$: Observable<number>;
-  count = 60;
-  public dailyDoubleNum1;
-  public dailyDoubleNum2;
+  public count = 60;
+  public dailyDoubleNum1: number;
+  public dailyDoubleNum2: number;
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
@@ -418,10 +419,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
   }
-  public onSelectionChange(event) {
+  public onSelectionChange(event): void {
     this.userChoice = event.target.value;
   }
-  public checkAnswerGiveDollars() {
+  public checkAnswerGiveDollars(): void {
     this.closeModalEvent.emit(false);
     // tslint:disable-next-line: quotemark
     if (this.btnPressed === "cat1-btn1") {
