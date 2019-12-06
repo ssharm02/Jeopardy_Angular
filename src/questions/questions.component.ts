@@ -33,7 +33,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public dollarAmount = 0;
 
   public selectCategory: string;
-  public cat: string;
+  public cat = new Object();
   public modalId: string;
   public btnPressed: string;
   public userChoice: string;
@@ -47,7 +47,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public userAnswer: string;
 
   public allQuestions = new Array();
-  public incorrectAnswers = new Array();
+  public incorrectAnswers = new Object();
   public jeopardyQuestion = new Array();
   public possibleAnswers = new Array();
   public name$: any;
@@ -172,7 +172,11 @@ export class JeoQuestions implements OnInit, OnDestroy {
     return randomNum;
   }
 
-  public traverseCategories(categoryX, i) {
+  public traverseCategories(categoryX, i): {
+    categoryQuestion: object,
+    incorrectOptions: object,
+    disabledButton: boolean
+  } {
     const categoryQuestion = categoryX[i].question;
     const incorrectOptions = categoryX[i].incorrect_answers;
     const disabledButton = categoryX[i].disabled;
