@@ -12,13 +12,12 @@ import { Observable, Subscription, timer } from "rxjs";
 import { UserInfoService } from "src/services/getUserInfo";
 import { map, take } from "rxjs/operators";
 import { Router } from "@angular/router";
-import { User } from '../models/User';
+import { User } from "../models/User";
 @Component({
   selector: "jeo-questions",
   templateUrl: "./questions.component.html",
   styleUrls: ["./questions.component.css"]
 })
-
 
 // tslint:disable-next-line:component-class-suffix
 export class JeoQuestions implements OnInit, OnDestroy {
@@ -172,10 +171,13 @@ export class JeoQuestions implements OnInit, OnDestroy {
     return randomNum;
   }
 
-  public traverseCategories(categoryX, i): {
-    categoryQuestion: object,
-    incorrectOptions: object,
-    disabledButton: boolean
+  public traverseCategories(
+    categoryX,
+    i
+  ): {
+    categoryQuestion: object;
+    incorrectOptions: object;
+    disabledButton: boolean;
   } {
     const categoryQuestion = categoryX[i].question;
     const incorrectOptions = categoryX[i].incorrect_answers;
@@ -187,7 +189,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
     };
   }
   public userButtonClicked(event): void {
-
     this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
     switch (this.btnPressed) {
@@ -195,7 +196,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
         this.startTimer();
         this.modalId = "cat1";
         this.cat = this.traverseCategories(this.category1, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category1, 0).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category1,
+          0
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category1[0].disabled = true;
@@ -205,7 +209,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
         this.startTimer();
         this.modalId = "cat2";
         this.cat = this.traverseCategories(this.category1, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category1, 1).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category1,
+          1
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category1[1].disabled = true;
@@ -215,7 +222,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
         this.startTimer();
         this.modalId = "cat3";
         this.cat = this.traverseCategories(this.category1, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category1, 2).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category1,
+          2
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category1[2].disabled = true;
@@ -224,7 +234,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat1-btn4":
         this.modalId = "cat4";
         this.cat = this.traverseCategories(this.category1, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category1, 3).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category1,
+          3
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category1[3].disabled = true;
@@ -232,8 +245,11 @@ export class JeoQuestions implements OnInit, OnDestroy {
         break;
       case "cat1-btn5":
         this.modalId = "cat5";
-        this.cat = this.traverseCategories(this.category1, 4).categoryQuestion;;
-        this.incorrectAnswers = this.traverseCategories(this.category1, 4).incorrectOptions;
+        this.cat = this.traverseCategories(this.category1, 4).categoryQuestion;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category1,
+          4
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category1[4].disabled = true;
@@ -242,7 +258,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat2-btn1":
         this.modalId = "cat1a";
         this.cat = this.traverseCategories(this.category2, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category2, 0).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category2,
+          0
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category2[0].disabled = true;
@@ -250,8 +269,11 @@ export class JeoQuestions implements OnInit, OnDestroy {
         break;
       case "cat2-btn2":
         this.modalId = "cat2a";
-        this.cat = this.traverseCategories(this.category2, 1).categoryQuestion;;
-        this.incorrectAnswers = this.traverseCategories(this.category2, 1).incorrectOptions;
+        this.cat = this.traverseCategories(this.category2, 1).categoryQuestion;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category2,
+          1
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category2[1].disabled = true;
@@ -260,7 +282,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat2-btn3":
         this.modalId = "cat3a";
         this.cat = this.traverseCategories(this.category2, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category2, 2).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category2,
+          2
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category2[2].disabled = true;
@@ -269,7 +294,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat2-btn4":
         this.modalId = "cat4a";
         this.cat = this.traverseCategories(this.category2, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category2, 3).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category2,
+          3
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category2[3].disabled = true;
@@ -278,7 +306,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat2-btn5":
         this.modalId = "cat5a";
         this.cat = this.traverseCategories(this.category2, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category2, 4).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category2,
+          4
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category2[4].disabled = true;
@@ -287,7 +318,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat3-btn1":
         this.modalId = "cat1b";
         this.cat = this.traverseCategories(this.category3, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category3, 0).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category3,
+          0
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category3[0].disabled = true;
@@ -296,7 +330,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat3-btn2":
         this.modalId = "cat2b";
         this.cat = this.traverseCategories(this.category3, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category3, 1).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category3,
+          1
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category3[1].disabled = true;
@@ -305,7 +342,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat3-btn3":
         this.modalId = "cat3b";
         this.cat = this.traverseCategories(this.category3, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category3, 2).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category3,
+          2
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category3[2].disabled = true;
@@ -314,7 +354,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat3-btn4":
         this.modalId = "cat4b";
         this.cat = this.traverseCategories(this.category3, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category3, 3).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category3,
+          3
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category3[3].disabled = true;
@@ -323,7 +366,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat3-btn5":
         this.modalId = "cat5b";
         this.cat = this.traverseCategories(this.category3, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category3, 4).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category3,
+          4
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category3[4].disabled = true;
@@ -332,7 +378,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat4-btn1":
         this.modalId = "cat1aa";
         this.cat = this.traverseCategories(this.category4, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category4, 0).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category4,
+          0
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category4[0].disabled = true;
@@ -341,7 +390,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat4-btn2":
         this.modalId = "cat2aa";
         this.cat = this.traverseCategories(this.category4, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category4, 1).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category4,
+          1
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category4[1].disabled = true;
@@ -350,7 +402,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat4-btn3":
         this.modalId = "cat3aa";
         this.cat = this.traverseCategories(this.category4, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category4, 2).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category4,
+          2
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category4[2].disabled = true;
@@ -359,7 +414,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat4-btn4":
         this.modalId = "cat4aa";
         this.cat = this.traverseCategories(this.category4, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category4, 3).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category4,
+          3
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category4[3].disabled = true;
@@ -368,7 +426,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat4-btn5":
         this.modalId = "cat5aa";
         this.cat = this.traverseCategories(this.category4, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category4, 4).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category4,
+          4
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category4[4].disabled = true;
@@ -377,7 +438,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat5-btn1":
         this.modalId = "cat1bb";
         this.cat = this.traverseCategories(this.category5, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category5, 0).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category5,
+          0
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category5[0].disabled = true;
@@ -386,7 +450,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat5-btn2":
         this.modalId = "cat2bb";
         this.cat = this.traverseCategories(this.category5, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category5, 1).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category5,
+          1
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category5[1].disabled = true;
@@ -395,7 +462,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat5-btn3":
         this.modalId = "cat3bb";
         this.cat = this.traverseCategories(this.category5, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category5, 2).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category5,
+          2
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category5[2].disabled = true;
@@ -404,7 +474,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat5-btn4":
         this.modalId = "cat4bb";
         this.cat = this.traverseCategories(this.category5, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category5, 3).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category5,
+          3
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category5[3].disabled = true;
@@ -413,7 +486,10 @@ export class JeoQuestions implements OnInit, OnDestroy {
       case "cat5-btn5":
         this.modalId = "cat5bb";
         this.cat = this.traverseCategories(this.category5, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(this.category5, 4).incorrectOptions;
+        this.incorrectAnswers = this.traverseCategories(
+          this.category5,
+          4
+        ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
           this.category5[4].disabled = true;
@@ -429,157 +505,42 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public checkAnswerGiveDollars(): void {
     this.closeModalEvent.emit(false);
     // tslint:disable-next-line: quotemark
-    if (this.btnPressed === "cat1-btn1") {
-      if (this.userChoice === this.category1[0].correct_answer) {
-        this.userScore += this.dollarAmount;
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat1-btn2") {
-      if (this.userChoice === this.category1[1].correct_answer) {
-        this.userScore += this.dollarAmount;
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat1-btn3") {
-      if (this.userChoice === this.category1[2].correct_answer) {
-        this.userScore += this.dollarAmount;
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat1-btn4") {
-      if (this.userChoice === this.category1[3].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat1-btn5") {
-      if (this.userChoice === this.category1[4].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat2-btn1") {
-      if (this.userChoice === this.category2[0].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat2-btn2") {
-      if (this.userChoice === this.category2[1].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat2-btn3") {
-      if (this.userChoice === this.category2[2].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat2-btn4") {
-      if (this.userChoice === this.category2[3].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat2-btn5") {
-      if (this.userChoice === this.category2[4].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat3-btn1") {
-      if (this.userChoice === this.category3[0].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat3-btn2") {
-      if (this.userChoice === this.category3[1].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat3-btn3") {
-      if (this.userChoice === this.category3[2].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat3-btn4") {
-      if (this.userChoice === this.category3[3].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat3-btn5") {
-      if (this.userChoice === this.category3[4].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat4-btn1") {
-      if (this.userChoice === this.category4[0].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat4-btn2") {
-      if (this.userChoice === this.category4[1].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat4-btn3") {
-      if (this.userChoice === this.category4[2].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat4-btn4") {
-      if (this.userChoice === this.category4[3].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat4-btn5") {
-      if (this.userChoice === this.category4[4].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat5-btn1") {
-      if (this.userChoice === this.category5[0].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat5-btn2") {
-      if (this.userChoice === this.category5[1].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat5-btn3") {
-      if (this.userChoice === this.category5[2].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat5-btn4") {
-      if (this.userChoice === this.category5[3].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
-      }
-    }
-    if (this.btnPressed === "cat5-btn5") {
-      if (this.userChoice === this.category5[4].correct_answer) {
-      } else {
-        this.userScore -= this.dollarAmount;
+    const buttonArray = [
+      "cat1-btn1",
+      "cat1-btn2",
+      "cat1-btn3",
+      "cat1-btn4",
+      "cat1-btn5",
+      "cat2-btn1",
+      "cat2-btn2",
+      "cat2-btn3",
+      "cat2-btn4",
+      "cat2-btn5",
+      "cat3-btn1",
+      "cat3-btn2",
+      "cat3-btn3",
+      "cat3-btn4",
+      "cat3-btn5",
+      "cat4-btn1",
+      "cat4-btn2",
+      "cat4-btn3",
+      "cat4-btn4",
+      "cat4-btn5",
+      "cat5-btn1",
+      "cat5-btn2",
+      "cat5-btn3",
+      "cat5-btn4",
+      "cat5-btn5",
+    ];
+
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < buttonArray.length; i++) {
+      if (this.btnPressed === buttonArray[i]) {
+        if (this.userChoice === this.category1[0].correct_answer) {
+          this.userScore += this.dollarAmount;
+        } else {
+          this.userScore -= this.dollarAmount;
+        }
       }
     }
   }
