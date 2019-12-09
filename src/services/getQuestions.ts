@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { map, first } from "rxjs/operators";
-import { BehaviorSubject } from 'rxjs';
-
+import { BehaviorSubject } from "rxjs";
+import { first, map } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -37,22 +36,26 @@ export class JeopardyService {
     10,
     9
   ];
+
   display(value: boolean) {
     this.status.next(value);
-}
+  }
+
   public selectRandomCategory(maximum, minimum) {
     const num = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
     this.categoryArray.splice(num, 1);
     this.randomizeArray(this.categoryArray).then(() => {
       this.spliceArray(this.categoryArray);
-      console.log('final spliced array is ', this.categoryArray);
+      console.log("final spliced array is ", this.categoryArray);
     });
-    return this.categoryArray[Math.floor((Math.random() * this.categoryArray.length))];
+    return this.categoryArray[
+      Math.floor(Math.random() * this.categoryArray.length)
+    ];
   }
 
   async randomizeArray(arr) {
     arr.sort(() => {
-      return .5 - Math.random();
+      return 0.5 - Math.random();
     });
   }
   async spliceArray(arr) {
@@ -61,7 +64,7 @@ export class JeopardyService {
   returnUniqueElement() {
     const shuffled = this.categoryArray.sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 5);
-    const uniqueElement = selected[Math.floor(Math.random()*selected.length)];
+    const uniqueElement = selected[Math.floor(Math.random() * selected.length)];
     return uniqueElement;
   }
 
@@ -81,7 +84,6 @@ export class JeopardyService {
   }
   // Observable shouldn't be any
   public getItems(): Observable<any> {
-
     const category = this.returnUniqueElement();
     const NUMBER_OF_QUESTIONS = 5;
     return this.http
@@ -90,4 +92,6 @@ export class JeopardyService {
       )
       .pipe(map(jeopardyData => jeopardyData["results"]));
   }
+
+
 }

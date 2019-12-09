@@ -1,18 +1,13 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ViewChild,
-  OnDestroy
-} from "@angular/core";
-import { JeopardyService } from "src/services/getQuestions";
-import { LogMeIn } from "../login/login.component";
-import { Observable, Subscription, timer } from "rxjs";
-import { UserInfoService } from "src/services/getUserInfo";
-import { map, take } from "rxjs/operators";
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
+import { Observable, Subscription, timer } from "rxjs";
+import { map, take } from "rxjs/operators";
+import { JeopardyService } from "src/services/getQuestions";
+import { UserInfoService } from "src/services/getUserInfo";
+
+import { LogMeIn } from "../login/login.component";
 import { User } from "../models/User";
+
 @Component({
   selector: "jeo-questions",
   templateUrl: "./questions.component.html",
@@ -59,6 +54,43 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public interval;
   public dailyDoubleNum1: number;
   public dailyDoubleNum2: number;
+
+  public catOnebuttonArray = [
+    "cat1-btn1",
+    "cat1-btn2",
+    "cat1-btn3",
+    "cat1-btn4",
+    "cat1-btn5"
+  ];
+  public catTwobuttonArray = [
+    "cat2-btn1",
+    "cat2-btn2",
+    "cat2-btn3",
+    "cat2-btn4",
+    "cat2-btn5"
+  ];
+  public catThreebuttonArray = [
+    "cat3-btn1",
+    "cat3-btn2",
+    "cat3-btn3",
+    "cat3-btn4",
+    "cat3-btn5"
+  ];
+  public catFourbuttonArray = [
+    "cat4-btn1",
+    "cat4-btn2",
+    "cat4-btn3",
+    "cat4-btn4",
+    "cat4-btn5"
+  ];
+  public catFivebuttonArray = [
+    "cat5-btn1",
+    "cat5-btn2",
+    "cat5-btn3",
+    "cat5-btn4",
+    "cat5-btn5"
+  ];
+
   @ViewChild(LogMeIn) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
@@ -81,10 +113,15 @@ export class JeoQuestions implements OnInit, OnDestroy {
     }
     console.log("daily double 1 is ", this.dailyDoubleNum1);
     console.log("daily double 2 is ", this.dailyDoubleNum2);
+    console.log('session name is ', this.getSessionStorage());
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();
     // this.nameSub.unsubscribe();
+  }
+  public getSessionStorage(): string {
+    const  sessionName = sessionStorage.getItem('name');
+    return sessionName;
   }
   public startTimer() {
     this.timeLeft = 15;
@@ -135,9 +172,6 @@ export class JeoQuestions implements OnInit, OnDestroy {
   }
   public mutateObject(data) {
     data.forEach(e => {
-      console.log('good questions are')
-      console.log(this.parseHtmlEntities(e.question))
-      e.question = this.parseHtmlEntities(e.question);
       e.incorrect_answers.push(e.correct_answer);
     });
     data.map(ele => (ele.disabled = false));
@@ -507,88 +541,24 @@ export class JeoQuestions implements OnInit, OnDestroy {
   public onSelectionChange(event): void {
     this.userChoice = event.target.value;
   }
+
+  public checkAnswersGiveDollars2(buttonArr, category): void {
+    for (let i = 0; i < buttonArr.length; i++) {
+      if (this.btnPressed === buttonArr[i]) {
+        if (this.userChoice === category[i].correct_answer) {
+          this.userScore += this.dollarAmount;
+        } else {
+          this.userScore -= this.dollarAmount;
+        }
+      }
+    }
+  }
   public checkAnswerGiveDollars(): void {
     this.closeModalEvent.emit(false);
-    const catOnebuttonArray = [
-      "cat1-btn1",
-      "cat1-btn2",
-      "cat1-btn3",
-      "cat1-btn4",
-      "cat1-btn5",
-    ];
-    const catTwobuttonArray = [
-      "cat2-btn1",
-      "cat2-btn2",
-      "cat2-btn3",
-      "cat2-btn4",
-      "cat2-btn5"
-    ];
-    const catThreebuttonArray = [
-      "cat3-btn1",
-      "cat3-btn2",
-      "cat3-btn3",
-      "cat3-btn4",
-      "cat3-btn5",
-    ];
-    const catFourbuttonArray = [
-      "cat4-btn1",
-      "cat4-btn2",
-      "cat4-btn3",
-      "cat4-btn4",
-      "cat4-btn5",
-    ]
-    const catFivebuttonArray = [
-      "cat5-btn1",
-      "cat5-btn2",
-      "cat5-btn3",
-      "cat5-btn4",
-      "cat5-btn5"
-    ];
-
-    for (let i = 0; i < catOnebuttonArray.length; i++) {
-      if (this.btnPressed === catOnebuttonArray[i]) {
-        if (this.userChoice === this.category1[i].correct_answer) {
-          this.userScore += this.dollarAmount;
-        } else {
-          this.userScore -= this.dollarAmount;
-        }
-      }
-    }
-    for (let i = 0; i < catTwobuttonArray.length; i++) {
-      if (this.btnPressed === catTwobuttonArray[i]) {
-        if (this.userChoice === this.category2[i].correct_answer) {
-          this.userScore += this.dollarAmount;
-        } else {
-          this.userScore -= this.dollarAmount;
-        }
-      }
-    }
-    for (let i = 0; i < catThreebuttonArray.length; i++) {
-      if (this.btnPressed === catThreebuttonArray[i]) {
-        if (this.userChoice === this.category3[i].correct_answer) {
-          this.userScore += this.dollarAmount;
-        } else {
-          this.userScore -= this.dollarAmount;
-        }
-      }
-    }
-    for (let i = 0; i < catFourbuttonArray.length; i++) {
-      if (this.btnPressed === catFourbuttonArray[i]) {
-        if (this.userChoice === this.category4[i].correct_answer) {
-          this.userScore += this.dollarAmount;
-        } else {
-          this.userScore -= this.dollarAmount;
-        }
-      }
-    }
-    for (let i = 0; i < catFivebuttonArray.length; i++) {
-      if (this.btnPressed === catFivebuttonArray[i]) {
-        if (this.userChoice === this.category5[i].correct_answer) {
-          this.userScore += this.dollarAmount;
-        } else {
-          this.userScore -= this.dollarAmount;
-        }
-      }
-    }
+    this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
+    this.checkAnswersGiveDollars2(this.catTwobuttonArray, this.category2);
+    this.checkAnswersGiveDollars2(this.catThreebuttonArray, this.category3);
+    this.checkAnswersGiveDollars2(this.catFourbuttonArray, this.category4);
+    this.checkAnswersGiveDollars2(this.catFivebuttonArray, this.category5);
   }
 }
