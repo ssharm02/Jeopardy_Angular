@@ -105,22 +105,37 @@ export class JeoQuestions implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.manipulateObject();
+    if (
+      "category1" in sessionStorage &&
+      "category2" in sessionStorage &&
+      "category3" in sessionStorage &&
+      "category4" in sessionStorage &&
+      "category5" in sessionStorage
+    ) {
+      this.getSessionStorageData();
+    } else {
+      this.manipulateObject();
+    }
     this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
     this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
     if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
       this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
     }
+    console.log(this.name$)
+    let name = this.getSessionStorage();
+    if (this.name$ === "Default Player") {
+      this.name$ = name; 
+    }
     console.log("daily double 1 is ", this.dailyDoubleNum1);
     console.log("daily double 2 is ", this.dailyDoubleNum2);
-    console.log('session name is ', this.getSessionStorage());
+    console.log("session name is ", this.getSessionStorage());
   }
   ngOnDestroy(): void {
     this.jeoSub.unsubscribe();
     // this.nameSub.unsubscribe();
   }
   public getSessionStorage(): string {
-    const  sessionName = sessionStorage.getItem('name');
+    const sessionName = sessionStorage.getItem("name");
     return sessionName;
   }
   public startTimer() {
@@ -143,6 +158,15 @@ export class JeoQuestions implements OnInit, OnDestroy {
       return this.allQuestions;
     });
   }
+  public getSessionStorageData() {
+    this.showSpinner = false;
+    this.allQuestions = JSON.parse(sessionStorage.getItem('allQuestions'));
+    this.category1 = JSON.parse(sessionStorage.getItem("category1"));
+    this.category2 = JSON.parse(sessionStorage.getItem("category2"));
+    this.category3 = JSON.parse(sessionStorage.getItem("category3"));
+    this.category4 = JSON.parse(sessionStorage.getItem("category4"));
+    this.category5 = JSON.parse(sessionStorage.getItem("category5"));
+  }
   public manipulateObject() {
     for (let i = 0; i <= this.GET_QUESTIONS; i++) {
       this.getServiceData();
@@ -159,6 +183,13 @@ export class JeoQuestions implements OnInit, OnDestroy {
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
+      sessionStorage.setItem('allQuestions', JSON.stringify(this.allQuestions));
+      sessionStorage.setItem("category1", JSON.stringify(this.category1));
+      sessionStorage.setItem("category2", JSON.stringify(this.category2));
+      sessionStorage.setItem("category3", JSON.stringify(this.category3));
+      sessionStorage.setItem("category4", JSON.stringify(this.category4));
+      sessionStorage.setItem("category5", JSON.stringify(this.category5));
+
     }, 5000);
   }
 
@@ -227,6 +258,11 @@ export class JeoQuestions implements OnInit, OnDestroy {
       disabledButton
     };
   }
+  public disableButton(categoryObject, val, sessionKey) {
+    categoryObject[val].disabled = true;
+    sessionStorage.setItem(sessionKey, JSON.stringify(this.category1));
+  }
+
   public userButtonClicked(event): void {
     this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
@@ -241,7 +277,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category1[0].disabled = true;
+          this.disableButton(this.category1, 0, "category1");
         }, 2000);
         break;
       case "cat1-btn2":
@@ -254,7 +290,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category1[1].disabled = true;
+          this.disableButton(this.category1, 1, "category1");
         }, 2000);
         break;
       case "cat1-btn3":
@@ -267,7 +303,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category1[2].disabled = true;
+          this.disableButton(this.category1, 2, "category1");
         }, 2000);
         break;
       case "cat1-btn4":
@@ -279,7 +315,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category1[3].disabled = true;
+          this.disableButton(this.category1, 3, "category1");
         }, 2000);
         break;
       case "cat1-btn5":
@@ -291,7 +327,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category1[4].disabled = true;
+          this.disableButton(this.category1, 4, "category1");
         }, 2000);
         break;
       case "cat2-btn1":
@@ -303,7 +339,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category2[0].disabled = true;
+          this.disableButton(this.category2, 0, "category2");
         }, 2000);
         break;
       case "cat2-btn2":
@@ -315,7 +351,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category2[1].disabled = true;
+          this.disableButton(this.category2, 1, "category2");
         }, 2000);
         break;
       case "cat2-btn3":
@@ -327,7 +363,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category2[2].disabled = true;
+          this.disableButton(this.category2, 2, "category2");
         }, 2000);
         break;
       case "cat2-btn4":
@@ -339,7 +375,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category2[3].disabled = true;
+          this.disableButton(this.category2, 3, "category2");
         }, 2000);
         break;
       case "cat2-btn5":
@@ -351,7 +387,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category2[4].disabled = true;
+          this.disableButton(this.category2, 4, "category2");
         }, 2000);
         break;
       case "cat3-btn1":
@@ -363,7 +399,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category3[0].disabled = true;
+          this.disableButton(this.category3, 0, "category3");
         }, 2000);
         break;
       case "cat3-btn2":
@@ -375,7 +411,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category3[1].disabled = true;
+          this.disableButton(this.category3, 1, "category3");
         }, 2000);
         break;
       case "cat3-btn3":
@@ -387,7 +423,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category3[2].disabled = true;
+          this.disableButton(this.category3, 2, "category3");
         }, 2000);
         break;
       case "cat3-btn4":
@@ -399,7 +435,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category3[3].disabled = true;
+          this.disableButton(this.category3, 3, "category3");
         }, 2000);
         break;
       case "cat3-btn5":
@@ -411,7 +447,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category3[4].disabled = true;
+          this.disableButton(this.category3, 4, "category3");
         }, 2000);
         break;
       case "cat4-btn1":
@@ -423,7 +459,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category4[0].disabled = true;
+          this.disableButton(this.category4, 0, "category4");
         }, 2000);
         break;
       case "cat4-btn2":
@@ -435,7 +471,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category4[1].disabled = true;
+          this.disableButton(this.category4, 1, "category4");
         }, 2000);
         break;
       case "cat4-btn3":
@@ -447,7 +483,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category4[2].disabled = true;
+          this.disableButton(this.category4, 2, "category4");
         }, 2000);
         break;
       case "cat4-btn4":
@@ -459,7 +495,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category4[3].disabled = true;
+          this.disableButton(this.category4, 3, "category4");
         }, 2000);
         break;
       case "cat4-btn5":
@@ -471,7 +507,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category4[4].disabled = true;
+          this.disableButton(this.category4, 4, "category4");
         }, 2000);
         break;
       case "cat5-btn1":
@@ -483,7 +519,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category5[0].disabled = true;
+          this.disableButton(this.category5, 0, "category5");
         }, 2000);
         break;
       case "cat5-btn2":
@@ -495,7 +531,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category5[1].disabled = true;
+          this.disableButton(this.category5, 1, "category5");
         }, 2000);
         break;
       case "cat5-btn3":
@@ -507,7 +543,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category5[2].disabled = true;
+          this.disableButton(this.category5, 2, "category5");
         }, 2000);
         break;
       case "cat5-btn4":
@@ -519,7 +555,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category5[3].disabled = true;
+          this.disableButton(this.category5, 3, "category5");
         }, 2000);
         break;
       case "cat5-btn5":
@@ -531,7 +567,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
         ).incorrectOptions;
         this.questionCounter++;
         setTimeout(() => {
-          this.category5[4].disabled = true;
+          this.disableButton(this.category5, 4, "category5");
         }, 2000);
         break;
     }
