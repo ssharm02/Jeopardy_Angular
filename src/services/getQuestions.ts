@@ -3,7 +3,7 @@ import { Injectable, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { BehaviorSubject } from "rxjs";
 import { first, map } from "rxjs/operators";
-
+import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 @Injectable({
   providedIn: "root"
 })
@@ -83,7 +83,7 @@ export class JeopardyService {
     return valueToEject;
   }
   // Observable shouldn't be any
-  public getItems(): Observable<any> {
+  public getItems(): Observable<JeopardyServiceClass> {
     const category = this.returnUniqueElement();
     const NUMBER_OF_QUESTIONS = 5;
     return this.http
@@ -92,6 +92,4 @@ export class JeopardyService {
       )
       .pipe(map(jeopardyData => jeopardyData["results"]));
   }
-
-
 }

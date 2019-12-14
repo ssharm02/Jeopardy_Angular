@@ -17,22 +17,17 @@
     <div class="splash-overlay" id="overlay-bottom"></div>
 
     <div id="wrapper">
-      <input
-        id="login-field"
-        type="text"
-        #nameInput
-        placeholder="Enter your Name"
-        maxlength="40"
-        name="uname"
-        autofocus
-        autocomplete="off"
-        required
-        minlength="4"
-      />
-      <a [routerLink]="['../jeopardyBoard']">
-        <button id="login-button" (click)="addPlayer()">Login</button></a
-      >
-
+      <form [formGroup]="loginForm" (ngSubmit)="addPlayer()">
+        <div class="form-group">
+          <input type="text" formControlName="playerName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.playerName.errors }"
+          id="login-field" #nameInput  autofocus autocomplete="off" />
+        <div *ngIf="submitted && f.playerName.errors" class="invalid-feedback">
+          <div *ngIf="f.playerName.errors.required">Name is required</div>
+        </div>
+        <!-- <a [routerLink]="['../jeopardyBoard']"> -->
+          <button id="login-button" (click)="addPlayer()">Login</button>
+      </div>
+      </form>
       <div id="credits-text">Sarthak's Jeopardy</div>
     </div>
   </body>

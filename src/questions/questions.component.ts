@@ -4,9 +4,10 @@ import { Observable, Subscription, timer } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { JeopardyService } from "src/services/getQuestions";
 import { UserInfoService } from "src/services/getUserInfo";
-
+import { Jeopardy } from '../models/jeopardy.abstract';
 import { LogMeIn } from "../login/login.component";
 import { User } from "../models/User";
+import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 
 @Component({
   selector: "jeo-questions",
@@ -15,7 +16,7 @@ import { User } from "../models/User";
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class JeoQuestions implements OnInit, OnDestroy {
+export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
   // Move all fieds to a seperate class
   public jeoSub: Subscription;
   public nameSub: Subscription;
@@ -99,6 +100,7 @@ export class JeoQuestions implements OnInit, OnDestroy {
     public getUserInfoService: UserInfoService,
     private router: Router
   ) {
+    super();
     this.getUserInfoService.currentMessage.subscribe(
       data => (this.name$ = data)
     );
@@ -121,17 +123,17 @@ export class JeoQuestions implements OnInit, OnDestroy {
     if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
       this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
     }
-    console.log(this.name$)
+    console.log(this.name$);
     let name = this.getSessionStorage();
     if (this.name$ === "Default Player") {
-      this.name$ = name; 
+      this.name$ = name;
     }
     console.log("daily double 1 is ", this.dailyDoubleNum1);
     console.log("daily double 2 is ", this.dailyDoubleNum2);
     console.log("session name is ", this.getSessionStorage());
   }
   ngOnDestroy(): void {
-    this.jeoSub.unsubscribe();
+    // this.jeoSub.unsubscribe();
     // this.nameSub.unsubscribe();
   }
   public getSessionStorage(): string {
@@ -160,12 +162,17 @@ export class JeoQuestions implements OnInit, OnDestroy {
   }
   public getSessionStorageData() {
     this.showSpinner = false;
-    this.allQuestions = JSON.parse(sessionStorage.getItem('allQuestions'));
+    this.allQuestions = JSON.parse(sessionStorage.getItem("allQuestions"));
     this.category1 = JSON.parse(sessionStorage.getItem("category1"));
     this.category2 = JSON.parse(sessionStorage.getItem("category2"));
     this.category3 = JSON.parse(sessionStorage.getItem("category3"));
     this.category4 = JSON.parse(sessionStorage.getItem("category4"));
     this.category5 = JSON.parse(sessionStorage.getItem("category5"));
+    this.questionCounter = JSON.parse(
+      sessionStorage.getItem("questionCounter")
+    );
+    this.dailyDoubleNum1 = JSON.parse(sessionStorage.getItem("dailyDouble1"));
+    this.dailyDoubleNum2 = JSON.parse(sessionStorage.getItem("dailyDouble2"));
   }
   public manipulateObject() {
     for (let i = 0; i <= this.GET_QUESTIONS; i++) {
@@ -183,13 +190,12 @@ export class JeoQuestions implements OnInit, OnDestroy {
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
-      sessionStorage.setItem('allQuestions', JSON.stringify(this.allQuestions));
+      sessionStorage.setItem("allQuestions", JSON.stringify(this.allQuestions));
       sessionStorage.setItem("category1", JSON.stringify(this.category1));
       sessionStorage.setItem("category2", JSON.stringify(this.category2));
       sessionStorage.setItem("category3", JSON.stringify(this.category3));
       sessionStorage.setItem("category4", JSON.stringify(this.category4));
       sessionStorage.setItem("category5", JSON.stringify(this.category5));
-
     }, 5000);
   }
 
@@ -596,5 +602,18 @@ export class JeoQuestions implements OnInit, OnDestroy {
     this.checkAnswersGiveDollars2(this.catThreebuttonArray, this.category3);
     this.checkAnswersGiveDollars2(this.catFourbuttonArray, this.category4);
     this.checkAnswersGiveDollars2(this.catFivebuttonArray, this.category5);
+    sessionStorage.setItem("userDollars", JSON.stringify(this.userScore));
+    sessionStorage.setItem(
+      "questionCounter",
+      JSON.stringify(this.questionCounter)
+    );
+    sessionStorage.setItem(
+      "dailyDouble1",
+      JSON.stringify(this.dailyDoubleNum1)
+    );
+    sessionStorage.setItem(
+      "dailyDouble2",
+      JSON.stringify(this.dailyDoubleNum2)
+    );
   }
 }
