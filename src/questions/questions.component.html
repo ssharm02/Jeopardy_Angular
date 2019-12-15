@@ -40,7 +40,7 @@
             <button
               type="button"
               id="cat1-btn{{ i + 1 }}"
-              (click)="userButtonClicked($event)"
+              (click)="clickButtonTakeAction($event)"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -49,6 +49,7 @@
               attr.data-target="#cat{{ i + 1 }}"
               data-keyboard="false"
               data-backdrop="static"
+              category="this.category1"
             >
               ${{ i + 1 }}00
             </button>
@@ -62,7 +63,7 @@
             <button
               type="button"
               id="cat2-btn{{ i + 1 }}"
-              (click)="userButtonClicked($event)"
+              (click)="clickButtonTakeAction($event)"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -71,6 +72,7 @@
               attr.data-target="#cat{{ i + 1 }}a"
               data-keyboard="false"
               data-backdrop="static"
+              category="this.category2"
             >
               ${{ i + 1 }}00
             </button>
@@ -84,7 +86,7 @@
             <button
               type="button"
               id="cat3-btn{{ i + 1 }}"
-              (click)="userButtonClicked($event)"
+              (click)="clickButtonTakeAction($event)"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -93,6 +95,7 @@
               attr.data-target="#cat{{ i + 1 }}b"
               data-keyboard="false"
               data-backdrop="static"
+              category="this.category3"
             >
               ${{ i + 1 }}00
             </button>
@@ -106,7 +109,7 @@
             <button
               type="button"
               id="cat4-btn{{ i + 1 }}"
-              (click)="userButtonClicked($event)"
+              (click)="clickButtonTakeAction($event)"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -115,6 +118,7 @@
               attr.data-target="#cat{{ i + 1 }}aa"
               data-keyboard="false"
               data-backdrop="static"
+              category="this.category4"
             >
               ${{ i + 1 }}00
             </button>
@@ -128,7 +132,7 @@
             <button
               type="button"
               id="cat5-btn{{ i + 1 }}"
-              (click)="userButtonClicked($event)"
+              (click)="clickButtonTakeAction($event)"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -137,6 +141,7 @@
               attr.data-target="#cat{{ i + 1 }}bb"
               data-keyboard="false"
               data-backdrop="static"
+              category="this.category5"
             >
               ${{ i + 1 }}00
             </button>

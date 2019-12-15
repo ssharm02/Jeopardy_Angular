@@ -4,10 +4,12 @@ import { Observable, Subscription, timer } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { JeopardyService } from "src/services/getQuestions";
 import { UserInfoService } from "src/services/getUserInfo";
-import { Jeopardy } from '../models/jeopardy.abstract';
+
 import { LogMeIn } from "../login/login.component";
-import { User } from "../models/User";
+import { Jeopardy } from '../models/jeopardy.abstract';
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
+import { User } from "../models/User";
+import { R3TargetBinder } from '@angular/compiler';
 
 @Component({
   selector: "jeo-questions",
@@ -234,12 +236,12 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
       this.getUserInfoService.getUserScore(this.userScore);
       this.router.navigateByUrl("/userScore");
     }
-    if (this.dailyDoubleNum1 === this.questionCounter) {
-      this.router.navigateByUrl("dailyD");
-    }
-    if (this.dailyDoubleNum2 === this.questionCounter) {
-      this.router.navigateByUrl("dailyD");
-    }
+    // if (this.dailyDoubleNum1 === this.questionCounter) {
+    //   this.router.navigateByUrl("dailyD");
+    // }
+    // if (this.dailyDoubleNum2 === this.questionCounter) {
+    //   this.router.navigateByUrl("dailyD");
+    // }
   }
   public launchDailyDouble(maximum, minimum): number {
     const randomNum =
@@ -266,319 +268,64 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
   }
   public disableButton(categoryObject, val, sessionKey) {
     categoryObject[val].disabled = true;
-    sessionStorage.setItem(sessionKey, JSON.stringify(this.category1));
+    console.log('category object is ', categoryObject)
   }
-
-  public userButtonClicked(event): void {
-    this.navigateToScore();
-    this.btnPressed = (event.target as Element).id;
-    switch (this.btnPressed) {
-      case "cat1-btn1":
-        this.startTimer();
-        this.modalId = "cat1";
-        this.cat = this.traverseCategories(this.category1, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category1,
-          0
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category1, 0, "category1");
-        }, 2000);
-        break;
-      case "cat1-btn2":
-        this.startTimer();
-        this.modalId = "cat2";
-        this.cat = this.traverseCategories(this.category1, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category1,
-          1
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category1, 1, "category1");
-        }, 2000);
-        break;
-      case "cat1-btn3":
-        this.startTimer();
-        this.modalId = "cat3";
-        this.cat = this.traverseCategories(this.category1, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category1,
-          2
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category1, 2, "category1");
-        }, 2000);
-        break;
-      case "cat1-btn4":
-        this.modalId = "cat4";
-        this.cat = this.traverseCategories(this.category1, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category1,
-          3
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category1, 3, "category1");
-        }, 2000);
-        break;
-      case "cat1-btn5":
-        this.modalId = "cat5";
-        this.cat = this.traverseCategories(this.category1, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category1,
-          4
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category1, 4, "category1");
-        }, 2000);
-        break;
-      case "cat2-btn1":
-        this.modalId = "cat1a";
-        this.cat = this.traverseCategories(this.category2, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category2,
-          0
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category2, 0, "category2");
-        }, 2000);
-        break;
-      case "cat2-btn2":
-        this.modalId = "cat2a";
-        this.cat = this.traverseCategories(this.category2, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category2,
-          1
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category2, 1, "category2");
-        }, 2000);
-        break;
-      case "cat2-btn3":
-        this.modalId = "cat3a";
-        this.cat = this.traverseCategories(this.category2, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category2,
-          2
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category2, 2, "category2");
-        }, 2000);
-        break;
-      case "cat2-btn4":
-        this.modalId = "cat4a";
-        this.cat = this.traverseCategories(this.category2, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category2,
-          3
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category2, 3, "category2");
-        }, 2000);
-        break;
-      case "cat2-btn5":
-        this.modalId = "cat5a";
-        this.cat = this.traverseCategories(this.category2, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category2,
-          4
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category2, 4, "category2");
-        }, 2000);
-        break;
-      case "cat3-btn1":
-        this.modalId = "cat1b";
-        this.cat = this.traverseCategories(this.category3, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category3,
-          0
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category3, 0, "category3");
-        }, 2000);
-        break;
-      case "cat3-btn2":
-        this.modalId = "cat2b";
-        this.cat = this.traverseCategories(this.category3, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category3,
-          1
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category3, 1, "category3");
-        }, 2000);
-        break;
-      case "cat3-btn3":
-        this.modalId = "cat3b";
-        this.cat = this.traverseCategories(this.category3, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category3,
-          2
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category3, 2, "category3");
-        }, 2000);
-        break;
-      case "cat3-btn4":
-        this.modalId = "cat4b";
-        this.cat = this.traverseCategories(this.category3, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category3,
-          3
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category3, 3, "category3");
-        }, 2000);
-        break;
-      case "cat3-btn5":
-        this.modalId = "cat5b";
-        this.cat = this.traverseCategories(this.category3, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category3,
-          4
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category3, 4, "category3");
-        }, 2000);
-        break;
-      case "cat4-btn1":
-        this.modalId = "cat1aa";
-        this.cat = this.traverseCategories(this.category4, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category4,
-          0
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category4, 0, "category4");
-        }, 2000);
-        break;
-      case "cat4-btn2":
-        this.modalId = "cat2aa";
-        this.cat = this.traverseCategories(this.category4, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category4,
-          1
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category4, 1, "category4");
-        }, 2000);
-        break;
-      case "cat4-btn3":
-        this.modalId = "cat3aa";
-        this.cat = this.traverseCategories(this.category4, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category4,
-          2
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category4, 2, "category4");
-        }, 2000);
-        break;
-      case "cat4-btn4":
-        this.modalId = "cat4aa";
-        this.cat = this.traverseCategories(this.category4, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category4,
-          3
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category4, 3, "category4");
-        }, 2000);
-        break;
-      case "cat4-btn5":
-        this.modalId = "cat5aa";
-        this.cat = this.traverseCategories(this.category4, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category4,
-          4
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category4, 4, "category4");
-        }, 2000);
-        break;
-      case "cat5-btn1":
-        this.modalId = "cat1bb";
-        this.cat = this.traverseCategories(this.category5, 0).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category5,
-          0
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category5, 0, "category5");
-        }, 2000);
-        break;
-      case "cat5-btn2":
-        this.modalId = "cat2bb";
-        this.cat = this.traverseCategories(this.category5, 1).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category5,
-          1
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category5, 1, "category5");
-        }, 2000);
-        break;
-      case "cat5-btn3":
-        this.modalId = "cat3bb";
-        this.cat = this.traverseCategories(this.category5, 2).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category5,
-          2
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category5, 2, "category5");
-        }, 2000);
-        break;
-      case "cat5-btn4":
-        this.modalId = "cat4bb";
-        this.cat = this.traverseCategories(this.category5, 3).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category5,
-          3
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category5, 3, "category5");
-        }, 2000);
-        break;
-      case "cat5-btn5":
-        this.modalId = "cat5bb";
-        this.cat = this.traverseCategories(this.category5, 4).categoryQuestion;
-        this.incorrectAnswers = this.traverseCategories(
-          this.category5,
-          4
-        ).incorrectOptions;
-        this.questionCounter++;
-        setTimeout(() => {
-          this.disableButton(this.category5, 4, "category5");
-        }, 2000);
-        break;
+  public getArrValToPass(event) {
+    let arrVal = 0;
+    let sessionKey = '';
+    // tslint:disable-next-line:radix
+    const value = parseInt(event.target.getAttribute('value'));
+    if (value === 100) {
+      arrVal = 0;
+      sessionKey = "category1";
+    } else if (value === 200) {
+      arrVal = 1;
+      sessionKey = "category2"
+    } else if (value === 300) {
+      arrVal = 2;
+      sessionKey = "category3";
+    } else if (value === 400) {
+      arrVal = 3;
+      sessionKey = "category4";
+    } else if (value === 500) {
+      arrVal = 4;
+      sessionKey = "category5"
     }
+    return {
+      arrVal,
+      sessionKey
+    };
+  }
+  public returnCategory(event): object {
+    const btnCat = event.target.getAttribute('category');
+    if (btnCat === 'this.category1') {
+      return this.category1;
+    } else if (btnCat === 'this.category2') {
+      return this.category2;
+    } else if (btnCat === 'this.category3') {
+      return this.category3;
+    } else if (btnCat === 'this.category4') {
+      return this.category4;
+    } else if (btnCat === 'this.category5') {
+      return this.category5;
+    }
+  }
+  public clickButtonTakeAction(event): void {
+    this.navigateToScore();
+    const category = this.returnCategory(event);
+    const arrVal = this.getArrValToPass(event).arrVal;
+    const sessKey =  this.getArrValToPass(event).sessionKey;
+    this.btnPressed = (event.target as Element).id;
+    this.modalId = event.target.getAttribute('data-target').substr(1);
+    this.cat = this.traverseCategories(category, arrVal).categoryQuestion;
+    this.incorrectAnswers = this.traverseCategories(
+      category, arrVal).incorrectOptions;
+    this.questionCounter++;
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
+    setTimeout(() => {
+      this.disableButton(category, arrVal, sessKey);
+    }, 2000);
   }
   public onSelectionChange(event): void {
     this.userChoice = event.target.value;

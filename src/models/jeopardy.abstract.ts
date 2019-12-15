@@ -12,8 +12,10 @@ export abstract class Jeopardy {
     abstract launchDailyDouble(num, num2): number;
     abstract traverseCategories(category, index): object;
     abstract disableButton(catobject, val, sessionKey): void;
-    abstract userButtonClicked(event$): void;
+    abstract clickButtonTakeAction(event$): void;
     abstract onSelectionChange(event$): void;
     abstract checkAnswersGiveDollars2(buttonArr, cat): void;
     abstract checkAnswerGiveDollars(): void;
+    abstract returnCategory(event): object;
+    abstract getArrValToPass(event): object;
 }
