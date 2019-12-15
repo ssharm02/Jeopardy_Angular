@@ -17,5 +17,5 @@ export abstract class Jeopardy {
     abstract checkAnswersGiveDollars2(buttonArr, cat): void;
     abstract checkAnswerGiveDollars(): void;
     abstract returnCategory(event): object;
-    abstract getArrValToPass(event): object;
+    abstract getArrValToPass(event): number;
 }

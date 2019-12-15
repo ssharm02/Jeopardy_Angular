@@ -9,7 +9,6 @@ import { LogMeIn } from "../login/login.component";
 import { Jeopardy } from '../models/jeopardy.abstract';
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
-import { R3TargetBinder } from '@angular/compiler';
 
 @Component({
   selector: "jeo-questions",
@@ -266,35 +265,25 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
       disabledButton
     };
   }
-  public disableButton(categoryObject, val, sessionKey) {
+  public disableButton(categoryObject, val) {
     categoryObject[val].disabled = true;
-    console.log('category object is ', categoryObject)
   }
-  public getArrValToPass(event) {
+  public getArrValToPass(event): number {
     let arrVal = 0;
-    let sessionKey = '';
     // tslint:disable-next-line:radix
     const value = parseInt(event.target.getAttribute('value'));
     if (value === 100) {
       arrVal = 0;
-      sessionKey = "category1";
     } else if (value === 200) {
       arrVal = 1;
-      sessionKey = "category2"
     } else if (value === 300) {
       arrVal = 2;
-      sessionKey = "category3";
     } else if (value === 400) {
       arrVal = 3;
-      sessionKey = "category4";
     } else if (value === 500) {
       arrVal = 4;
-      sessionKey = "category5"
     }
-    return {
-      arrVal,
-      sessionKey
-    };
+    return arrVal;
   }
   public returnCategory(event): object {
     const btnCat = event.target.getAttribute('category');
@@ -310,11 +299,27 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
       return this.category5;
     }
   }
+  public disableSessionButtons(event) {
+    const btnCat = event.target.getAttribute('category');
+    const category = this.returnCategory(event);
+    console.log('category', category)
+    if (btnCat === 'this.category1') {
+      sessionStorage.setItem("category1", JSON.stringify(category));
+    } else if (btnCat === 'this.category2') {
+      sessionStorage.setItem("category2", JSON.stringify(category));
+    } else if (btnCat === 'this.category3') {
+      sessionStorage.setItem("category3", JSON.stringify(category));
+    } else if (btnCat === 'this.category4') {
+      sessionStorage.setItem("category4", JSON.stringify(category));
+    } else if (btnCat === 'this.category5') {
+      sessionStorage.setItem("category5", JSON.stringify(category));
+    }
+  }
   public clickButtonTakeAction(event): void {
     this.navigateToScore();
+    
     const category = this.returnCategory(event);
-    const arrVal = this.getArrValToPass(event).arrVal;
-    const sessKey =  this.getArrValToPass(event).sessionKey;
+    const arrVal = this.getArrValToPass(event);
     this.btnPressed = (event.target as Element).id;
     this.modalId = event.target.getAttribute('data-target').substr(1);
     this.cat = this.traverseCategories(category, arrVal).categoryQuestion;
@@ -324,7 +329,8 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
     setTimeout(() => {
-      this.disableButton(category, arrVal, sessKey);
+      this.disableButton(category, arrVal);
+      this.disableSessionButtons(event);
     }, 2000);
   }
   public onSelectionChange(event): void {
