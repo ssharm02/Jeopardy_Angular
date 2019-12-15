@@ -17,7 +17,7 @@ import { User } from "../models/User";
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
+export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
   // Move all fieds to a seperate class
   public jeoSub: Subscription;
   public nameSub: Subscription;
@@ -124,14 +124,12 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
     if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
       this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
     }
-    console.log(this.name$);
     let name = this.getSessionStorage();
     if (this.name$ === "Default Player") {
       this.name$ = name;
     }
     console.log("daily double 1 is ", this.dailyDoubleNum1);
     console.log("daily double 2 is ", this.dailyDoubleNum2);
-    console.log("session name is ", this.getSessionStorage());
   }
   ngOnDestroy(): void {
     // this.jeoSub.unsubscribe();
@@ -302,7 +300,6 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
   public disableSessionButtons(event) {
     const btnCat = event.target.getAttribute('category');
     const category = this.returnCategory(event);
-    console.log('category', category)
     if (btnCat === 'this.category1') {
       sessionStorage.setItem("category1", JSON.stringify(category));
     } else if (btnCat === 'this.category2') {
@@ -317,7 +314,6 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy  {
   }
   public clickButtonTakeAction(event): void {
     this.navigateToScore();
-    
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
     this.btnPressed = (event.target as Element).id;
