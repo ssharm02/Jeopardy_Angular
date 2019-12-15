@@ -10,11 +10,8 @@ Features:
 
 
 ## TODO
-* Implement state management and persistance for username, user score, disabled buttons, categories and questions displayed
-* Clean up code --- follow clean code practices
 * Implement mongoDB or firebase to save user names and high scores 
 * Make scoring page more attractive
-* Add daily double
 * Fix various bugs (repeating categories etc)
 
 <img src="jeopardyGif.gif?raw=true" width="600px">
