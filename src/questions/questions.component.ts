@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, Subscription, timer } from "rxjs";
 import { map, take } from "rxjs/operators";
@@ -6,7 +13,7 @@ import { JeopardyService } from "src/services/getQuestions";
 import { UserInfoService } from "src/services/getUserInfo";
 
 import { LogMeIn } from "../login/login.component";
-import { Jeopardy } from '../models/jeopardy.abstract';
+import { Jeopardy } from "../models/jeopardy.abstract";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 
@@ -115,16 +122,22 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       "category4" in sessionStorage &&
       "category5" in sessionStorage
     ) {
-      this.getSessionStorageData();
+      this.getSessionDailyD();
+      this.getSessionAllQuestions();
+      this.getSessionCat1();
+      this.getSessionCat2();
+      this.getSessionCat3();
+      this.getSessionCat4();
+      this.getSessionCat5();
+      this.getSessionCounter();
     } else {
       this.manipulateObject();
+      this.fetchApiData();
     }
-    this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
-    this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
-    if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
-      this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
+    if ("dailyDouble1" in sessionStorage && "dailyDouble2" in sessionStorage) {
     }
-    let name = this.getSessionStorage();
+    const name = this.getSessionStorageName();
+    this.userScore = this.getSessionStorageScore();
     if (this.name$ === "Default Player") {
       this.name$ = name;
     }
@@ -135,9 +148,14 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
     // this.jeoSub.unsubscribe();
     // this.nameSub.unsubscribe();
   }
-  public getSessionStorage(): string {
+  public getSessionStorageName(): string {
     const sessionName = sessionStorage.getItem("name");
     return sessionName;
+  }
+  public getSessionStorageScore(): number {
+    // tslint:disable-next-line: radix
+    const userDollars =  this.userScore = parseInt(sessionStorage.getItem('userDollars'));
+    return userDollars;
   }
   public startTimer() {
     this.timeLeft = 15;
@@ -145,7 +163,7 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
-        // this.closeModalEvent.emit(false);
+        this.closeModalEvent.emit(false);
       }
     }, 1000);
   }
@@ -159,24 +177,40 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       return this.allQuestions;
     });
   }
-  public getSessionStorageData() {
+  public getSessionDailyD(): void {
     this.showSpinner = false;
-    this.allQuestions = JSON.parse(sessionStorage.getItem("allQuestions"));
-    this.category1 = JSON.parse(sessionStorage.getItem("category1"));
-    this.category2 = JSON.parse(sessionStorage.getItem("category2"));
-    this.category3 = JSON.parse(sessionStorage.getItem("category3"));
-    this.category4 = JSON.parse(sessionStorage.getItem("category4"));
-    this.category5 = JSON.parse(sessionStorage.getItem("category5"));
-    this.questionCounter = JSON.parse(
-      sessionStorage.getItem("questionCounter")
-    );
     this.dailyDoubleNum1 = JSON.parse(sessionStorage.getItem("dailyDouble1"));
     this.dailyDoubleNum2 = JSON.parse(sessionStorage.getItem("dailyDouble2"));
   }
-  public manipulateObject() {
+  public getSessionAllQuestions(): void {
+    this.allQuestions = JSON.parse(sessionStorage.getItem("allQuestions"));
+  }
+  public getSessionCat1(): void {
+    this.category1 = JSON.parse(sessionStorage.getItem("category1"));
+  }
+  public getSessionCat2(): void {
+    this.category2 = JSON.parse(sessionStorage.getItem("category2"));
+  }
+  public getSessionCat3(): void {
+    this.category3 = JSON.parse(sessionStorage.getItem("category3"));
+  }
+  public getSessionCat4(): void {
+    this.category4 = JSON.parse(sessionStorage.getItem("category4"));
+  }
+  public getSessionCat5(): void {
+    this.category5 = JSON.parse(sessionStorage.getItem("category5"));
+  }
+  public getSessionCounter(): void {
+    this.questionCounter = JSON.parse(
+      sessionStorage.getItem("questionCounter")
+    );
+  }
+  public fetchApiData() {
     for (let i = 0; i <= this.GET_QUESTIONS; i++) {
       this.getServiceData();
     }
+  }
+  public manipulateObject() {
     setTimeout(() => {
       this.category1 = this.allQuestions[0];
       this.category2 = this.allQuestions[1];
@@ -195,6 +229,19 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       sessionStorage.setItem("category3", JSON.stringify(this.category3));
       sessionStorage.setItem("category4", JSON.stringify(this.category4));
       sessionStorage.setItem("category5", JSON.stringify(this.category5));
+      this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
+      this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
+      sessionStorage.setItem(
+        "dailyDouble1",
+        JSON.stringify(this.dailyDoubleNum1)
+      );
+      sessionStorage.setItem(
+        "dailyDouble2",
+        JSON.stringify(this.dailyDoubleNum2)
+      );
+      if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
+        this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
+      }
     }, 5000);
   }
 
@@ -230,6 +277,8 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
   }
   public navigateToScore(): void {
     if (this.questionCounter === 25) {
+      console.log("moving to score screen");
+      console.log("question counter ", this.questionCounter);
       this.getUserInfoService.getUserScore(this.userScore);
       this.router.navigateByUrl("/userScore");
     }
@@ -269,7 +318,7 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
   public getArrValToPass(event): number {
     let arrVal = 0;
     // tslint:disable-next-line:radix
-    const value = parseInt(event.target.getAttribute('value'));
+    const value = parseInt(event.target.getAttribute("value"));
     if (value === 100) {
       arrVal = 0;
     } else if (value === 200) {
@@ -284,44 +333,47 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
     return arrVal;
   }
   public returnCategory(event): object {
-    const btnCat = event.target.getAttribute('category');
-    if (btnCat === 'this.category1') {
+    const btnCat = event.target.getAttribute("category");
+    if (btnCat === "this.category1") {
       return this.category1;
-    } else if (btnCat === 'this.category2') {
+    } else if (btnCat === "this.category2") {
       return this.category2;
-    } else if (btnCat === 'this.category3') {
+    } else if (btnCat === "this.category3") {
       return this.category3;
-    } else if (btnCat === 'this.category4') {
+    } else if (btnCat === "this.category4") {
       return this.category4;
-    } else if (btnCat === 'this.category5') {
+    } else if (btnCat === "this.category5") {
       return this.category5;
     }
   }
   public disableSessionButtons(event) {
-    const btnCat = event.target.getAttribute('category');
+    const btnCat = event.target.getAttribute("category");
     const category = this.returnCategory(event);
-    if (btnCat === 'this.category1') {
+    if (btnCat === "this.category1") {
       sessionStorage.setItem("category1", JSON.stringify(category));
-    } else if (btnCat === 'this.category2') {
+    } else if (btnCat === "this.category2") {
       sessionStorage.setItem("category2", JSON.stringify(category));
-    } else if (btnCat === 'this.category3') {
+    } else if (btnCat === "this.category3") {
       sessionStorage.setItem("category3", JSON.stringify(category));
-    } else if (btnCat === 'this.category4') {
+    } else if (btnCat === "this.category4") {
       sessionStorage.setItem("category4", JSON.stringify(category));
-    } else if (btnCat === 'this.category5') {
+    } else if (btnCat === "this.category5") {
       sessionStorage.setItem("category5", JSON.stringify(category));
     }
   }
   public clickButtonTakeAction(event): void {
-    this.navigateToScore();
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
+    this.navigateToScore();
+    this.questionCounter++;
     this.btnPressed = (event.target as Element).id;
-    this.modalId = event.target.getAttribute('data-target').substr(1);
+    this.modalId = event.target.getAttribute("data-target").substr(1);
     this.cat = this.traverseCategories(category, arrVal).categoryQuestion;
     this.incorrectAnswers = this.traverseCategories(
-      category, arrVal).incorrectOptions;
-    this.questionCounter++;
+      category,
+      arrVal
+    ).incorrectOptions;
+    this.startTimer();
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
     setTimeout(() => {
@@ -356,13 +408,27 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       "questionCounter",
       JSON.stringify(this.questionCounter)
     );
-    sessionStorage.setItem(
-      "dailyDouble1",
-      JSON.stringify(this.dailyDoubleNum1)
-    );
-    sessionStorage.setItem(
-      "dailyDouble2",
-      JSON.stringify(this.dailyDoubleNum2)
-    );
   }
 }
+/*
+
+
+function sleepPromise(ms)
+{
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function sleep()
+{
+    while(true)
+    {
+        // do something
+        await sleepPromise(2000);   // Sleep desired amount of miliseconds
+        // break if needed
+        console.log('I have awakend.');
+    }
+}
+
+sleep();
+
+*/

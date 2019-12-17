@@ -27,4 +27,9 @@ export class ScoreComponent implements OnInit, OnDestroy {
   public getUrl(): string {
     return 'url(\'../assets/images/cashmoney.jpg\')';
   }
+  public backToMain() {
+    console.log('clearing session storage')
+    this.router.navigateByUrl('')
+    sessionStorage.clear();
+  }
 }

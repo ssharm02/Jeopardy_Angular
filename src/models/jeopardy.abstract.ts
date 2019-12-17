@@ -1,5 +1,8 @@
+import { ValueProvider } from '@angular/core';
+
 export abstract class Jeopardy {
-    abstract getSessionStorage(): string;
+    abstract getSessionStorageName(): string;
+    abstract getSessionStorageScore(): number;
     abstract startTimer(): void;
     abstract getServiceData(): void;
     abstract manipulateObject(): void;
@@ -18,4 +21,13 @@ export abstract class Jeopardy {
     abstract checkAnswerGiveDollars(): void;
     abstract returnCategory(event): object;
     abstract getArrValToPass(event): number;
+    abstract fetchApiData(): void;
+    abstract getSessionDailyD(): void;
+    abstract getSessionAllQuestions(): void;
+    abstract getSessionCat1(): void;
+    abstract getSessionCat2(): void;
+    abstract getSessionCat3(): void;
+    abstract getSessionCat4(): void;
+    abstract getSessionCat5(): void;
+
 }
