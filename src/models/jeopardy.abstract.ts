@@ -2,7 +2,7 @@ import { ValueProvider } from '@angular/core';
 
 export abstract class Jeopardy {
     abstract getSessionStorageName(): string;
-    abstract getSessionStorageScore(): number;
+    abstract getSessionStorageScore(): void;
     abstract startTimer(): void;
     abstract getServiceData(): void;
     abstract manipulateObject(): void;

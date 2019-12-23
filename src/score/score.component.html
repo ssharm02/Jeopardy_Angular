@@ -1,32 +1,39 @@
-<div class="scoreBackground">
-<body [ngStyle]="{'background-image': getUrl()}">
-<table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">User Name</th>
-            <th scope="col">Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>{{name$}}</td>
-            <td>{{score$}}</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>$500</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>-$1000</td>
-          </tr>
-        </tbody>
-      </table>
-      </body>
-      
-        <button id="login-button" (click)="backToMain()">Back to Main Page</button>
+<div class="scoreBackground" [ngStyle]="{ 'background-image': getUrl() }">
+  <div class="UserData">
+    <div class="messageToPlayer">
+      <h1>Thanks for Playing Jeopardy!</h1>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr class="text-center align-middle">
+          <th scope="col">#</th>
+          <th scope="col">User Name</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="text-center align-middle">
+          <th scope="row">1</th>
+          <td>{{ name$ }}</td>
+          <td>{{ score$ }}</td>
+        </tr>
+        <tr class="text-center align-middle">
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>$500</td>
+        </tr>
+        <tr class="text-center align-middle">
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>-$1000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="buttonContainer">
+    <button class="btn btn-primary" id="login-button" (click)="backToMain()">
+      Back to Main Page
+    </button>
+  </div>
 </div>

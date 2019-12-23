@@ -1,4 +1,20 @@
-.background {
-    background-repeat:no-repeat;
-    background-size:cover;
-  }
+.scoreBackground {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 105%;
+  height: 105%;
+}
+
+h1 {
+  color: #ffffff;
+  text-align: center;
+}
+
+table tr {
+  font-size: 15px;
+  color: #ffffff;
+}
+.buttonContainer {
+  text-align: center;
+}

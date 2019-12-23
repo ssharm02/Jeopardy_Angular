@@ -46,7 +46,6 @@ export class JeopardyService {
     this.categoryArray.splice(num, 1);
     this.randomizeArray(this.categoryArray).then(() => {
       this.spliceArray(this.categoryArray);
-      console.log("final spliced array is ", this.categoryArray);
     });
     return this.categoryArray[
       Math.floor(Math.random() * this.categoryArray.length)

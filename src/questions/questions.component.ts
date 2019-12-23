@@ -11,7 +11,7 @@ import { Observable, Subscription, timer } from "rxjs";
 import { map, take } from "rxjs/operators";
 import { JeopardyService } from "src/services/getQuestions";
 import { UserInfoService } from "src/services/getUserInfo";
-
+import { JeopardyBoard } from "../models/JeopardyBoard";
 import { LogMeIn } from "../login/login.component";
 import { Jeopardy } from "../models/jeopardy.abstract";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
@@ -24,7 +24,10 @@ import { User } from "../models/User";
 })
 
 // tslint:disable-next-line:component-class-suffix
-export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
+export class JeoQuestions extends Jeopardy
+  implements OnInit, OnDestroy, JeopardyBoard {
+  jeopardyboard: JeopardyBoard[];
+
   // Move all fieds to a seperate class
   public jeoSub: Subscription;
   public nameSub: Subscription;
@@ -115,12 +118,15 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log("on init is running now");
+    this.pickRandomCategory();
     if (
       "category1" in sessionStorage &&
       "category2" in sessionStorage &&
       "category3" in sessionStorage &&
       "category4" in sessionStorage &&
-      "category5" in sessionStorage
+      "category5" in sessionStorage &&
+      "userDollars" in sessionStorage
     ) {
       this.getSessionDailyD();
       this.getSessionAllQuestions();
@@ -130,14 +136,22 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       this.getSessionCat4();
       this.getSessionCat5();
       this.getSessionCounter();
+      this.getSessionStorageScore();
     } else {
       this.manipulateObject();
       this.fetchApiData();
     }
     if ("dailyDouble1" in sessionStorage && "dailyDouble2" in sessionStorage) {
+      console.log("daily double is in session");
     }
+    // if ("userDollars" in sessionStorage) {
+    //     this.getSessionStorageScore();
+    //     console.log('session dollars are ', this.userScore)
+    //     console.log('dollars are in session')
+    // }
     const name = this.getSessionStorageName();
-    this.userScore = this.getSessionStorageScore();
+    // tslint:disable-next-line:radix
+    // this.userScore = this.getSessionStorageScore();
     if (this.name$ === "Default Player") {
       this.name$ = name;
     }
@@ -152,10 +166,9 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
     const sessionName = sessionStorage.getItem("name");
     return sessionName;
   }
-  public getSessionStorageScore(): number {
+  public getSessionStorageScore(): void {
     // tslint:disable-next-line: radix
-    const userDollars =  this.userScore = parseInt(sessionStorage.getItem('userDollars'));
-    return userDollars;
+    this.userScore = parseInt(sessionStorage.getItem("userDollars"));
   }
   public startTimer() {
     this.timeLeft = 15;
@@ -223,6 +236,8 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
+      this.sendDailyDoubleToCat(this.category1, 2)
+      console.log('category 1 super modified ', this.category1)
       sessionStorage.setItem("allQuestions", JSON.stringify(this.allQuestions));
       sessionStorage.setItem("category1", JSON.stringify(this.category1));
       sessionStorage.setItem("category2", JSON.stringify(this.category2));
@@ -280,8 +295,12 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       console.log("moving to score screen");
       console.log("question counter ", this.questionCounter);
       this.getUserInfoService.getUserScore(this.userScore);
-      this.router.navigateByUrl("/userScore");
+      setTimeout(() => {
+        this.router.navigateByUrl("/userScore");
+      }, 10000);
     }
+  }
+  public redirectToDailyDouble(): void {
     // if (this.dailyDoubleNum1 === this.questionCounter) {
     //   this.router.navigateByUrl("dailyD");
     // }
@@ -294,7 +313,15 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
     return randomNum;
   }
-
+  public sendDailyDoubleToCat(data, ran) {
+    data.map(ele => (ele.dailyDouble = ran));
+    return data;
+  }
+  public pickRandomCategory() {
+    const randomCats = Math.floor(Math.random() * (5 - 3 + 1) + 3);
+    const randomCats2 = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+    const dailyD = Math.floor(Math.random() * (5 - 1 + 1) + 1);
+  }
   public traverseCategories(
     categoryX,
     i
@@ -364,8 +391,8 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
   public clickButtonTakeAction(event): void {
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
-    this.navigateToScore();
     this.questionCounter++;
+    this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
     this.modalId = event.target.getAttribute("data-target").substr(1);
     this.cat = this.traverseCategories(category, arrVal).categoryQuestion;
@@ -396,6 +423,17 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
       }
     }
   }
+
+  public pickRandomObject(questionArr) {
+    const keys = Object.keys(questionArr);
+    const n = keys.length;
+    const index = Math.floor(Math.random() * n);
+    const randomKey = keys[index];
+    const randomQuestion = questionArr[randomKey];
+    const randomQuestionIsDisabled = questionArr[randomKey].disabled;
+    return { randomQuestion, randomQuestionIsDisabled };
+  }
+
   public checkAnswerGiveDollars(): void {
     this.closeModalEvent.emit(false);
     this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
@@ -410,25 +448,3 @@ export class JeoQuestions extends Jeopardy implements OnInit, OnDestroy {
     );
   }
 }
-/*
-
-
-function sleepPromise(ms)
-{
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function sleep()
-{
-    while(true)
-    {
-        // do something
-        await sleepPromise(2000);   // Sleep desired amount of miliseconds
-        // break if needed
-        console.log('I have awakend.');
-    }
-}
-
-sleep();
-
-*/
