@@ -236,8 +236,9 @@ export class JeoQuestions extends Jeopardy
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
-      this.sendDailyDoubleToCat(this.category1, 2)
-      console.log('category 1 super modified ', this.category1)
+      this.sendDailyDoubleToCat(this.category1, 2);
+      console.log('category 2 is ', this.category1[2])
+      console.log("category 1 super modified ", this.category1);
       sessionStorage.setItem("allQuestions", JSON.stringify(this.allQuestions));
       sessionStorage.setItem("category1", JSON.stringify(this.category1));
       sessionStorage.setItem("category2", JSON.stringify(this.category2));
