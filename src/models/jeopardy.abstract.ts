@@ -6,7 +6,6 @@ export abstract class Jeopardy {
     abstract startTimer(): void;
     abstract getServiceData(): void;
     abstract manipulateObject(): void;
-    abstract parseHtmlEntities(str): string;
     abstract mutateObject(data): void;
     abstract filterCategories(data): void;
     abstract getUrl(): string;

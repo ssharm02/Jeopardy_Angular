@@ -4,7 +4,8 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  ChangeDetectorRef
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, Subscription, timer } from "rxjs";
@@ -16,6 +17,7 @@ import { LogMeIn } from "../login/login.component";
 import { Jeopardy } from "../models/jeopardy.abstract";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
+import * as _ from "underscore";
 
 @Component({
   selector: "jeo-questions",
@@ -103,13 +105,14 @@ export class JeoQuestions extends Jeopardy
     "cat5-btn5"
   ];
 
-  @ViewChild(LogMeIn) playerNameRef;
+  @ViewChild(LogMeIn, { static: false }) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
   constructor(
     public jeotest: JeopardyService,
     public getUserInfoService: UserInfoService,
-    private router: Router
+    private router: Router,
+    private ref: ChangeDetectorRef
   ) {
     super();
     this.getUserInfoService.currentMessage.subscribe(
@@ -118,7 +121,18 @@ export class JeoQuestions extends Jeopardy
   }
 
   ngOnInit(): void {
-    console.log("on init is running now");
+    let counter = 0;
+    if ("userDollars" in sessionStorage && this.userScore === 0) {
+      const updateScore = setInterval(() => {
+        this.userScore = this.getSessionStorageScore();
+        this.questionCounter = this.getSessionCounter();
+        this.ref.markForCheck();
+        counter++;
+        if (counter === 10) {
+          clearInterval(updateScore);
+        }
+      }, 100);
+    }
     this.pickRandomCategory();
     if (
       "category1" in sessionStorage &&
@@ -136,7 +150,6 @@ export class JeoQuestions extends Jeopardy
       this.getSessionCat4();
       this.getSessionCat5();
       this.getSessionCounter();
-      this.getSessionStorageScore();
     } else {
       this.manipulateObject();
       this.fetchApiData();
@@ -144,31 +157,24 @@ export class JeoQuestions extends Jeopardy
     if ("dailyDouble1" in sessionStorage && "dailyDouble2" in sessionStorage) {
       console.log("daily double is in session");
     }
-    // if ("userDollars" in sessionStorage) {
-    //     this.getSessionStorageScore();
-    //     console.log('session dollars are ', this.userScore)
-    //     console.log('dollars are in session')
-    // }
     const name = this.getSessionStorageName();
     // tslint:disable-next-line:radix
-    // this.userScore = this.getSessionStorageScore();
     if (this.name$ === "Default Player") {
       this.name$ = name;
     }
-    console.log("daily double 1 is ", this.dailyDoubleNum1);
-    console.log("daily double 2 is ", this.dailyDoubleNum2);
   }
   ngOnDestroy(): void {
-    // this.jeoSub.unsubscribe();
-    // this.nameSub.unsubscribe();
+    this.jeoSub.unsubscribe();
+    this.nameSub.unsubscribe();
   }
   public getSessionStorageName(): string {
     const sessionName = sessionStorage.getItem("name");
     return sessionName;
   }
-  public getSessionStorageScore(): void {
+  public getSessionStorageScore(): number {
     // tslint:disable-next-line: radix
-    this.userScore = parseInt(sessionStorage.getItem("userDollars"));
+    const sessionScore = parseInt(sessionStorage.getItem("userDollars"));
+    return sessionScore;
   }
   public startTimer() {
     this.timeLeft = 15;
@@ -184,7 +190,7 @@ export class JeoQuestions extends Jeopardy
     this.jeoSub = this.jeotest.getItems().subscribe(data => {
       setTimeout(() => {
         this.showSpinner = false;
-      }, 5000);
+      }, 7000);
 
       this.allQuestions.push(data);
       return this.allQuestions;
@@ -213,10 +219,9 @@ export class JeoQuestions extends Jeopardy
   public getSessionCat5(): void {
     this.category5 = JSON.parse(sessionStorage.getItem("category5"));
   }
-  public getSessionCounter(): void {
-    this.questionCounter = JSON.parse(
-      sessionStorage.getItem("questionCounter")
-    );
+  public getSessionCounter(): number {
+    const counter = JSON.parse(sessionStorage.getItem("questionCounter"));
+    return counter;
   }
   public fetchApiData() {
     for (let i = 0; i <= this.GET_QUESTIONS; i++) {
@@ -237,8 +242,6 @@ export class JeoQuestions extends Jeopardy
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
       this.sendDailyDoubleToCat(this.category1, 2);
-      console.log('category 2 is ', this.category1[2])
-      console.log("category 1 super modified ", this.category1);
       sessionStorage.setItem("allQuestions", JSON.stringify(this.allQuestions));
       sessionStorage.setItem("category1", JSON.stringify(this.category1));
       sessionStorage.setItem("category2", JSON.stringify(this.category2));
@@ -258,19 +261,12 @@ export class JeoQuestions extends Jeopardy
       if (this.dailyDoubleNum1 === this.dailyDoubleNum2) {
         this.dailyDoubleNum1 = this.launchDailyDouble(22, 1);
       }
-    }, 5000);
+    }, 7000);
   }
 
-  public parseHtmlEntities(str): string {
-    str = str.replace(/&/g, "&amp;");
-    str = str.replace(/>/g, "&gt;");
-    str = str.replace(/</g, "&lt;");
-    str = str.replace(/"/g, "&quot;");
-    str = str.replace(/'/g, "&#039;");
-    return str;
-  }
   public mutateObject(data) {
     data.forEach(e => {
+      e.question = _.unescape(e.question);
       e.incorrect_answers.push(e.correct_answer);
     });
     data.map(ele => (ele.disabled = false));
@@ -393,6 +389,10 @@ export class JeoQuestions extends Jeopardy
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
     this.questionCounter++;
+    sessionStorage.setItem(
+      "questionCounter",
+      JSON.stringify(this.questionCounter)
+    );
     this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
     this.modalId = event.target.getAttribute("data-target").substr(1);
@@ -436,6 +436,7 @@ export class JeoQuestions extends Jeopardy
   }
 
   public checkAnswerGiveDollars(): void {
+    console.log("question counter is ", this.questionCounter);
     this.closeModalEvent.emit(false);
     this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
     this.checkAnswersGiveDollars2(this.catTwobuttonArray, this.category2);
@@ -443,9 +444,5 @@ export class JeoQuestions extends Jeopardy
     this.checkAnswersGiveDollars2(this.catFourbuttonArray, this.category4);
     this.checkAnswersGiveDollars2(this.catFivebuttonArray, this.category5);
     sessionStorage.setItem("userDollars", JSON.stringify(this.userScore));
-    sessionStorage.setItem(
-      "questionCounter",
-      JSON.stringify(this.questionCounter)
-    );
   }
 }

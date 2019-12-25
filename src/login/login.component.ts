@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ["./login.component.css"]
 })
 export class LogMeIn implements OnInit {
-  @ViewChild("nameInput") nameInput: ElementRef;
+  @ViewChild("nameInput", { static: true }) nameInput: ElementRef;
   @Input() public playerName: string;
   loginForm: FormGroup;
   submitted = false;
