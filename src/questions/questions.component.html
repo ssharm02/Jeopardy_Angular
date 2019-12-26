@@ -152,6 +152,7 @@
 
     <div
       *ngFor="let item of category1; let i = index"
+      [hidden]="IsmodelShow"
       class="modal fade"
       id="{{ modalId }}"
       tabindex="-1"

@@ -19,6 +19,7 @@ import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 import * as _ from "underscore";
 
+
 @Component({
   selector: "jeo-questions",
   templateUrl: "./questions.component.html",
@@ -34,9 +35,10 @@ export class JeoQuestions extends Jeopardy
   public jeoSub: Subscription;
   public nameSub: Subscription;
   public subscription: Subscription;
-
+  public $: any;
   public showSpinner = true;
   public timer = false;
+  public IsmodelShow = false;
   public GET_QUESTIONS = 4;
   public questionCounter = 0;
   public dollarAmount = 0;
@@ -105,7 +107,6 @@ export class JeoQuestions extends Jeopardy
     "cat5-btn4",
     "cat5-btn5"
   ];
-
   @ViewChild(LogMeIn, { static: false }) playerNameRef;
   @Output() closeModalEvent = new EventEmitter<boolean>();
 
@@ -181,17 +182,15 @@ export class JeoQuestions extends Jeopardy
     this.timeLeft = 15;
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
-        console.log('timeleft is ', this.timeLeft)
         this.timeLeft--;
         if (this.timer) {
-          console.log('stopping timer')
           clearInterval(this.interval);
-          this.closeModalEvent.emit(false);
           this.timer = false;
         }
       }
     }, 1000);
   }
+
   public getServiceData() {
     this.jeoSub = this.jeotest.getItems().subscribe(data => {
       setTimeout(() => {
