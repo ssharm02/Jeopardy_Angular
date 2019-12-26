@@ -36,6 +36,7 @@ export class JeoQuestions extends Jeopardy
   public subscription: Subscription;
 
   public showSpinner = true;
+  public timer = false;
   public GET_QUESTIONS = 4;
   public questionCounter = 0;
   public dollarAmount = 0;
@@ -180,9 +181,14 @@ export class JeoQuestions extends Jeopardy
     this.timeLeft = 15;
     this.interval = setInterval(() => {
       if (this.timeLeft > 0) {
+        console.log('timeleft is ', this.timeLeft)
         this.timeLeft--;
-      } else {
-        this.closeModalEvent.emit(false);
+        if (this.timer) {
+          console.log('stopping timer')
+          clearInterval(this.interval);
+          this.closeModalEvent.emit(false);
+          this.timer = false;
+        }
       }
     }, 1000);
   }
@@ -436,6 +442,7 @@ export class JeoQuestions extends Jeopardy
   }
 
   public checkAnswerGiveDollars(): void {
+    this.timer = true;
     console.log("question counter is ", this.questionCounter);
     this.closeModalEvent.emit(false);
     this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
