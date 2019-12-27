@@ -5,7 +5,8 @@ import {
   OnInit,
   Output,
   ViewChild,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ElementRef
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, Subscription, timer } from "rxjs";
@@ -18,6 +19,7 @@ import { Jeopardy } from "../models/jeopardy.abstract";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 import * as _ from "underscore";
+import { FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -35,10 +37,10 @@ export class JeoQuestions extends Jeopardy
   public jeoSub: Subscription;
   public nameSub: Subscription;
   public subscription: Subscription;
-  public $: any;
   public showSpinner = true;
   public timer = false;
   public IsmodelShow = false;
+  public successBtn = false;
   public GET_QUESTIONS = 4;
   public questionCounter = 0;
   public dollarAmount = 0;
@@ -68,7 +70,6 @@ export class JeoQuestions extends Jeopardy
   public name$: any;
   public counter$: Observable<number>;
   public timeLeft;
-  public interval;
   public dailyDoubleNum1: number;
   public dailyDoubleNum2: number;
 
@@ -108,13 +109,14 @@ export class JeoQuestions extends Jeopardy
     "cat5-btn5"
   ];
   @ViewChild(LogMeIn, { static: false }) playerNameRef;
-  @Output() closeModalEvent = new EventEmitter<boolean>();
+  @ViewChild('savebutton', {static: false}) savebutton: ElementRef;
 
   constructor(
     public jeotest: JeopardyService,
     public getUserInfoService: UserInfoService,
     private router: Router,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private fb: FormBuilder
   ) {
     super();
     this.getUserInfoService.currentMessage.subscribe(
@@ -178,15 +180,20 @@ export class JeoQuestions extends Jeopardy
     const sessionScore = parseInt(sessionStorage.getItem("userDollars"));
     return sessionScore;
   }
+  // TODO add logic to close the modal
   public startTimer() {
+    console.log('start timer func is running')
     this.timeLeft = 15;
-    this.interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
-        if (this.timer) {
-          clearInterval(this.interval);
-          this.timer = false;
-        }
+      }
+      if (this.timeLeft === 0) {
+        console.log('stopping interval')
+        this.savebutton.nativeElement.click();
+        console.log('clicking btn again and again')
+        clearInterval(interval);
+        // this.timer = false;
       }
     }, 1000);
   }
@@ -233,6 +240,24 @@ export class JeoQuestions extends Jeopardy
       this.getServiceData();
     }
   }
+  public setAllQuestions(): void {
+    sessionStorage.setItem("allQuestions", JSON.stringify(this.allQuestions));
+  }
+  public setCat1(): void {
+    sessionStorage.setItem("category1", JSON.stringify(this.category1));
+  }
+  public setCat2(): void {
+    sessionStorage.setItem("category2", JSON.stringify(this.category2));
+  }
+  public setCat3(): void {
+    sessionStorage.setItem("category3", JSON.stringify(this.category3));
+  }
+  public setCat4(): void {
+    sessionStorage.setItem("category4", JSON.stringify(this.category4));
+  }
+  public setCat5(): void {
+    sessionStorage.setItem("category5", JSON.stringify(this.category5));
+  }
   public manipulateObject() {
     setTimeout(() => {
       this.category1 = this.allQuestions[0];
@@ -246,13 +271,13 @@ export class JeoQuestions extends Jeopardy
       this.mutateObject(this.category3);
       this.mutateObject(this.category4);
       this.mutateObject(this.category5);
+      this.setAllQuestions();
+      this.setCat1();
+      this.setCat2();
+      this.setCat3();
+      this.setCat4();
+      this.setCat5();
       this.sendDailyDoubleToCat(this.category1, 2);
-      sessionStorage.setItem("allQuestions", JSON.stringify(this.allQuestions));
-      sessionStorage.setItem("category1", JSON.stringify(this.category1));
-      sessionStorage.setItem("category2", JSON.stringify(this.category2));
-      sessionStorage.setItem("category3", JSON.stringify(this.category3));
-      sessionStorage.setItem("category4", JSON.stringify(this.category4));
-      sessionStorage.setItem("category5", JSON.stringify(this.category5));
       this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
       this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
       sessionStorage.setItem(
@@ -391,6 +416,7 @@ export class JeoQuestions extends Jeopardy
     }
   }
   public clickButtonTakeAction(event): void {
+    event.preventDefault();
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
     this.questionCounter++;
@@ -398,6 +424,7 @@ export class JeoQuestions extends Jeopardy
       "questionCounter",
       JSON.stringify(this.questionCounter)
     );
+    this.startTimer();
     this.navigateToScore();
     this.btnPressed = (event.target as Element).id;
     this.modalId = event.target.getAttribute("data-target").substr(1);
@@ -406,7 +433,6 @@ export class JeoQuestions extends Jeopardy
       category,
       arrVal
     ).incorrectOptions;
-    this.startTimer();
     // tslint:disable-next-line:radix
     this.dollarAmount = parseInt(event.target.value);
     setTimeout(() => {
@@ -415,7 +441,7 @@ export class JeoQuestions extends Jeopardy
     }, 2000);
   }
   public onSelectionChange(event): void {
-    this.userChoice = event.target.value;
+    return this.userChoice = event.target.value;
   }
 
   public checkAnswersGiveDollars2(buttonArr, category): void {
@@ -440,10 +466,9 @@ export class JeoQuestions extends Jeopardy
     return { randomQuestion, randomQuestionIsDisabled };
   }
 
-  public checkAnswerGiveDollars(): void {
-    this.timer = true;
-    console.log("question counter is ", this.questionCounter);
-    this.closeModalEvent.emit(false);
+  public checkAnswerGiveDollars(event): void {
+    // this.timer = true;
+    this.successBtn = true;
     this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
     this.checkAnswersGiveDollars2(this.catTwobuttonArray, this.category2);
     this.checkAnswersGiveDollars2(this.catThreebuttonArray, this.category3);

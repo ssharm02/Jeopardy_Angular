@@ -33,7 +33,6 @@ export interface JeopardyBoard {
   name$: any;
   counter$: Observable<number>;
   timeLeft;
-  interval;
   dailyDoubleNum1: number;
   dailyDoubleNum2: number;
 }

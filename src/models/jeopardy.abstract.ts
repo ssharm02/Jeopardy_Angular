@@ -17,7 +17,7 @@ export abstract class Jeopardy {
     abstract clickButtonTakeAction(event$): void;
     abstract onSelectionChange(event$): void;
     abstract checkAnswersGiveDollars2(buttonArr, cat): void;
-    abstract checkAnswerGiveDollars(): void;
+    abstract checkAnswerGiveDollars(event): void;
     abstract returnCategory(event): object;
     abstract getArrValToPass(event): number;
     abstract fetchApiData(): void;

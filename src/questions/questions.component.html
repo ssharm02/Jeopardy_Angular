@@ -132,7 +132,7 @@
             <button
               type="button"
               id="cat5-btn{{ i + 1 }}"
-              (click)="clickButtonTakeAction($event)"
+              (click)="clickButtonTakeAction($event);"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -185,10 +185,12 @@
           <div class="modal-footer">
             <h2>{{ timeLeft }}</h2>
             <button
+              #savebutton
               type="button"
               class="btn btn-primary"
               data-dismiss="modal"
-              (click)="checkAnswerGiveDollars()"
+              id="suc-btn{{ i + 1 }}"
+              (click)="checkAnswerGiveDollars($event)"
             >
               Submit
             </button>
