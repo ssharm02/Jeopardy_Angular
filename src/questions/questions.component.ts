@@ -19,8 +19,7 @@ import { Jeopardy } from "../models/jeopardy.abstract";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 import * as _ from "underscore";
-import { FormBuilder } from '@angular/forms';
-
+import { FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "jeo-questions",
@@ -109,7 +108,7 @@ export class JeoQuestions extends Jeopardy
     "cat5-btn5"
   ];
   @ViewChild(LogMeIn, { static: false }) playerNameRef;
-  @ViewChild('savebutton', {static: false}) savebutton: ElementRef;
+  @ViewChild("savebutton", { static: false }) savebutton: ElementRef;
 
   constructor(
     public jeotest: JeopardyService,
@@ -180,22 +179,18 @@ export class JeoQuestions extends Jeopardy
     const sessionScore = parseInt(sessionStorage.getItem("userDollars"));
     return sessionScore;
   }
-  // TODO add logic to close the modal
   public startTimer() {
-    console.log('start timer func is running')
     this.timeLeft = 15;
     const interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       }
-      if (this.timeLeft === 0) {
-        console.log('stopping interval')
+      if (this.timer === true || this.timeLeft === 0) {
         this.savebutton.nativeElement.click();
-        console.log('clicking btn again and again')
         clearInterval(interval);
-        // this.timer = false;
       }
     }, 1000);
+    this.timer = false;
   }
 
   public getServiceData() {
@@ -441,7 +436,7 @@ export class JeoQuestions extends Jeopardy
     }, 2000);
   }
   public onSelectionChange(event): void {
-    return this.userChoice = event.target.value;
+    return (this.userChoice = event.target.value);
   }
 
   public checkAnswersGiveDollars2(buttonArr, category): void {
@@ -467,7 +462,7 @@ export class JeoQuestions extends Jeopardy
   }
 
   public checkAnswerGiveDollars(event): void {
-    // this.timer = true;
+    this.timer = true;
     this.successBtn = true;
     this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
     this.checkAnswersGiveDollars2(this.catTwobuttonArray, this.category2);
