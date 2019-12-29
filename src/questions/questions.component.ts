@@ -46,6 +46,9 @@ export class JeoQuestions extends Jeopardy
   public userScore = 0;
   public count = 60;
 
+  public correctAnswerCount = 0;
+  public incorrectAnswerCount = 0;
+
   public selectCategory: string;
   public modalId: string;
   public btnPressed: string;
@@ -129,6 +132,8 @@ export class JeoQuestions extends Jeopardy
       const updateScore = setInterval(() => {
         this.userScore = this.getSessionStorageScore();
         this.questionCounter = this.getSessionCounter();
+        this.correctAnswerCount = this.getCorrectAns();
+        this.incorrectAnswerCount = this.getIncorrectAns();
         this.ref.markForCheck();
         counter++;
         if (counter === 10) {
@@ -152,6 +157,8 @@ export class JeoQuestions extends Jeopardy
       this.getSessionCat3();
       this.getSessionCat4();
       this.getSessionCat5();
+      this.getCorrectAns();
+      this.getIncorrectAns();
       this.getSessionCounter();
     } else {
       this.manipulateObject();
@@ -185,7 +192,8 @@ export class JeoQuestions extends Jeopardy
       if (this.timeLeft > 0) {
         this.timeLeft--;
       }
-      if (this.timer === true || this.timeLeft === 0) {
+      if (this.timer || this.timeLeft === 0) {
+        this.timeLeft = 15;
         this.savebutton.nativeElement.click();
         clearInterval(interval);
       }
@@ -230,6 +238,14 @@ export class JeoQuestions extends Jeopardy
     const counter = JSON.parse(sessionStorage.getItem("questionCounter"));
     return counter;
   }
+  public getCorrectAns(): number {
+    const correctCount = JSON.parse(sessionStorage.getItem("correctAnsws"));
+    return correctCount;
+  }
+  public getIncorrectAns(): number {
+    const incorrectCount = JSON.parse(sessionStorage.getItem("incorrectAns"));
+    return incorrectCount;
+  }
   public fetchApiData() {
     for (let i = 0; i <= this.GET_QUESTIONS; i++) {
       this.getServiceData();
@@ -253,6 +269,18 @@ export class JeoQuestions extends Jeopardy
   public setCat5(): void {
     sessionStorage.setItem("category5", JSON.stringify(this.category5));
   }
+  public setCorrectAns(): void {
+    sessionStorage.setItem(
+      "correctAnsws",
+      JSON.stringify(this.correctAnswerCount)
+    );
+  }
+  public setIncorrectAns(): void {
+    sessionStorage.setItem(
+      "incorrectAns",
+      JSON.stringify(this.incorrectAnswerCount)
+    );
+  }
   public manipulateObject() {
     setTimeout(() => {
       this.category1 = this.allQuestions[0];
@@ -272,6 +300,7 @@ export class JeoQuestions extends Jeopardy
       this.setCat3();
       this.setCat4();
       this.setCat5();
+
       this.sendDailyDoubleToCat(this.category1, 2);
       this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
       this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
@@ -314,8 +343,6 @@ export class JeoQuestions extends Jeopardy
   }
   public navigateToScore(): void {
     if (this.questionCounter === 25) {
-      console.log("moving to score screen");
-      console.log("question counter ", this.questionCounter);
       this.getUserInfoService.getUserScore(this.userScore);
       setTimeout(() => {
         this.router.navigateByUrl("/userScore");
@@ -411,7 +438,7 @@ export class JeoQuestions extends Jeopardy
     }
   }
   public clickButtonTakeAction(event): void {
-    event.preventDefault();
+    // event.preventDefault();
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
     this.questionCounter++;
@@ -444,13 +471,31 @@ export class JeoQuestions extends Jeopardy
       if (this.btnPressed === buttonArr[i]) {
         if (this.userChoice === category[i].correct_answer) {
           this.userScore += this.dollarAmount;
+          this.setCorrectAns();
+          this.correctAnswerCount++;
         } else {
           this.userScore -= this.dollarAmount;
+          this.incorrectAnswerCount++;
+          this.setIncorrectAns();
         }
       }
     }
   }
 
+  public checkAnswerGiveDollars(): void {
+    if (this.timer) {
+      return;
+    }
+    this.successBtn = true;
+    this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
+    this.checkAnswersGiveDollars2(this.catTwobuttonArray, this.category2);
+    this.checkAnswersGiveDollars2(this.catThreebuttonArray, this.category3);
+    this.checkAnswersGiveDollars2(this.catFourbuttonArray, this.category4);
+    this.checkAnswersGiveDollars2(this.catFivebuttonArray, this.category5);
+    sessionStorage.setItem("userDollars", JSON.stringify(this.userScore));
+    this.timer = true;
+
+  }
   public pickRandomObject(questionArr) {
     const keys = Object.keys(questionArr);
     const n = keys.length;
@@ -460,15 +505,5 @@ export class JeoQuestions extends Jeopardy
     const randomQuestionIsDisabled = questionArr[randomKey].disabled;
     return { randomQuestion, randomQuestionIsDisabled };
   }
-
-  public checkAnswerGiveDollars(event): void {
-    this.timer = true;
-    this.successBtn = true;
-    this.checkAnswersGiveDollars2(this.catOnebuttonArray, this.category1);
-    this.checkAnswersGiveDollars2(this.catTwobuttonArray, this.category2);
-    this.checkAnswersGiveDollars2(this.catThreebuttonArray, this.category3);
-    this.checkAnswersGiveDollars2(this.catFourbuttonArray, this.category4);
-    this.checkAnswersGiveDollars2(this.catFivebuttonArray, this.category5);
-    sessionStorage.setItem("userDollars", JSON.stringify(this.userScore));
-  }
+  public formatOne = () => `${this.timeLeft}`;
 }

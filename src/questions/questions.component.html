@@ -22,7 +22,34 @@
       <p>You have answered {{ questionCounter }} of 25 Questions</p>
     </div>
     <hr />
-
+      <nz-row [nzGutter]="16">
+        <nz-col [nzSpan]="12">
+          <nz-card>
+            <nz-statistic
+              [nzValue]="correctAnswerCount"
+              [nzTitle]="'Active'"
+              [nzPrefix]="prefixTplOne"
+              [nzSuffix]="'%'"
+              [nzValueStyle]="{ color: '#3F8600' }"
+            >
+            </nz-statistic>
+            <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
+          </nz-card>
+        </nz-col>
+        <nz-col [nzSpan]="12">
+          <nz-card>
+            <nz-statistic
+              [nzValue]="incorrectAnswerCount"
+              [nzTitle]="'Idle'"
+              [nzPrefix]="prefixTplTwo"
+              [nzSuffix]="'%'"
+              [nzValueStyle]="{ color: '#CF1322' }"
+            >
+            </nz-statistic>
+            <ng-template #prefixTplTwo><i nz-icon nzType="arrow-down"></i></ng-template>
+          </nz-card>
+        </nz-col>
+      </nz-row>
     <table class="table table-bordered">
       <thead>
         <tr class="text-center align-middle" *ngFor="let item of allQuestions">
@@ -183,14 +210,14 @@
             </div>
           </div>
           <div class="modal-footer">
-            <h2>{{ timeLeft }}</h2>
+            <nz-progress [nzPercent]="timeLeft" nzType="circle" [nzWidth]="80" [nzFormat]="formatOne"></nz-progress>
             <button
               #savebutton
               type="button"
               class="btn btn-primary"
               data-dismiss="modal"
               id="suc-btn{{ i + 1 }}"
-              (click)="checkAnswerGiveDollars($event)"
+              (click)="checkAnswerGiveDollars()"
             >
               Submit
             </button>

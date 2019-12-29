@@ -11,9 +11,11 @@ import { ScoreComponent } from "src/score/score.component";
 import { JeopardyService } from "src/services/getQuestions";
 import { UserInfoService } from "src/services/getUserInfo";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
+import { NgZorroAntdModule, NZ_ICONS } from 'ng-zorro-antd';
+import { IconDefinition } from '@ant-design/icons-angular';
 import { AppComponent } from "./app.component";
-
+import * as AllIcons from '@ant-design/icons-angular/icons';
+import { NZ_I18N, en_US } from 'ng-zorro-antd';
 const appRoutes: Routes = [
   { path: "", component: LogMeIn },
   { path: "jeopardyBoard", component: JeoQuestions },
@@ -22,6 +24,11 @@ const appRoutes: Routes = [
   // following has to be the last path nofound component
   // { path: '**', component: NotFoundComponent }
 ];
+const antDesignIcons = AllIcons as {
+  [key: string]: IconDefinition;
+};
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,10 +43,11 @@ const appRoutes: Routes = [
     MatCardModule,
     FormsModule,
     ReactiveFormsModule,
+    NgZorroAntdModule,
     AtomSpinnerModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [JeopardyService, UserInfoService],
+  providers: [JeopardyService, UserInfoService, { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
