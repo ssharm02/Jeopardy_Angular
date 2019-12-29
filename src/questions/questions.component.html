@@ -22,34 +22,38 @@
       <p>You have answered {{ questionCounter }} of 25 Questions</p>
     </div>
     <hr />
-      <nz-row [nzGutter]="16">
-        <nz-col [nzSpan]="12">
-          <nz-card>
-            <nz-statistic
-              [nzValue]="correctAnswerCount"
-              [nzTitle]="'Active'"
-              [nzPrefix]="prefixTplOne"
-              [nzSuffix]="'%'"
-              [nzValueStyle]="{ color: '#3F8600' }"
-            >
-            </nz-statistic>
-            <ng-template #prefixTplOne><i nz-icon nzType="arrow-up"></i></ng-template>
-          </nz-card>
-        </nz-col>
-        <nz-col [nzSpan]="12">
-          <nz-card>
-            <nz-statistic
-              [nzValue]="incorrectAnswerCount"
-              [nzTitle]="'Idle'"
-              [nzPrefix]="prefixTplTwo"
-              [nzSuffix]="'%'"
-              [nzValueStyle]="{ color: '#CF1322' }"
-            >
-            </nz-statistic>
-            <ng-template #prefixTplTwo><i nz-icon nzType="arrow-down"></i></ng-template>
-          </nz-card>
-        </nz-col>
-      </nz-row>
+    <nz-row [nzGutter]="16">
+      <nz-col [nzSpan]="12">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="correctAnswerCount"
+            [nzTitle]="'Active'"
+            [nzPrefix]="prefixTplOne"
+            [nzSuffix]="'%'"
+            [nzValueStyle]="{ color: '#3F8600' }"
+          >
+          </nz-statistic>
+          <ng-template #prefixTplOne
+            ><i nz-icon nzType="arrow-up"></i
+          ></ng-template>
+        </nz-card>
+      </nz-col>
+      <nz-col [nzSpan]="12">
+        <nz-card>
+          <nz-statistic
+            [nzValue]="incorrectAnswerCount"
+            [nzTitle]="'Idle'"
+            [nzPrefix]="prefixTplTwo"
+            [nzSuffix]="'%'"
+            [nzValueStyle]="{ color: '#CF1322' }"
+          >
+          </nz-statistic>
+          <ng-template #prefixTplTwo
+            ><i nz-icon nzType="arrow-down"></i
+          ></ng-template>
+        </nz-card>
+      </nz-col>
+    </nz-row>
     <table class="table table-bordered">
       <thead>
         <tr class="text-center align-middle" *ngFor="let item of allQuestions">
@@ -159,7 +163,7 @@
             <button
               type="button"
               id="cat5-btn{{ i + 1 }}"
-              (click)="clickButtonTakeAction($event);"
+              (click)="clickButtonTakeAction($event)"
               [ngClass]="x.disabled ? 'strikethrough' : 'null'"
               [disabled]="x.disabled"
               class="btn btn-primary"
@@ -210,7 +214,18 @@
             </div>
           </div>
           <div class="modal-footer">
-            <nz-progress [nzPercent]="timeLeft" nzType="circle" [nzWidth]="80" [nzFormat]="formatOne"></nz-progress>
+            <!-- <nz-progress [nzPercent]="timeLeft" nzType="circle" [nzWidth]="80" [nzFormat]="formatOne"></nz-progress> -->
+            <circle-progress
+              [percent]="timeLeft"
+              [radius]="100"
+              [outerStrokeWidth]="16"
+              [innerStrokeWidth]="8"
+              [outerStrokeColor]="'#78C000'"
+              [innerStrokeColor]="'#C7E596'"
+              [animation]="true"
+              [animationDuration]="300"
+            ></circle-progress>
+
             <button
               #savebutton
               type="button"

@@ -16,6 +16,8 @@ import { IconDefinition } from '@ant-design/icons-angular';
 import { AppComponent } from "./app.component";
 import * as AllIcons from '@ant-design/icons-angular/icons';
 import { NZ_I18N, en_US } from 'ng-zorro-antd';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+
 const appRoutes: Routes = [
   { path: "", component: LogMeIn },
   { path: "jeopardyBoard", component: JeoQuestions },
@@ -45,6 +47,15 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     ReactiveFormsModule,
     NgZorroAntdModule,
     AtomSpinnerModule,
+    NgCircleProgressModule.forRoot({
+      // set defaults here
+      radius: 100,
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      animationDuration: 300
+    }),
     RouterModule.forRoot(appRoutes)
   ],
   providers: [JeopardyService, UserInfoService, { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }],
