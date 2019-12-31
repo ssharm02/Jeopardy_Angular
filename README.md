@@ -15,6 +15,7 @@ Features:
 ## TODO
 * Add animations to make game more attractive
 * Fix Daily double functionality
+* Fix score page
 * Fix minor bugs issues (repeat category, score screen unsubscribe crash)
 
 <img src="jeopardyGif2.gif?raw=true" width="600px">
