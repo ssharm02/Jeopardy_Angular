@@ -8,7 +8,7 @@ Features:
 * Questions and categories randomly picked from: https://opentdb.com/api_config.php
 * Application maintains a session via sessionStorage (user's name, score, question they have answered are kept in session - refreshing doesn't cause data loss)
 * Features music and sound effects
-* Question modal automatically closes if the time runs out
+* User has 30 seconds to answer a question before the question modal closes on timeout.
 
 
 
