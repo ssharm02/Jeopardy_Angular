@@ -11,12 +11,12 @@ import { ScoreComponent } from "src/score/score.component";
 import { JeopardyService } from "src/services/getQuestions";
 import { UserInfoService } from "src/services/getUserInfo";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { NgZorroAntdModule, NZ_ICONS } from 'ng-zorro-antd';
-import { IconDefinition } from '@ant-design/icons-angular';
+import { NgZorroAntdModule, NZ_ICONS } from "ng-zorro-antd";
+import { IconDefinition } from "@ant-design/icons-angular";
 import { AppComponent } from "./app.component";
-import * as AllIcons from '@ant-design/icons-angular/icons';
-import { NZ_I18N, en_US } from 'ng-zorro-antd';
-import { NgCircleProgressModule } from 'ng-circle-progress';
+import * as AllIcons from "@ant-design/icons-angular/icons";
+import { NZ_I18N, en_US } from "ng-zorro-antd";
+import { NgCircleProgressModule } from "ng-circle-progress";
 
 const appRoutes: Routes = [
   { path: "", component: LogMeIn },
@@ -29,7 +29,9 @@ const appRoutes: Routes = [
 const antDesignIcons = AllIcons as {
   [key: string]: IconDefinition;
 };
-const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesignIcons[key])
+const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
+  key => antDesignIcons[key]
+);
 
 @NgModule({
   declarations: [
@@ -50,15 +52,22 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
     NgCircleProgressModule.forRoot({
       // set defaults here
       radius: 100,
-      outerStrokeWidth: 16,
+      outerStrokeWidth: 8,
       innerStrokeWidth: 8,
+      showUnits: false,
+      showSubtitle: false,
       outerStrokeColor: "#78C000",
       innerStrokeColor: "#C7E596",
       animationDuration: 300
     }),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [JeopardyService, UserInfoService, { provide: NZ_I18N, useValue: en_US }, { provide: NZ_ICONS, useValue: icons }],
+  providers: [
+    JeopardyService,
+    UserInfoService,
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: NZ_ICONS, useValue: icons }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

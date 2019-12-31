@@ -81,7 +81,6 @@ export class JeopardyService {
     valueToEject = firstValueInSet.value;
     return valueToEject;
   }
-  // Observable shouldn't be any
   public getItems(): Observable<JeopardyServiceClass> {
     const category = this.returnUniqueElement();
     const NUMBER_OF_QUESTIONS = 5;

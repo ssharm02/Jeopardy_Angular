@@ -20,6 +20,7 @@ import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 import * as _ from "underscore";
 import { FormBuilder } from "@angular/forms";
+import { Howl } from "howler";
 
 @Component({
   selector: "jeo-questions",
@@ -187,13 +188,20 @@ export class JeoQuestions extends Jeopardy
     return sessionScore;
   }
   public startTimer() {
-    this.timeLeft = 15;
+    const sound = new Howl({
+      src: ["../assets/audio/Jeopardy_Theme_Song.mp3"],
+      html5: true
+    });
+    this.timeLeft = 30;
+    console.log('play the sound')
+    this.playTimerSound(sound);
     const interval = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       }
       if (this.timer || this.timeLeft === 0) {
-        this.timeLeft = 15;
+        this.timeLeft = 30;
+        this.stopTimerSound(sound);
         this.savebutton.nativeElement.click();
         clearInterval(interval);
       }
@@ -210,6 +218,13 @@ export class JeoQuestions extends Jeopardy
       this.allQuestions.push(data);
       return this.allQuestions;
     });
+  }
+
+  public playTimerSound(sound) {
+    return sound.play();
+  }
+  public stopTimerSound(sound) {
+    return sound.stop();
   }
   public getSessionDailyD(): void {
     this.showSpinner = false;
@@ -300,7 +315,6 @@ export class JeoQuestions extends Jeopardy
       this.setCat3();
       this.setCat4();
       this.setCat5();
-
       this.sendDailyDoubleToCat(this.category1, 2);
       this.dailyDoubleNum1 = this.launchDailyDouble(15, 1);
       this.dailyDoubleNum2 = this.launchDailyDouble(22, 1);
@@ -438,7 +452,6 @@ export class JeoQuestions extends Jeopardy
     }
   }
   public clickButtonTakeAction(event): void {
-    // event.preventDefault();
     const category = this.returnCategory(event);
     const arrVal = this.getArrValToPass(event);
     this.questionCounter++;
@@ -494,7 +507,6 @@ export class JeoQuestions extends Jeopardy
     this.checkAnswersGiveDollars2(this.catFivebuttonArray, this.category5);
     sessionStorage.setItem("userDollars", JSON.stringify(this.userScore));
     this.timer = true;
-
   }
   public pickRandomObject(questionArr) {
     const keys = Object.keys(questionArr);

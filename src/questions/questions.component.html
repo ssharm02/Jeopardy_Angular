@@ -22,7 +22,7 @@
       <p>You have answered {{ questionCounter }} of 25 Questions</p>
     </div>
     <hr />
-    <nz-row [nzGutter]="16">
+    <!-- <nz-row [nzGutter]="16">
       <nz-col [nzSpan]="12">
         <nz-card>
           <nz-statistic
@@ -53,8 +53,8 @@
           ></ng-template>
         </nz-card>
       </nz-col>
-    </nz-row>
-    <table class="table table-bordered">
+    </nz-row> -->
+    <table class="table table-striped">
       <thead>
         <tr class="text-center align-middle" *ngFor="let item of allQuestions">
           {{
@@ -214,11 +214,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <!-- <nz-progress [nzPercent]="timeLeft" nzType="circle" [nzWidth]="80" [nzFormat]="formatOne"></nz-progress> -->
             <circle-progress
               [percent]="timeLeft"
-              [radius]="100"
-              [outerStrokeWidth]="16"
+              [subtitle]="Seconds"
+              [radius]="55"
+              [outerStrokeWidth]="8"
               [innerStrokeWidth]="8"
               [outerStrokeColor]="'#78C000'"
               [innerStrokeColor]="'#C7E596'"

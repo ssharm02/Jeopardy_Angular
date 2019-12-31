@@ -9,8 +9,11 @@
   }
 
   .background {
-    background-repeat:no-repeat;
-    background-size:cover;
+    min-height: 100vh;
+    height: auto;
+    margin: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
   }
 
@@ -40,6 +43,9 @@
     min-height: 100vh;
     height: auto;
     margin: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
   }
   nz-progress {
     margin-right: 8px;
