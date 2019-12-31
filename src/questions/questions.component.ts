@@ -193,7 +193,6 @@ export class JeoQuestions extends Jeopardy
       html5: true
     });
     this.timeLeft = 30;
-    console.log('play the sound')
     this.playTimerSound(sound);
     const interval = setInterval(() => {
       if (this.timeLeft > 0) {
@@ -480,16 +479,26 @@ export class JeoQuestions extends Jeopardy
   }
 
   public checkAnswersGiveDollars2(buttonArr, category): void {
+    const failSound = new Howl({
+      src: ["../assets/audio/maximum_failure.mp3"],
+      html5: true
+    });
+    const winSound = new Howl({
+      src: ["../assets/audio/win_sound.mp3"],
+      html5: true
+    });
     for (let i = 0; i < buttonArr.length; i++) {
       if (this.btnPressed === buttonArr[i]) {
         if (this.userChoice === category[i].correct_answer) {
           this.userScore += this.dollarAmount;
           this.setCorrectAns();
+          this.playTimerSound(winSound);
           this.correctAnswerCount++;
         } else {
           this.userScore -= this.dollarAmount;
           this.incorrectAnswerCount++;
           this.setIncorrectAns();
+          this.playTimerSound(failSound);
         }
       }
     }
