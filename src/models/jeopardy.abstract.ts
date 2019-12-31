@@ -21,6 +21,7 @@ export abstract class Jeopardy {
     abstract returnCategory(event): object;
     abstract getArrValToPass(event): number;
     abstract fetchApiData(): void;
+
     abstract getSessionDailyD(): void;
     abstract getSessionAllQuestions(): void;
     abstract getSessionCat1(): void;
@@ -28,5 +29,18 @@ export abstract class Jeopardy {
     abstract getSessionCat3(): void;
     abstract getSessionCat4(): void;
     abstract getSessionCat5(): void;
+
+    abstract setAllQuestions(): void;
+    abstract setCat1(): void;
+    abstract setCat2(): void;
+    abstract setCat3(): void;
+    abstract setCat4(): void;
+    abstract setCat5(): void;
+    abstract setCorrectAns(): void;
+    abstract setIncorrectAns(): void;
+
+    abstract playTimerSound(sound): object;
+    abstract stopTimerSound(sound): object;
+
 
 }
