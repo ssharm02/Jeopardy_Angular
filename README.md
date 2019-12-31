@@ -6,7 +6,9 @@ I am recreating that application with angular 7+.  :)  Work in progress - more f
 
 Features: 
 * Questions and categories randomly picked from: https://opentdb.com/api_config.php
-* Buttons are disabled after the user clicks on them
+* Application maintains a session via sessionStorage (user's name, score, question they have answered are kept in session - refreshing doesn't cause data loss)
+* Features music and sound effects
+
 
 
 ## TODO
