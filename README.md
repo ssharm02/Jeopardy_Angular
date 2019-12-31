@@ -10,10 +10,9 @@ Features:
 
 
 ## TODO
-* Implement mongoDB or firebase to save user names and high scores 
-* Make scoring page more attractive
-* Fix Daily Double functionality
-* Fix various bugs (repeating categories etc)
+* Add animations to make game more attractive
+* Fix Daily double functionality
+* Fix minor bugs issues (repeat category, score screen unsubscribe crash)
 
 <img src="jeopardyGif.gif?raw=true" width="600px">
 <img src="jeopardy1.PNG?raw=true" width="600px">
