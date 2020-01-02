@@ -6,14 +6,16 @@ I am recreating that application with angular 7+.  :)  Work in progress - more f
 
 Features: 
 * Questions and categories randomly picked from: https://opentdb.com/api_config.php
-* Buttons are disabled after the user clicks on them
+* Application maintains a session via sessionStorage (user's name, score, question they have answered are kept in session - refreshing doesn't cause data loss)
+* Features music and sound effects
+* User has 30 seconds to answer a question before the question modal closes on timeout.
+
 
 
 ## TODO
 * Add animations to make game more attractive
 * Fix Daily double functionality
+* Fix score page
 * Fix minor bugs issues (repeat category, score screen unsubscribe crash)
 
-<img src="jeopardyGif.gif?raw=true" width="600px">
-<img src="jeopardy1.PNG?raw=true" width="600px">
-<img src="jeopardy2.PNG?raw=true" width="500px">
+<img src="jeopardyGif2.gif?raw=true" width="600px">
