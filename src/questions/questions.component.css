@@ -1,54 +1,69 @@
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    /* width: 00%; */
-  }
-  
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  /* width: 00%; */
+}
 
-  .background {
-    min-height: 100vh;
-    height: auto;
-    margin: 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
 
-  .userDollars{
-    color: white
-  }
-  .p {
-    text-align: center;
-    align-content: center;
-  }
-  table {
-    display: table;
-  }
-  table tr {
-    display: table-cell;
-    font-size: 15px;
-    color: #ffffff;
-  }
-  table tr td {
-    display: block;
-  }
-  .strikethrough {
-    text-decoration: line-through;
-  }
-  html,
-  body {
-    min-height: 100vh;
-    height: auto;
-    margin: 0;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  nz-progress {
-    margin-right: 8px;
-    margin-bottom: 8px;
-    display: inline-block;
-  }
+.background {
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.userDollars {
+  color: white
+}
+
+.p {
+  text-align: center;
+  align-content: center;
+}
+
+table {
+  display: table;
+}
+
+table tr {
+  display: table-cell;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+table tr td {
+  display: block;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
+html,
+body {
+  min-height: 100vh;
+  height: auto;
+  margin: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+nz-progress {
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}

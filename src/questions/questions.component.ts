@@ -6,7 +6,8 @@ import {
   Output,
   ViewChild,
   ChangeDetectorRef,
-  ElementRef
+  ElementRef,
+  AfterViewInit
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Observable, Subscription, timer } from "rxjs";
@@ -19,8 +20,10 @@ import { Jeopardy } from "../models/jeopardy.abstract";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 import * as _ from "underscore";
-import { FormBuilder } from "@angular/forms";
 import { Howl } from "howler";
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from 
+'@angular/forms';
 
 @Component({
   selector: "jeo-questions",
@@ -75,7 +78,8 @@ export class JeoQuestions extends Jeopardy
   public timeLeft;
   public dailyDoubleNum1: number;
   public dailyDoubleNum2: number;
-
+  myForm = new FormGroup({}) // Instantiating our form
+  get f() { return this.myForm.controls; }
   public catOnebuttonArray = [
     "cat1-btn1",
     "cat1-btn2",
@@ -119,14 +123,29 @@ export class JeoQuestions extends Jeopardy
     public getUserInfoService: UserInfoService,
     private router: Router,
     private ref: ChangeDetectorRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder
   ) {
     super();
+    // let dailyDBet = this.dailyDouble();
     this.getUserInfoService.currentMessage.subscribe(
       data => (this.name$ = data)
     );
-  }
 
+  }
+  public dailyDouble(): number {
+    let betAmount = 0;
+    if (this.userScore < 0) {
+      betAmount = 1000;
+    } else if (this.userScore < 1000) {
+      betAmount = 1000;
+    } else {
+      betAmount = this.userScore;
+    }
+    console.log('bet amount is ', betAmount)
+    return betAmount;
+  }
   ngOnInit(): void {
     let counter = 0;
     if ("userDollars" in sessionStorage && this.userScore === 0) {
@@ -175,8 +194,8 @@ export class JeoQuestions extends Jeopardy
     }
   }
   ngOnDestroy(): void {
-    this.jeoSub.unsubscribe();
-    this.nameSub.unsubscribe();
+    // this.jeoSub.unsubscribe();
+    // this.nameSub.unsubscribe();
   }
   public getSessionStorageName(): string {
     const sessionName = sessionStorage.getItem("name");
@@ -350,7 +369,9 @@ export class JeoQuestions extends Jeopardy
   public getUrl(): string {
     return 'url(\'../assets/images/jeoback.png\')';
   }
-
+  public getDailyD(): string {
+    return 'url(\'../assets/images/dailyDouble.jpg\')';
+  }
   public changeActiveButtons(i) {
     return (this.category1[i].disabled = !this.category1[i].disabled);
   }
@@ -527,4 +548,37 @@ export class JeoQuestions extends Jeopardy
     return { randomQuestion, randomQuestionIsDisabled };
   }
   public formatOne = () => `${this.timeLeft}`;
+
+  open(content) {
+    const dailyDoubleSound = new Howl({
+      src: ["../assets/audio/daily-double.mp3"],
+      html5: true
+    });
+    this.playTimerSound(dailyDoubleSound);
+    this.myForm = this.formBuilder.group({
+      dailyD: ['', [Validators.min(0), Validators.max(this.dailyDouble())]]
+    });
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      // this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  public keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+
+    const inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode !== 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
+  }
 }

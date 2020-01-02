@@ -17,6 +17,7 @@ import { AppComponent } from "./app.component";
 import * as AllIcons from "@ant-design/icons-angular/icons";
 import { NZ_I18N, en_US } from "ng-zorro-antd";
 import { NgCircleProgressModule } from "ng-circle-progress";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const appRoutes: Routes = [
   { path: "", component: LogMeIn },
@@ -43,6 +44,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     HttpClientModule,
     MatCardModule,
     FormsModule,

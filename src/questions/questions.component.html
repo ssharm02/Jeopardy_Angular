@@ -4,12 +4,13 @@
   *ngIf="showSpinner; else loaded"
   [ngStyle]="{ 'background-image': getUrl() }"
 >
-  <app-atom-spinner
-    [animationDuration]="1000"
-    [size]="60"
-    [color]="'#ff1d5e'"
-    style="margin:0 auto;"
-  ></app-atom-spinner>
+  <div class="spinner">
+    <app-atom-spinner
+      [animationDuration]="1000"
+      [size]="100"
+      [color]="'#000000'"
+    ></app-atom-spinner>
+  </div>
 
   <div style="position:relative; top: -60px; left: 30px;"></div>
 </div>
@@ -17,7 +18,7 @@
 <ng-template #loaded>
   <div class="background" [ngStyle]="{ 'background-image': getUrl() }">
     <div class="userDollars" style="text-align: right;">
-      <p>Your Winnings $ {{ userScore }}</p>
+      <span>Your Winnings ${{userScore}}</span>
       <p *ngIf="name$">Welcome to Jeopardy {{ name$ }}!!</p>
       <p>You have answered {{ questionCounter }} of 25 Questions</p>
     </div>
@@ -180,7 +181,8 @@
         </tr>
       </tbody>
     </table>
-
+    <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+<!-- Modal -->
     <div
       *ngFor="let item of category1; let i = index"
       [hidden]="IsmodelShow"
@@ -242,3 +244,32 @@
     </div>
   </div>
 </ng-template>
+
+<!-- <ng-template #content let-modal>
+  <div [ngStyle]="{ 'background-image': getUrl() }">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Daily Double</h4>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="betAmount">Bet Amount</label>
+        <div class="input-group">
+          <form [formGroup]="myForm">
+          <input type="text" id="dailyD" formControlName="dailyD" class="form-control"
+            autofocus autocomplete="off" (keypress)="keyPress($event)"/>
+            <div *ngIf="f.dailyD.errors; else dailyDButton">
+              Invalid Amount Entered
+            </div>
+            <button type="button" id="dailyDButton" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+          </form>
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+</ng-template> -->
+
+
+
+
