@@ -17,4 +17,4 @@ Features:
 * Fix Daily double functionality
 * Fix minor bugs issues (repeat category, score screen unsubscribe crash)
 
-<img src="jeopardyGif2.gif?raw=true" width="600px">
+<img src="jeopardyGif3.gif?raw=true" width="600px">
