@@ -16,5 +16,6 @@ Features:
 * Add animations to make game more attractive
 * Fix Daily double functionality
 * Fix minor bugs issues (repeat category, score screen unsubscribe crash)
+* Add multiplayer via socket.io
 
 <img src="jeopardyGif3.gif?raw=true" width="600px">
