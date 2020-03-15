@@ -21,9 +21,13 @@ import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 import { User } from "../models/User";
 import * as _ from "underscore";
 import { Howl } from "howler";
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from 
-'@angular/forms';
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule
+} from "@angular/forms";
 
 @Component({
   selector: "jeo-questions",
@@ -40,15 +44,15 @@ export class JeoQuestions extends Jeopardy
   public jeoSub: Subscription;
   public nameSub: Subscription;
   public subscription: Subscription;
-  public showSpinner = true;
-  public timer = false;
-  public IsmodelShow = false;
-  public successBtn = false;
-  public GET_QUESTIONS = 4;
-  public questionCounter = 0;
-  public dollarAmount = 0;
-  public userScore = 0;
-  public count = 60;
+  public showSpinner: boolean = true;
+  public timer: boolean = false;
+  public IsmodelShow: boolean = false;
+  public successBtn: boolean = false;
+  public GET_QUESTIONS: number = 4;
+  public questionCounter: number = 0;
+  public dollarAmount: number = 0;
+  public userScore: number = 0;
+  public count: number = 60;
 
   public correctAnswerCount = 0;
   public incorrectAnswerCount = 0;
@@ -78,8 +82,10 @@ export class JeoQuestions extends Jeopardy
   public timeLeft;
   public dailyDoubleNum1: number;
   public dailyDoubleNum2: number;
-  myForm = new FormGroup({}) // Instantiating our form
-  get f() { return this.myForm.controls; }
+  myForm = new FormGroup({}); // Instantiating our form
+  get f() {
+    return this.myForm.controls;
+  }
   public catOnebuttonArray = [
     "cat1-btn1",
     "cat1-btn2",
@@ -115,6 +121,32 @@ export class JeoQuestions extends Jeopardy
     "cat5-btn4",
     "cat5-btn5"
   ];
+  public categoryArray = [
+    32,
+    31,
+    29,
+    28,
+    27,
+    26,
+    25,
+    24,
+    22,
+    21,
+    20,
+    19,
+    18,
+    17,
+    16,
+    15,
+    14,
+    13,
+    12,
+    11,
+    10,
+    9
+  ];
+  public doubleCopy = [...this.categoryArray];
+
   @ViewChild(LogMeIn, { static: false }) playerNameRef;
   @ViewChild("savebutton", { static: false }) savebutton: ElementRef;
 
@@ -132,7 +164,6 @@ export class JeoQuestions extends Jeopardy
     this.getUserInfoService.currentMessage.subscribe(
       data => (this.name$ = data)
     );
-
   }
   public dailyDouble(): number {
     let betAmount = 0;
@@ -143,7 +174,7 @@ export class JeoQuestions extends Jeopardy
     } else {
       betAmount = this.userScore;
     }
-    console.log('bet amount is ', betAmount)
+    console.log("bet amount is ", betAmount);
     return betAmount;
   }
   ngOnInit(): void {
@@ -197,6 +228,19 @@ export class JeoQuestions extends Jeopardy
     // this.jeoSub.unsubscribe();
     // this.nameSub.unsubscribe();
   }
+  public selectRandomCategory2() {
+    let arr = [];
+    const maxArrNum = Math.max(...this.doubleCopy);
+    const minArrNum = Math.min(...this.doubleCopy);
+    while (arr.length < 5) {
+      const num =
+        Math.floor(Math.random() * (maxArrNum - minArrNum + 1)) + minArrNum;
+      if (arr.indexOf(num) === -1) {
+        arr.push(num);
+      }
+    }
+    return arr;
+  }
   public getSessionStorageName(): string {
     const sessionName = sessionStorage.getItem("name");
     return sessionName;
@@ -227,8 +271,8 @@ export class JeoQuestions extends Jeopardy
     this.timer = false;
   }
 
-  public getServiceData() {
-    this.jeoSub = this.jeotest.getItems().subscribe(data => {
+  public getServiceData(cat) {
+    this.jeoSub = this.jeotest.getItems(cat).subscribe(data => {
       setTimeout(() => {
         this.showSpinner = false;
       }, 7000);
@@ -280,8 +324,10 @@ export class JeoQuestions extends Jeopardy
     return incorrectCount;
   }
   public fetchApiData() {
-    for (let i = 0; i <= this.GET_QUESTIONS; i++) {
-      this.getServiceData();
+    const catArr = this.selectRandomCategory2();
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < catArr.length; i++) {
+      this.getServiceData(catArr[i]);
     }
   }
   public setAllQuestions(): void {
@@ -556,13 +602,18 @@ export class JeoQuestions extends Jeopardy
     });
     this.playTimerSound(dailyDoubleSound);
     this.myForm = this.formBuilder.group({
-      dailyD: ['', [Validators.min(0), Validators.max(this.dailyDouble())]]
+      dailyD: ["", [Validators.min(0), Validators.max(this.dailyDouble())]]
     });
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      // this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService
+      .open(content, { ariaLabelledBy: "modal-basic-title" })
+      .result.then(
+        result => {
+          // this.closeResult = `Closed with: ${result}`;
+        },
+        reason => {
+          // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
   public keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
@@ -574,11 +625,11 @@ export class JeoQuestions extends Jeopardy
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
+      return "by pressing ESC";
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
+      return "by clicking on a backdrop";
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 }

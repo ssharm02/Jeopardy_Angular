@@ -1,8 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, forkJoin } from "rxjs";
 import { BehaviorSubject } from "rxjs";
-import { first, map } from "rxjs/operators";
+import { first, map, catchError } from "rxjs/operators";
 import { JeopardyServiceClass } from "../models/jeopardy.service.class";
 @Injectable({
   providedIn: "root"
@@ -36,7 +36,12 @@ export class JeopardyService {
     10,
     9
   ];
-
+  results1 = {};
+  results2 = {};
+  results3 = {};
+  results4 = {};
+  results5 = {};
+  public doubleCopy = [...this.categoryArray];
   display(value: boolean) {
     this.status.next(value);
   }
@@ -81,9 +86,20 @@ export class JeopardyService {
     valueToEject = firstValueInSet.value;
     return valueToEject;
   }
-  public getItems(): Observable<JeopardyServiceClass> {
-    const category = this.returnUniqueElement();
+  public selectRandomCategory2() {
+    const maxArrNum = Math.max(...this.doubleCopy);
+    const minArrNum = Math.min(...this.doubleCopy);
+    const num =
+      Math.floor(Math.random() * (maxArrNum - minArrNum + 1)) + minArrNum;
+    this.doubleCopy.splice(num, 1);
+    return num;
+  }
+  public pickRandomCat(max, min) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  public getItems(category): Observable<JeopardyServiceClass>{
     const NUMBER_OF_QUESTIONS = 5;
+
     return this.http
       .get(
         `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${category}`
@@ -91,3 +107,52 @@ export class JeopardyService {
       .pipe(map(jeopardyData => jeopardyData["results"]));
   }
 }
+
+
+/*
+
+
+    // const randomCatOne = this.http.get(
+    //   `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${this.selectRandomCategory2()}`
+    // );
+    // const randomCatTwo = this.http.get(
+    //   `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${this.selectRandomCategory2()}`
+    // );
+    // const randomCat3 = this.http.get(
+    //   `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${this.selectRandomCategory2()}`
+    // );
+    // const randomCatFour = this.http.get(
+    //   `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${this.selectRandomCategory2()}`
+    // );
+    // const randomCatFive = this.http.get(
+    //   `https://opentdb.com/api.php?amount=${NUMBER_OF_QUESTIONS}&category=${this.selectRandomCategory2()}`
+    // );
+
+    // forkJoin([
+    //   randomCatOne,
+    //   randomCatTwo,
+    //   randomCat3,
+    //   randomCatFour,
+    //   randomCatFive
+    // ]).subscribe(
+    //   results => {
+    //     this.results1 = results[0]["results"],
+    //     this.results2 = results[1]["results"],
+    //     this.results3 = results[2]["results"],
+    //     this.results4 = results[3]["results"],
+    //     this.results5 = results[4]["results"]
+    //     // console.log("results are ", JSON.stringify(results));
+    //   },
+    //   error => console.log(`Error making request ${error}`),
+    //   () => {
+    //     console.log("fork join completed");
+    //     return [
+    //       this.results1,
+    //       this.results2,
+    //       this.results3,
+    //       this.results4,
+    //       this.results5
+    //     ];
+    //   }
+    //   );
+*/

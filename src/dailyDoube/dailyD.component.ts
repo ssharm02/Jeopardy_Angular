@@ -50,7 +50,7 @@ export class DailyDComponent implements OnInit {
     return 'url(\'../assets/images/dailyDouble.jpg\')';
   }
   public getAllQuestions() {
-    this.questionsData$ = this.getJeopardyData.getItems().subscribe(data => {
+    this.questionsData$ = this.getJeopardyData.getItems(3).subscribe(data => {
       this.allQuestions.push(data);
       return this.allQuestions;
     });

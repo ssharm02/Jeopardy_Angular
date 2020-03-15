@@ -4,7 +4,7 @@ export abstract class Jeopardy {
   abstract getSessionStorageName(): string;
   abstract getSessionStorageScore(): void;
   abstract startTimer(): void;
-  abstract getServiceData(): void;
+  abstract getServiceData(cat): void;
   abstract manipulateObject(): void;
   abstract mutateObject(data): void;
   abstract filterCategories(data): void;
