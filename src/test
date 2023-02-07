@@ -1,0 +1,79 @@
+import ReactApexChart from "react-apexcharts";
+import React from "react";
+import { ApexOptions } from "apexcharts";
+
+const MyCharts = (props) => {
+  const series = [
+    //data on the y-axis
+    {
+      name: "Temperature in Celsius",
+      data: props.data,
+    },
+  ];
+  let change: boolean = props.change;
+  let chart_type:
+    | "line"
+    | "area"
+    | "bar"
+    | "histogram"
+    | "pie"
+    | "donut"
+    | "radialBar"
+    | "scatter"
+    | "bubble"
+    | "heatmap"
+    | "candlestick"
+    | "boxPlot"
+    | "radar"
+    | "polarArea"
+    | "rangeBar"
+    | "rangeArea"
+    | "treemap" = props.type;
+  const options: ApexOptions = {
+    chart: {
+      height: 350,
+      width: 380,
+      type: `${chart_type}`,
+      zoom: {
+        enabled: false,
+      },
+      animations: {
+        enabled: true, //no animations
+        speed: 1900
+      },
+    },
+    labels: props.label,
+    xaxis: {
+      categories: props.label,
+    },
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200,
+          },
+          legend: {
+            position: "bottom",
+          },
+        },
+      },
+    ],
+    plotOptions: {
+        bar: {
+          horizontal: change, //horizontal bar chart
+        },
+      },
+  };
+
+  return (
+    <ReactApexChart
+      options={options}
+      series={series}
+      type={props.type}
+      width="450"
+    />
+  );
+};
+
+export default MyCharts;
