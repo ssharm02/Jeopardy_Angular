@@ -8,7 +8,7 @@ interface ReusableChartProps {
   width?: string | number;
 }
 
-const ReusableChart: React.FC<ReusableChartProps> = ({ options, series, width }) => {
+const ReusableChart = ({ options, series, width }: ReusableChartProps) => {
   const chartProps: any = {};
 
   if (width) {
