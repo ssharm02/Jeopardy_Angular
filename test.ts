@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactApexChart from 'react-apexcharts';
+import Chart from 'react-apexcharts';
 import { ChartOptions, ApexAxisChartSeries } from 'apexcharts';
 
 interface ReusableChartProps {
@@ -15,7 +15,7 @@ const ReusableChart: React.FC<ReusableChartProps> = ({ options, series, width })
     chartProps.width = width;
   }
 
-  return <ReactApexChart options={options} series={series} {...chartProps} />;
+  return <Chart options={options} series={series} {...chartProps} />;
 };
 
 export default ReusableChart;
